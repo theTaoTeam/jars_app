@@ -1,5 +1,5 @@
 name: fude
-description: A new Flutter project.
+description: An app that encourages cooking new dishes and spending time with those you care about.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,6 +19,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  scoped_model: ^0.3.0
+  http: ^0.12.0
+  shared_preferences: ^0.4.3 #for accesing device storage
+  rxdart: ^0.19.0 #PublishSubject
+  # flutter_facebook_login: ^1.1.1
 
 dev_dependencies:
   flutter_test:
