@@ -1,4 +1,4 @@
-#Setting Up
+# Setting Up
 
 Assuming Flutter is Installed
 1. Names with hyphens are considered invalid module names in dart, so change the snuze-app folder's name to be snuze_app.
@@ -10,7 +10,7 @@ Assuming Flutter is Installed
 6. Run pod install from the ios directory.
 7. Run using xcode/android studio. Since we're using native  using the xcworkspace file not xcproj because we're using cocoapods.
 
-#Commitizen
+## Commitizen
 
 We use commitizen to format our commit messages. To use commitizen with this repository please use the following steps:
 1. Install commitizen globally using `npm i -g commitizen`.
