@@ -1,4 +1,4 @@
-# Fude
+# fude
 ## Pull a random recipe from your personal collection! An app to encourage cooking new things and spending time with those you care about.
 
 ### Setting Up
