@@ -1,4 +1,4 @@
-import 'package:fude/scoped-models/connected_user_recipe.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:fude/scoped-models/user.dart';
 
-class MainModel extends ConnectedUserRecipeModel with UserModel{
-}
+class MainModel extends Model with UserModel {}
