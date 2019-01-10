@@ -1,115 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:fude/models/auth.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'dart:async';
+import 'styles.dart';
+import 'package:fude/pages/auth/login/loginAnimation.dart';
+import 'package:fude/pages/auth/signup/signup_link.dart';
+import 'package:fude/widgets/forms/form_container.dart';
+import 'package:fude/pages/auth/signup/signup_button.dart';
+import 'package:fude/widgets/logo.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SignUpPageState();
+    return _SignUpState();
   }
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  AuthMode _authMode = AuthMode.Signup;
-  final Map<String, dynamic> _formData = {
+class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AnimationController _loginButtonController;
+  var animationStatus = 0;
+
+  final Map<String, String> _formData = {
     'email': null,
     'password': null,
-    'number': '',
-    'expMonth': null,
-    'expYear': null,
-    'cvc': '',
   };
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _passwordTextController = TextEditingController();
 
-  Widget _buildTitleText(double targetWidth) {
-    return Container(
-        width: targetWidth,
-        margin: EdgeInsets.only(right: 30),
-        child: Text(
-          "We're going to need a few things...",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 40,
-            fontWeight: FontWeight.w900,
-            fontFamily: 'Montserrat-bold'
-          ),
-          textAlign: TextAlign.left,
-        ));
+  @override
+  void initState() {
+    super.initState();
+    _loginButtonController = AnimationController(
+        duration: Duration(milliseconds: 3000), vsync: this);
   }
 
-  Widget _buildEmailTextField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'email',
-        labelStyle: new TextStyle(color: Colors.white),
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 0.2),
-        errorStyle: TextStyle(color: Colors.white),
-      ),
-      style: new TextStyle(height: .3, fontFamily: 'Montserrat'),
-      keyboardType: TextInputType.emailAddress,
-      validator: (String value) {
-        if (value.isEmpty ||
-            !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                .hasMatch(value)) {
-          return 'Double check your email';
-        }
-      },
-      onSaved: (String value) {
-        _formData['email'] = value;
-      },
-    );
+  @override
+  void dispose() {
+    _loginButtonController.dispose();
+    super.dispose();
   }
 
-  Widget _buildPasswordTextField() {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'password',
-        labelStyle: new TextStyle(color: Colors.white),
-        filled: true,
-        fillColor: Color.fromRGBO(255, 255, 255, 0.2),
-        errorStyle: TextStyle(color: Colors.white),
-      ),
-      style: new TextStyle(height: .3, fontFamily: 'Montserrat'),
-      obscureText: true,
-      controller: _passwordTextController,
-      validator: (String value) {
-        if (value.isEmpty || value.length < 6) {
-          return 'Double check your password';
-        }
-      },
-      onSaved: (String value) {
-        _formData['password'] = value;
-      },
-    );
+  Future<Null> _playAnimation({Function register}) async {
+    try {
+      await _loginButtonController.forward();
+      await _loginButtonController.reverse();
+      _submitForm(register: register);
+    } on TickerCanceled {}
   }
 
-  void _submitForm(Function authenticate) async {
-    if (!_formKey.currentState.validate()) {
+  void updateEmail(String email) {
+    _formData['email'] = email;
+    print('Email saved: ' + _formData['email']);
+  }
+
+  void updatePassword(String password) {
+    _formData['password'] = password;
+    print('Password saved: ' + _formData['password']);
+  }
+
+  void _submitForm({Function register}) async {
+    if (!formKey.currentState.validate()) {
       return;
     }
-    _formKey.currentState.save();
-    Map<String, dynamic> successInformation;
-    successInformation = await authenticate(
-      _formData['email'],
-      _formData['password'],
-      _authMode,
-      _formData['number'],
-      _formData['expMonth'],
-      _formData['expYear'],
-      _formData['cvc'],
-    );
-    if (successInformation['success']) {
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
+    formKey.currentState.save();
+
+    try {
+      await register(_formData['email'], _formData['password']);
+      Navigator.pushReplacementNamed(context, '/');
+    } catch (e) {
+      print(e.toString());
+      try {
+        print(e.cause);
+      } catch (e) {
+        print("couldn't print cause");
+      }
+      print("Register Error on SignUp Page");
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Aw Geeze!'),
-            content: Text(successInformation['message']),
+            content: Text("Error"),
             actions: <Widget>[
               FlatButton(
                 child: Text('Okay'),
@@ -124,108 +97,61 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  void updateCardInfo(Map<String, dynamic> ccInfo) {
-    ccInfo.forEach((key, value) {
-      setState(() {
-        _formData[key] = value;
-      });
-    });
-    print(_formData);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final double deviceWidth = MediaQuery.of(context).size.width;
-    final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.75;
+    timeDilation = 0.4;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Color(0xFFFE2562),
-          iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
-          ),
-        ),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [
-                  0,
-                  0.58,
-                  1,
-                ],
-                colors: [
-                  Color(0xFFFE2562),
-                  Color(0xFFFE355A),
-                  Color(0xFFFFB52E),
-                ]),
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              reverse: true,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 75),
-                width: targetWidth,
-                child: Form(
-                    key: _formKey,
-                    child: Column(
+            child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  colors: <Color>[
+                    const Color.fromRGBO(162, 146, 199, 0.8),
+                    const Color.fromRGBO(51, 51, 63, 0.9),
+                  ],
+                  stops: [0.2, 1.0],
+                  begin: const FractionalOffset(0.0, 0.0),
+                  end: const FractionalOffset(0.0, 1.0),
+                )),
+                child: ListView(
+                  padding: const EdgeInsets.all(0.0),
+                  children: <Widget>[
+                    Stack(
+                      alignment: AlignmentDirectional.bottomCenter,
                       children: <Widget>[
-                        _buildTitleText(targetWidth),
-                        SizedBox(
-                          height: 35,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Logo(),
+                            FormContainer(
+                                formKey: formKey,
+                                updateEmail: updateEmail,
+                                updatePassword: updatePassword),
+                            SignUp()
+                          ],
                         ),
-                        _buildEmailTextField(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        _buildPasswordTextField(),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        model.isLoading
-                            ? Column(children: <Widget>[
-                                CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.white)),
-                                SizedBox(
-                                  height: 15,
-                                )
-                              ])
-                            : Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    width: targetWidth,
-                                    height: 40,
-                                    child: RaisedButton(
-                                      highlightElevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      textColor: Colors.red,
-                                      color: Colors.white,
-                                      splashColor: Color(0xFFFE2562),
-                                      child: Text(
-                                        'get snuzing',
-                                        style: TextStyle(fontSize: 20, fontFamily: 'Montserrat'),
-                                      ),
-                                      onPressed: () =>
-                                          _submitForm(model.authenticate),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        animationStatus == 0
+                            ? Padding(
+                                padding: const EdgeInsets.only(bottom: 50.0),
+                                child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        animationStatus = 1;
+                                      });
+                                      _playAnimation(register: model.register);
+                                      
+                                    },
+                                    child: SignUpButton()),
+                              )
+                            : StaggerAnimation(
+                                buttonController: _loginButtonController.view),
                       ],
-                    )),
-              ),
-            ),
-          ),
-        ),
+                    ),
+                  ],
+                ))),
       );
     });
   }

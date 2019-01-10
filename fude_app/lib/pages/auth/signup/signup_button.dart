@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LoginInButton extends StatelessWidget {
+class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,9 +11,9 @@ class LoginInButton extends StatelessWidget {
         color: const Color.fromRGBO(247, 64, 106, 1.0),
         borderRadius: BorderRadius.all(const Radius.circular(30.0)),
       ),
-      child: Text(
-        "login",
-        style: TextStyle(
+      child: new Text(
+        "get cooking",
+        style: new TextStyle(
           color: Colors.white,
           fontSize: 20.0,
           fontWeight: FontWeight.w300,

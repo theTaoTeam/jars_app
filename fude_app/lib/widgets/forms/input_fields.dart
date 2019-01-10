@@ -1,11 +1,17 @@
-
 import 'package:flutter/material.dart';
 
 class InputFieldArea extends StatelessWidget {
   final String hint;
   final bool obscure;
   final IconData icon;
-  InputFieldArea({this.hint, this.obscure, this.icon});
+  final Function updateEmail;
+  final Function updatePassword;
+  InputFieldArea(
+      {this.hint,
+      this.obscure,
+      this.icon,
+      this.updateEmail,
+      this.updatePassword});
   @override
   Widget build(BuildContext context) {
     return (new Container(
@@ -33,6 +39,10 @@ class InputFieldArea extends StatelessWidget {
           contentPadding: const EdgeInsets.only(
               top: 30.0, right: 30.0, bottom: 30.0, left: 5.0),
         ),
+        onSaved: (String val) {
+          print(val);
+          hint == 'Email' ? updateEmail(val) : updatePassword(val);
+        },
       ),
     ));
   }

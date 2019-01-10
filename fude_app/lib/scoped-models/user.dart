@@ -11,12 +11,14 @@ mixin UserModel on Model {
     return _currentUser;
   }
 
-  Future<void> register(
-      String email, String password) async {
+  Future<void> register(String email, String password) async {
     isLoading = true;
     notifyListeners();
+    FirebaseUser newUser;
+
     try {
-      _auth.createUserWithEmailAndPassword(email: email, password: password);
+      newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      _currentUser = newUser;
       isLoading = false;
       notifyListeners();
     } catch (err) {
@@ -31,13 +33,6 @@ mixin UserModel on Model {
     }
   }
 
-
-
-
-
-
-
-
   Future<void> fetchUser() async {
     print('FETCHING USER');
     _currentUser = await _auth.currentUser();
@@ -51,6 +46,8 @@ mixin UserModel on Model {
       FirebaseUser user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       _currentUser = user;
+      print("successful login. User...");
+      print(_currentUser);
       isLoading = false;
       notifyListeners();
     } catch (e) {
