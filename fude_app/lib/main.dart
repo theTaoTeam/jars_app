@@ -5,6 +5,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/pages/auth/login/login.dart';
 import 'package:fude/pages/auth/signup/signup.dart';
 import 'package:fude/pages/home/home.dart';
+import 'package:fude/pages/auth/forgot-password/forgotpassword.dart';
 import 'package:fude/scoped-models/main.dart';
 
 void main() {
@@ -35,6 +36,7 @@ Widget _buildApp(BuildContext context) {
       routes: {
         '/': (BuildContext context) => model.currentUser != null ? HomePage() : LoginPage(),
         '/signup': (BuildContext context) => SignUpPage(),
+        '/forgotpass': (BuildContext context) => ForgotPassPage(),
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(

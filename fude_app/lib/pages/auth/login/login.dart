@@ -8,8 +8,9 @@ import 'dart:async';
 import 'styles.dart';
 import 'loginAnimation.dart';
 import 'package:fude/pages/auth/signup/signup_link.dart';
-import 'package:fude/widgets/forms/form_container.dart';
 import 'package:fude/pages/auth/login/login_button.dart';
+import 'package:fude/helpers/exceptions.dart';
+import 'package:fude/widgets/forms/form_container.dart';
 import 'package:fude/widgets/logo.dart';
 
 class LoginPage extends StatefulWidget {
@@ -45,8 +46,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   Future<Null> _playAnimation({Function login}) async {
     try {
       await _loginButtonController.forward();
-      await _loginButtonController.reverse();
       _submitForm(login: login);
+      await _loginButtonController.reverse();
     } on TickerCanceled {}
   }
 
@@ -65,35 +66,37 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       return;
     }
     formKey.currentState.save();
-
     try {
-      await login(_formData['email'], _formData['password']);
+      await login(email: _formData['email'], password: _formData['password']);
       Navigator.pushReplacementNamed(context, '/');
+    } on CausedException catch (exc) {
+      exc.debugPrint();
+      _showErrorDialog(context: context, userMessage: exc.userMessage);
     } catch (e) {
-      print(e.toString());
-      try {
-        print(e.cause);
-      } catch (e) {
-        print("couldn't print cause");
-      }
-      showDialog(
+      _showErrorDialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Aw Geeze!'),
-            content: Text("Error"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Okay'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        },
       );
     }
+  }
+
+  void _showErrorDialog({BuildContext context, String userMessage}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Oops!'),
+          content: Text(userMessage),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -125,6 +128,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Logo(),
+                            model.resetLinkSent
+                                ? Text(
+                                    'check your email for your password reset link',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Container(),
                             FormContainer(
                                 formKey: formKey,
                                 updateEmail: updateEmail,
