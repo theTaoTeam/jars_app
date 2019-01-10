@@ -7,17 +7,18 @@ mixin UserModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _currentUser;
   var isLoading = false;
+  var resetLinkSent = false;
   FirebaseUser get currentUser {
     return _currentUser;
   }
 
-  Future<void> register(String email, String password) async {
+  Future<void> register({String email, String password}) async {
     isLoading = true;
     notifyListeners();
     FirebaseUser newUser;
-
     try {
-      newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      newUser = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       _currentUser = newUser;
       isLoading = false;
       notifyListeners();
@@ -29,7 +30,7 @@ mixin UserModel on Model {
           code: "3",
           message: 'register error',
           userMessage:
-              "It looks like some of your info is incorrect, give it another shot.");
+              "It looks like some of your info might be incorrect. Give it another shot.");
     }
   }
 
@@ -58,7 +59,7 @@ mixin UserModel on Model {
           code: "1",
           message: 'login error',
           userMessage:
-              "It looks like your email and password don't match, give it another shot.");
+              "It looks like your email and password might not match. Give it another shot.");
     }
   }
 
@@ -73,13 +74,28 @@ mixin UserModel on Model {
           code: "2",
           message: 'logout error',
           userMessage:
-              "We're having issues logging you out, sorry about that.");
+              "We're having issues logging you out right nows, sorry about that.");
     }
   }
 
-  void resetPassword(String email) {
+  void resetPassword(String email) async {
     print("sending reset password email...");
-    _auth.sendPasswordResetEmail(email: email);
+    try {
+      _auth.sendPasswordResetEmail(email: email);
+      resetLinkSent = true;
+      notifyListeners();
+      Timer(Duration(seconds: 3), () {
+        resetLinkSent = false;
+        notifyListeners();
+      });
+    } catch (e) {
+      throw new CausedException(
+          cause: 'Reset Password',
+          code: "5",
+          message: 'reset pass link send error',
+          userMessage:
+              "We're having issues sending you a reset link, sorry about that.");
+    }
   }
 
   void _handleTimeoutError() {

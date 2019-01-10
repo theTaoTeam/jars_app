@@ -6,11 +6,12 @@ class ForgotPassword extends StatelessWidget {
     return Column(
       children: <Widget>[
         FlatButton(
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: 160.0,
           ),
           onPressed: () {
             print('reset password pressed');
+            Navigator.pushReplacementNamed(context, '/forgotpass');
           },
           child: new Text(
             "Forgot your password? Reset it!",

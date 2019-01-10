@@ -5,99 +5,61 @@ import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'dart:async';
-import 'styles.dart';
-import './signupAnimation.dart';
+// import 'styles.dart';
+import './resetAnimation.dart';
 import 'package:fude/pages/auth/signup/forgotpass_link.dart';
-import 'package:fude/pages/auth/signup/signup_button.dart';
-import 'package:fude/helpers/exceptions.dart';
-import 'package:fude/widgets/forms/form_container.dart';
+import 'package:fude/pages/auth/forgot-password/forgotpass_button.dart';
 import 'package:fude/widgets/logo.dart';
+import 'package:fude/widgets/forms/input_fields.dart';
 
-class SignUpPage extends StatefulWidget {
+class ForgotPassPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SignUpState();
+    return _ForgotPassState();
   }
 }
 
-class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  AnimationController _signupButtonController;
+class _ForgotPassState extends State<ForgotPassPage>
+    with TickerProviderStateMixin {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AnimationController _resetButtonController;
   var animationStatus = 0;
 
-  final Map<String, String> _formData = {
-    'email': null,
-    'password': null,
-  };
+  String _emailInput;
 
   @override
   void initState() {
     super.initState();
-    _signupButtonController = AnimationController(
+    _resetButtonController = AnimationController(
         duration: Duration(milliseconds: 3000), vsync: this);
   }
 
   @override
   void dispose() {
-    _signupButtonController.dispose();
+    _resetButtonController.dispose();
     super.dispose();
   }
 
-  Future<Null> _playAnimation({Function register}) async {
+  Future<Null> _playAnimation({Function resetPassword}) async {
     try {
-      _submitForm(register: register);
-      await _signupButtonController.forward();
-      await _signupButtonController.reverse();
+      _resetPass(resetPassword);
+      await _resetButtonController.forward();
+      await _resetButtonController.reverse();
     } on TickerCanceled {}
   }
 
   void updateEmail(String email) {
-    _formData['email'] = email;
-    print('Email saved: ' + _formData['email']);
+    _emailInput = email;
   }
 
-  void updatePassword(String password) {
-    _formData['password'] = password;
-    print('Password saved: ' + _formData['password']);
-  }
-
-  void _submitForm({Function register}) async {
-    print("about to register");
-    if (!formKey.currentState.validate()) {
+  void _resetPass(Function resetPassword) async {
+    if (!_formKey.currentState.validate()) {
       return;
     }
-    formKey.currentState.save();
-    try {
-      await register(email: _formData['email'], password: _formData['password']);
-      Navigator.pushReplacementNamed(context, '/');
-    } on CausedException catch (exc) {
-      exc.debugPrint();
-      _showErrorDialog(context: context, userMessage: exc.userMessage);
-    } catch (e) {
-      _showErrorDialog(
-        context: context,
-      );
-    }
-  }
+    _formKey.currentState.save();
 
-   void _showErrorDialog({BuildContext context, String userMessage}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Oops!'),
-          content: Text(userMessage),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
-    );
+      resetPassword(_emailInput);
+      Navigator.pop(context);
   }
 
   @override
@@ -129,11 +91,25 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Logo(),
-                            FormContainer(
-                                formKey: formKey,
-                                updateEmail: updateEmail,
-                                updatePassword: updatePassword),
-                            ForgotPassword()
+                            Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    InputFieldArea(
+                                      hint: "Email",
+                                      obscure: false,
+                                      icon: Icons.person_outline,
+                                      updateEmail: updateEmail,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                        top: 160.0,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                           ],
                         ),
                         animationStatus == 0
@@ -144,13 +120,13 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                                       setState(() {
                                         animationStatus = 1;
                                       });
-                                      _playAnimation(register: model.register);
-                                      
+                                      _playAnimation(
+                                          resetPassword: model.resetPassword);
                                     },
-                                    child: SignUpButton()),
+                                    child: ForgotPassButton()),
                               )
                             : StaggerAnimation(
-                                buttonController: _signupButtonController.view),
+                                buttonController: _resetButtonController.view),
                       ],
                     ),
                   ],
