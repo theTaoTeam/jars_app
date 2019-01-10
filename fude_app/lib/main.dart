@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainModel _model = new MainModel();
-    // _model.fetchUser();
+    _model.fetchUser();
     return ScopedModel<MainModel>(model: _model, child: _buildApp(context));
   }
 }

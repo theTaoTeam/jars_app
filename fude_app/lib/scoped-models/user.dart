@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:fude/helpers/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:fude/helpers/exceptions.dart';
+import 'package:fude/models/recipe.dart';
+
 
 mixin UserModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -98,16 +101,7 @@ mixin UserModel on Model {
     }
   }
 
-  void _handleTimeoutError() {
-    Timer(Duration(seconds: 20), () {
-      isLoading = false;
-      notifyListeners();
-      throw new CausedException(
-          cause: "Timeout Error",
-          code: "4",
-          message: "timeout error while authenticating user",
-          userMessage:
-              "Something went wrong, please check your network connection and try again!");
-    });
+  Future<void> createRecipe(Map<String, String> recipe) {
+      
   }
 }
