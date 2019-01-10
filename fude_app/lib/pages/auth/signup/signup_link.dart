@@ -8,7 +8,7 @@ class SignUp extends StatelessWidget {
       padding: const EdgeInsets.only(
         top: 160.0,
       ),
-      onPressed: null,
+      onPressed: () => Navigator.pushNamed(context, '/signup'),
       child: new Text(
         "Don't have an account? Sign Up",
         textAlign: TextAlign.center,
