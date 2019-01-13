@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:fude/pages/home/add-recipe/add_recipe.dart';
+import 'package:fude/pages/home/get-recipe/get_recipe.dart';
 
 class MainView extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
+    
     return DefaultTabController(
-      // drawer: _buildSideDrawer(context),
       length: 2,
       child: Scaffold(
         bottomNavigationBar: Container(
@@ -52,7 +54,7 @@ class MainView extends StatelessWidget {
             end: FractionalOffset(0.0, 1.0),
           )),
           child: TabBarView(
-            children: <Widget>[Text('1'), AddRecipePage()],
+            children: <Widget>[GetRecipePage(), AddRecipePage()],
           ),
         ),
       ),
