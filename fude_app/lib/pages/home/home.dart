@@ -32,6 +32,7 @@ class HomePage extends StatelessWidget {
               Container(
                 child: ListTile(
                   title: Text('all recipes'),
+                  onTap: () => Navigator.pushNamed(context, '/allrecipes'),
                 ),
               ),
             ],
