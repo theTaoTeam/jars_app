@@ -20,6 +20,7 @@ class AllRecipesPage extends StatefulWidget {
 class _AllRecipesPageState extends State<AllRecipesPage> {
   @override
   initState() {
+    widget.model.fetchRecipes();
     super.initState();
   }
 

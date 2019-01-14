@@ -5,20 +5,46 @@ import 'package:fude/helpers/recipes.dart';
 import 'package:fude/models/recipe.dart';
 
 mixin RecipeModel on Model {
-  List<Recipe> _recipes;
-  bool _isLoading = false;
+  List<Recipe> _recipes = recipeCollection;
+  String _selRecipeId;
 
+  bool _isLoading = false;
 
   List<Recipe> get allRecipes {
     return _recipes;
   }
 
-  Future<void> fetchRecipes() {
-    _isLoading = true;
-    notifyListeners();
-    allRecipes;
-    _isLoading = false;
+  Recipe get selectedRecipe {
+    if (selectedRecipeId == null) {
+      return null;
+    }
+
+    return _recipes.firstWhere((Recipe recipe) {
+      return recipe.id == _selRecipeId;
+    });
+  }
+
+  int get selectedRecipeIndex {
+    return _recipes.indexWhere((Recipe recipe) {
+      return recipe.id == _selRecipeId;
+    });
+  }
+
+  String get selectedRecipeId {
+    return _selRecipeId;
+  }
+
+  void selectRecipe(String recipeId) {
+    _selRecipeId = recipeId;
     notifyListeners();
   }
 
+  List<Recipe> fetchRecipes() {
+    _isLoading = true;
+    notifyListeners();
+    final List<Recipe> fetchedProductList = recipeCollection;
+    _isLoading = false;
+    notifyListeners();
+    return fetchedProductList;
+  }
 }

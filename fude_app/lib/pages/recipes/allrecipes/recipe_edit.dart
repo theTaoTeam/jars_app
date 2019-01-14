@@ -5,7 +5,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/models/recipe.dart';
 import 'package:fude/scoped-models/main.dart';
 
-
 class RecipeEditPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -16,89 +15,78 @@ class RecipeEditPage extends StatefulWidget {
 class _RecipeEditPageState extends State<RecipeEditPage> {
   final Map<String, dynamic> _formData = {
     'title': null,
-    'description': null,
+    'notes': null,
     'price': null,
     'image': 'assets/food.jpg'
   };
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _titleFocusNode = FocusNode();
-  final _descriptionFocusNode = FocusNode();
-  final _priceFocusNode = FocusNode();
+  final _notesFocusNode = FocusNode();
+
+  Widget _buildImageField(Recipe recipe) {
+    return FadeInImage(
+      image: recipe.link != null
+          ? NetworkImage(recipe.link)
+          : AssetImage('assets/tempfudeicon.png'),
+      height: 300.0,
+      fit: BoxFit.cover,
+      placeholder: AssetImage('assets/tempfudeicon.png'),
+    );
+  }
 
   Widget _buildTitleTextField(Recipe recipe) {
     return TextFormField(
-        focusNode: _titleFocusNode,
-        decoration: InputDecoration(labelText: 'Recipe Title'),
-        initialValue: recipe == null ? '' : recipe.title,
-        validator: (String value) {
-          // if (value.trim().length <= 0) {
-          if (value.isEmpty || value.length < 5) {
-            return 'Title is required and should be 5+ characters long.';
-          }
-        },
-        onSaved: (String value) {
-          _formData['title'] = value;
-        },
-      
+      focusNode: _titleFocusNode,
+      decoration: InputDecoration(labelText: 'Recipe Title'),
+      initialValue: recipe == null ? '' : recipe.title,
+      validator: (String value) {
+        // if (value.trim().length <= 0) {
+        if (value.isEmpty || value.length < 5) {
+          return 'Title is required and should be 5+ characters long.';
+        }
+      },
+      onSaved: (String value) {
+        _formData['title'] = value;
+      },
     );
   }
 
-  Widget _buildDescriptionTextField(Recipe recipe) {
+  Widget _buildNotesTextField(Recipe recipe) {
     return TextFormField(
-        focusNode: _descriptionFocusNode,
-        maxLines: 4,
-        decoration: InputDecoration(labelText: 'Recipe Description'),
-        initialValue: recipe == null ? '' : recipe.description,
-        validator: (String value) {
-          // if (value.trim().length <= 0) {
-          if (value.isEmpty || value.length < 10) {
-            return 'Description is required and should be 10+ characters long.';
-          }
-        },
-        onSaved: (String value) {
-          _formData['description'] = value;
-        },
-      
-    );
-  }
-
-  Widget _buildPriceTextField(Recipe recipe) {
-    return TextFormField(
-        focusNode: _priceFocusNode,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(labelText: 'Recipe Price'),
-        // initialValue: recipe == null ? '' : recipe.price.toString(),
-        validator: (String value) {
-          // if (value.trim().length <= 0) {
-          if (value.isEmpty ||
-              !RegExp(r'^(?:[1-9]\d*|0)?(?:\.\d+)?$').hasMatch(value)) {
-            return 'Price is required and should be a number.';
-          }
-        },
-        onSaved: (String value) {
-          _formData['price'] = double.parse(value);
-        },
-      
+      focusNode: _notesFocusNode,
+      maxLines: 4,
+      decoration: InputDecoration(labelText: 'Recipe notes'),
+      initialValue: recipe == null ? '' : recipe.notes,
+      validator: (String value) {
+        // if (value.trim().length <= 0) {
+        if (value.isEmpty || value.length < 10) {
+          return 'notes is required and should be 10+ characters long.';
+        }
+      },
+      onSaved: (String value) {
+        _formData['notes'] = value;
+      },
     );
   }
 
   Widget _buildSubmitButton() {
     return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return model.isLoading
-            ? Center(child: CircularProgressIndicator())
-            : RaisedButton(
-                child: Text('Save'),
-                textColor: Colors.white,
-                onPressed: () {print("Submit Button presses");},
-                // _submitForm(
-                    // model.addRecipe,
-                    // model.updateRecipe,
-                    // model.selectRecipe,
-                    // model.selectedRecipeIndex),
-              );
-      }
-    );
+        builder: (BuildContext context, Widget child, MainModel model) {
+      return model.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : RaisedButton(
+              child: Text('Save'),
+              textColor: Colors.white,
+              onPressed: () {
+                print("Submit Button presses");
+              },
+              // _submitForm(
+              // model.addRecipe,
+              // model.updateRecipe,
+              // model.selectRecipe,
+              // model.selectedRecipeIndex),
+            );
+    });
   }
 
   Widget _buildPageContent(BuildContext context, Recipe recipe) {
@@ -116,9 +104,9 @@ class _RecipeEditPageState extends State<RecipeEditPage> {
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
             children: <Widget>[
+              _buildImageField(recipe),
               _buildTitleTextField(recipe),
-              _buildDescriptionTextField(recipe),
-              _buildPriceTextField(recipe),
+              _buildNotesTextField(recipe),
               SizedBox(
                 height: 10.0,
               ),
@@ -151,13 +139,12 @@ class _RecipeEditPageState extends State<RecipeEditPage> {
     if (selectedProductIndex == -1) {
       addProduct(
         _formData['title'],
-        _formData['description'],
+        _formData['notes'],
         _formData['image'],
         _formData['price'],
       ).then((bool success) {
         if (success) {
-          Navigator
-              .pushReplacementNamed(context, '/products')
+          Navigator.pushReplacementNamed(context, '/products')
               .then((_) => setSelectedProduct(null));
         } else {
           showDialog(
@@ -179,11 +166,10 @@ class _RecipeEditPageState extends State<RecipeEditPage> {
     } else {
       updateProduct(
         _formData['title'],
-        _formData['description'],
+        _formData['notes'],
         _formData['image'],
         _formData['price'],
-      ).then((_) => Navigator
-          .pushReplacementNamed(context, '/products')
+      ).then((_) => Navigator.pushReplacementNamed(context, '/products')
           .then((_) => setSelectedProduct(null)));
     }
   }
@@ -192,16 +178,16 @@ class _RecipeEditPageState extends State<RecipeEditPage> {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        // final Widget pageContent =_buildPageContent(context, model.selectedProduct);
-        // return model.selectedProductIndex == -1
-        //     ? pageContent
-        //     : Scaffold(
-        //         appBar: AppBar(
-        //           title: Text('Edit Recipe'),
-        //         ),
-        //         body: pageContent,
-        //       );
-        return Text('Edit Recipe');
+        final Widget pageContent =
+            _buildPageContent(context, model.selectedRecipe);
+        return model.selectedRecipeIndex == -1
+            ? pageContent
+            : Scaffold(
+                appBar: AppBar(
+                  title: Text('Edit Recipe'),
+                ),
+                body: pageContent,
+              );
       },
     );
   }

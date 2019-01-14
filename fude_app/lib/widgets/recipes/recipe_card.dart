@@ -8,9 +8,9 @@ import 'package:fude/pages/recipes/allrecipes/recipe_edit.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
-  final int recipeIndex;
+  final int index;
 
-  RecipeCard(this.recipe, this.recipeIndex);
+  RecipeCard(this.recipe, this.index);
 
   Widget _buildCategoryRow() {
     return Container(
@@ -48,7 +48,7 @@ class RecipeCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(recipe.description),
+          Text(recipe.notes),
           SizedBox(
             width: 8.0,
           ),
@@ -68,7 +68,7 @@ class RecipeCard extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 onPressed: () {
                   print('icon pressed');
-                  // model.selectProduct(model.allProducts[index].id);
+                  model.selectRecipe(model.allRecipes[index].id);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
