@@ -4,7 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
 
 import 'package:fude/widgets/recipes/recipes.dart';
-import 'package:fude/widgets/side_drawer.dart';
+import 'package:fude/models/recipe.dart';
 
 class AllRecipesPage extends StatefulWidget {
   final MainModel model;
@@ -20,20 +20,19 @@ class AllRecipesPage extends StatefulWidget {
 class _AllRecipesPageState extends State<AllRecipesPage> {
   @override
   initState() {
-    // widget.model.fetchProducts();
     super.initState();
   }
 
-  Widget _buildProductsList(MainModel model) {
+  Widget _buildRecipeList(MainModel model) {
     Widget content = Center(child: Text('No Products Found!'));
-    // if (model.displayedProducts.length > 0 && !model.isLoading) {
     if (!model.isLoading) {
-      content = Products();
-    } else if (model.isLoading) {
-      content = Center(child: CircularProgressIndicator());
+      if (!model.isLoading) {
+        content = Recipes();
+      } else if (model.isLoading) {
+        content = Center(child: CircularProgressIndicator());
+      }
+      return content;
     }
-    // return RefreshIndicator(onRefresh: model.fetchProducts, child: content,);
-    return content;
   }
 
   @override
@@ -44,7 +43,7 @@ class _AllRecipesPageState extends State<AllRecipesPage> {
         appBar: AppBar(
           title: Text('All Recipes'),
         ),
-        body: _buildProductsList(model),
+        body: _buildRecipeList(model),
       );
     });
   }

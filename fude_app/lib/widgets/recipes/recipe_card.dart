@@ -2,23 +2,53 @@ import 'package:flutter/material.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
-
 import 'package:fude/models/recipe.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/pages/recipes/allrecipes/recipe_edit.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
-  final int productIndex;
+  final int recipeIndex;
 
-  RecipeCard(this.recipe, this.productIndex);
+  RecipeCard(this.recipe, this.recipeIndex);
 
-  Widget _buildTitlePriceRow() {
+  Widget _buildCategoryRow() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(recipe.category, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(
+            width: 8.0,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTitleRow() {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(recipe.title),
+          SizedBox(
+            width: 8.0,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescriptionPriceRow() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(recipe.description),
           SizedBox(
             width: 8.0,
           ),
@@ -36,7 +66,17 @@ class RecipeCard extends StatelessWidget {
               IconButton(
                 icon: Icon(Icons.info),
                 color: Theme.of(context).accentColor,
-                onPressed: () => print('icon pressed'),
+                onPressed: () {
+                  print('icon pressed');
+                  // model.selectProduct(model.allProducts[index].id);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return RecipeEditPage();
+                      },
+                    ),
+                  );
+                },
               ),
               IconButton(
                 icon: Icon(Icons.favorite_border),
@@ -56,13 +96,16 @@ class RecipeCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           FadeInImage(
-            image: NetworkImage('https://pbs.twimg.com/profile_images/1905139115/larry-david-mobile-wallpaper.jpg'),
+            image: recipe.link != null
+                ? NetworkImage(recipe.link)
+                : AssetImage('assets/tempfudeicon.png'),
             height: 300.0,
             fit: BoxFit.cover,
-            placeholder: AssetImage('assets/larry.jpg'),
+            placeholder: AssetImage('assets/tempfudeicon.png'),
           ),
-          _buildTitlePriceRow(),
-          Text('test'),
+          _buildCategoryRow(),
+          _buildTitleRow(),
+          _buildDescriptionPriceRow(),
           _buildActionButtons(context)
         ],
       ),

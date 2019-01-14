@@ -3,7 +3,6 @@ import 'package:fude/scoped-models/main.dart';
 
 Widget buildSideDrawer(BuildContext context, MainModel model) {
     return Drawer(
-      semanticLabel: 'HELLO',
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(

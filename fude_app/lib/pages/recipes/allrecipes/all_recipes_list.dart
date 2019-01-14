@@ -5,21 +5,21 @@ import 'package:fude/scoped-models/main.dart';
 
 import 'package:fude/pages/recipes/allrecipes/recipe_edit.dart';
 
-class ProductListPage extends StatefulWidget {
+class RecipeListPage extends StatefulWidget {
   final MainModel model;
 
-  ProductListPage(this.model);
+  RecipeListPage(this.model);
 
   @override
   State<StatefulWidget> createState() {
-    return _ProductListPageState();
+    return _RecipeListPageState();
   }
 }
 
-class _ProductListPageState extends State<ProductListPage> {
+class _RecipeListPageState extends State<RecipeListPage> {
   @override
   initState() {
-    // widget.model.fetchProducts(onlyForUser: true);
+    widget.model.fetchRecipes();
     super.initState();
   }
 
