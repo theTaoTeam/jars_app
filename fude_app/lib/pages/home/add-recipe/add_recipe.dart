@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fude/widgets/forms/add_recipe_form_container.dart';
-import 'package:fude/pages/home/add-recipe/add_recipe_button.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/pages/home/add-recipe/add_recipe_button.dart';
+import 'package:fude/pages/recipes/allrecipes/all_recipes.dart';
 
 class AddRecipePage extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
       return Container(
         child: Container(
           child: ListView(
-            padding: EdgeInsets.only(top: deviceHeight * 0.10),
+            padding: EdgeInsets.only(top: deviceHeight * 0.05),
             children: <Widget>[
               Stack(
                 alignment: AlignmentDirectional.bottomCenter,
@@ -63,7 +64,41 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           updateTitle: updateTitle,
                           updateLink: updateLink,
                           updateDescription: updateDescription),
-                      model.isLoading ? CircularProgressIndicator() : AddRecipeButton(model: model),
+                      model.isLoading
+                          ? CircularProgressIndicator()
+                          : AddRecipeButton(model: model),
+                      Container(
+                          padding: EdgeInsets.only(top: 30),
+                          child: Column(
+                            children: <Widget>[
+                              Icon(Icons.keyboard_arrow_up),
+                              GestureDetector(
+                                child: Text('swipe up to see all recipes'),
+                                onVerticalDragStart:
+                                    (DragStartDetails details) {
+                                  print('swiped up' + details.toString());
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (context, animation1, animation2) {
+                                        return AllRecipesPage(model);
+                                      },
+                                      transitionsBuilder: (context, animation1,
+                                          animation2, child) {
+                                        return FadeTransition(
+                                          opacity: animation1,
+                                          child: child,
+                                        );
+                                      },
+                                      transitionDuration:
+                                          Duration(milliseconds: 500),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ))
                     ],
                   ),
                 ],
