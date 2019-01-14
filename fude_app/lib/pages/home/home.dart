@@ -3,13 +3,17 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fude/pages/home/main_view.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/widgets/side_drawer.dart';
 
 class HomePage extends StatelessWidget {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Color.fromRGBO(162, 146, 199, 0.8),
@@ -17,27 +21,7 @@ class HomePage extends StatelessWidget {
             color: Colors.white, //change your color here
           ),
         ),
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                accountName: Text('email'),
-                accountEmail: Text(model.currentUser.email),
-              ),
-              Container(
-                child: ListTile(
-                  title: Text('favorites'),
-                ),
-              ),
-              Container(
-                child: ListTile(
-                  title: Text('all recipes'),
-                  onTap: () => Navigator.pushNamed(context, '/allrecipes'),
-                ),
-              ),
-            ],
-          ),
-        ),
+        drawer: buildSideDrawer(context, model),
         body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
