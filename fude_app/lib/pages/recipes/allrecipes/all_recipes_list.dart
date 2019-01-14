@@ -27,7 +27,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
     return IconButton(
       icon: Icon(Icons.edit),
       onPressed: () {
-        // model.selectProduct(model.allProducts[index].id);
+        model.selectRecipe(model.allRecipes[index].id);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
