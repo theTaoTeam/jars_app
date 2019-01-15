@@ -36,7 +36,7 @@ mixin RecipeModel on Model {
 
   void selectRecipe(String recipeId) {
     _selRecipeId = recipeId;
-    notifyListeners();
+    // notifyListeners();
   }
 
   List<Recipe> fetchRecipes() {
@@ -46,5 +46,21 @@ mixin RecipeModel on Model {
     _isLoading = false;
     notifyListeners();
     return fetchedProductList;
+  }
+
+  void toggleRecipeFavoriteStatus() {
+    final bool isFavorite = selectedRecipe.isFavorite;
+    final bool newFavoriteStatus = !isFavorite;
+
+    final Recipe updatedRecipe = Recipe(
+      id: selectedRecipe.id,
+      category: selectedRecipe.category,
+      title: selectedRecipe.title,
+      link: selectedRecipe.link,
+      notes: selectedRecipe.notes,
+      isFavorite: newFavoriteStatus,
+    );
+    _recipes[selectedRecipeIndex] = updatedRecipe;
+    notifyListeners();
   }
 }

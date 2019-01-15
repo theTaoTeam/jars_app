@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fude/scoped-models/main.dart';
 
-import 'package:fude/pages/recipes/allrecipes/all_recipes.dart';
+import 'package:fude/scoped-models/main.dart';
+import 'package:fude/pages/recipes/allrecipes/all_recipes_list.dart';
 
 Widget buildSideDrawer(BuildContext context, MainModel model) {
   return Drawer(
-    child: ListView(
+    child: Column(
       children: <Widget>[
         UserAccountsDrawerHeader(
           currentAccountPicture: CircleAvatar(
@@ -26,11 +26,12 @@ Widget buildSideDrawer(BuildContext context, MainModel model) {
             onTap: () => model.logout(),
           ),
         ),
-        Container(
-          child: ListTile(
-            title: Text('list of favorites here'),
-          ),
-        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            RecipeListPage(model),
+          ],
+        )
       ],
     ),
   );
