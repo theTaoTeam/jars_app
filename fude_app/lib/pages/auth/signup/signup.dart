@@ -10,7 +10,7 @@ import './signupAnimation.dart';
 import 'package:fude/pages/auth/signup/forgotpass_link.dart';
 import 'package:fude/pages/auth/signup/signup_button.dart';
 import 'package:fude/helpers/exceptions.dart';
-import 'package:fude/widgets/forms/form_container.dart';
+import 'package:fude/widgets/forms/login_form_container.dart';
 import 'package:fude/widgets/logo.dart';
 
 class SignUpPage extends StatefulWidget {

@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
             color: Colors.white, //change your color here
           ),
         ),
-        drawer: buildSideDrawer(context, model),
+        drawer: buildSideDrawer(context),
         body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
