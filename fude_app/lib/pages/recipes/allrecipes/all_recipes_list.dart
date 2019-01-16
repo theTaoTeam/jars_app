@@ -19,7 +19,7 @@ class RecipeListPage extends StatefulWidget {
 class _RecipeListPageState extends State<RecipeListPage> {
   @override
   initState() {
-    widget.model.fetchRecipes();
+    // widget.model.fetchRecipes();
     super.initState();
   }
 
@@ -44,32 +44,31 @@ class _RecipeListPageState extends State<RecipeListPage> {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return ListView.builder(
+          shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
-              // key: Key(model.allProducts[index].title),
-              key: Key('1'),
+              key: Key(model.allRecipes[index].title),
               onDismissed: (DismissDirection direction) {
-                // if (direction == DismissDirection.endToStart) {
-                //   model.selectProduct(model.allProducts[index].id);
-                //   model.deleteProduct();
-                // } else if (direction == DismissDirection.startToEnd) {
-                //   print('Swiped start to end');
-                // } else {
-                //   print('Other swiping');
-                // }
+                if (direction == DismissDirection.endToStart) {
+                  model.selectRecipe(model.allRecipes[index].id);
+                  print(model.selectedRecipe);
+                  // model.deleteProduct();
+                } else if (direction == DismissDirection.startToEnd) {
+                  print('Swiped start to end');
+                } else {
+                  print('Other swiping');
+                }
                 print('Dissmissed attempt');
               },
               background: Container(color: Colors.red),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: CircleAvatar(),
-                    title: Text('Test'),
-                    subtitle: Text('subtitle test'),
-                    trailing: _buildEditButton(context, index, model),
-                  ),
-                  Divider()
-                ],
+              child: Container(
+                // decoration: BoxDecoration(border: Border.all(color: Colors.grey),),
+                child: ListTile(
+                  leading: CircleAvatar(),
+                  title: Text(model.allRecipes[index].title),
+                  subtitle: Text(model.allRecipes[index].notes),
+                  trailing: _buildEditButton(context, index, model),
+                ),
               ),
             );
           },

@@ -31,7 +31,7 @@ Widget _buildApp(BuildContext context) {
       builder: (BuildContext context, Widget child, MainModel model) {
     return MaterialApp(
       theme: ThemeData(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         primaryColor: Colors.black,
       ),
       routes: {

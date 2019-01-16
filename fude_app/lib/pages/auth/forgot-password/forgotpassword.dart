@@ -7,10 +7,9 @@ import 'package:fude/scoped-models/main.dart';
 import 'dart:async';
 // import 'styles.dart';
 import './resetAnimation.dart';
-import 'package:fude/pages/auth/signup/forgotpass_link.dart';
 import 'package:fude/pages/auth/forgot-password/forgotpass_button.dart';
 import 'package:fude/widgets/logo.dart';
-import 'package:fude/widgets/forms/input_fields.dart';
+import 'package:fude/widgets/form-inputs/input_fields.dart';
 
 class ForgotPassPage extends StatefulWidget {
   @override

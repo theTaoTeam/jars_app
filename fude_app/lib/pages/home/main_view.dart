@@ -14,8 +14,8 @@ class MainView extends StatelessWidget {
           decoration: BoxDecoration(
               gradient: LinearGradient(
             colors: <Color>[
-              Color.fromRGBO(51, 51, 63, 0.9),
               Color.fromRGBO(51, 51, 63, 1),
+              Color.fromRGBO(51, 51, 63, 0.9),
             ],
             stops: [0.2, 1.0],
             begin: FractionalOffset(0.0, 0.0),
@@ -27,13 +27,13 @@ class MainView extends StatelessWidget {
             indicatorColor: Color(0x00000000),
             tabs: <Widget>[
               Container(
-                height: 200,
+                height: 150,
                 child: Tab(
                   text: 'categories',
                 ),
               ),
               Container(
-                height: 200,
+                height: 150,
                 child: Tab(
                   text: 'add recipe',
                 ),
@@ -45,8 +45,8 @@ class MainView extends StatelessWidget {
           decoration: BoxDecoration(
               gradient: LinearGradient(
             colors: <Color>[
-              Color.fromRGBO(162, 146, 199, 0.8),
-              Color.fromRGBO(51, 51, 63, 0.9),
+              Color.fromRGBO(162, 146, 199, 01),
+              Color.fromRGBO(51, 51, 63, 1),
             ],
             stops: [0.2, 1.0],
             begin: FractionalOffset(0.0, 0.0),
