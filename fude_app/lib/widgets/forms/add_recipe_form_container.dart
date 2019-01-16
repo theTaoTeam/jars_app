@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fude/helpers/categories.dart';
-import 'package:fude/widgets/forms/add_recipe_inputs.dart';
-import 'package:fude/helpers/image.dart';
+import './add_recipe_inputs.dart';
 
 class AddRecipeForm extends StatelessWidget {
   final GlobalKey formKey;
@@ -50,7 +49,6 @@ class AddRecipeForm extends StatelessWidget {
                       },
                     ),
                   ),
-                  
                   AddRecipeInput(
                     hint: "Title",
                     updateTitle: updateTitle,
@@ -60,10 +58,9 @@ class AddRecipeForm extends StatelessWidget {
                     updateLink: updateLink,
                   ),
                   AddRecipeInput(
-                    hint: "Notes",
+                    hint: "Description",
                     updateDescription: updateDescription,
                   ),
-                  // ImageInput(),
                 ],
               )),
         ],

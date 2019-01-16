@@ -68,7 +68,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           ? CircularProgressIndicator()
                           : AddRecipeButton(model: model),
                       Container(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: 30),
                           child: Column(
                             children: <Widget>[
                               Icon(Icons.keyboard_arrow_up),

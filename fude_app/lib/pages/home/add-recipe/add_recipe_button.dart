@@ -17,7 +17,7 @@ class AddRecipeButton extends StatelessWidget {
       child: Container(
         width: 320.0,
         height: 60.0,
-        margin: EdgeInsets.only(top: 15),
+        margin: EdgeInsets.only(top: 50),
         alignment: FractionalOffset.center,
         decoration: BoxDecoration(
           color: const Color.fromRGBO(247, 64, 106, 1.0),

@@ -7,7 +7,6 @@ class Recipe {
   final String link;
   final String notes;
   final bool isFavorite;
-  final Image image;
 
   Recipe(
       {@required this.id,
@@ -15,5 +14,5 @@ class Recipe {
       @required this.title,
       @required this.link,
       @required this.notes,
-      this.isFavorite = false, this.image});
+      this.isFavorite = false});
 }
