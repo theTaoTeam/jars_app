@@ -24,6 +24,14 @@ class _GetRecipeState extends State<GetRecipePage> {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.2), BlendMode.dstATop),
+            image: AssetImage('assets/logo.png'),
+          ),
+        ),
         child: CupertinoPicker(
           children: <Widget>[
             Text(
