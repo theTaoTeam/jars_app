@@ -4,7 +4,6 @@ import 'package:fude/pages/home/add-recipe/add_recipe.dart';
 import 'package:fude/pages/home/get-recipe/get_recipe.dart';
 
 class MainView extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -12,15 +11,8 @@ class MainView extends StatelessWidget {
       child: Scaffold(
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-            colors: <Color>[
-              Color.fromRGBO(51, 51, 63, 1),
-              Color.fromRGBO(51, 51, 63, 0.9),
-            ],
-            stops: [0.2, 1.0],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(0.0, 1.0),
-          )),
+            color: Color.fromRGBO(100, 50, 115, 1),
+          ),
           child: TabBar(
             labelColor: Colors.white,
             unselectedLabelColor: Colors.black,
@@ -29,13 +21,13 @@ class MainView extends StatelessWidget {
               Container(
                 height: 150,
                 child: Tab(
-                  text: 'categories',
+                  text: 'jars',
                 ),
               ),
               Container(
                 height: 150,
                 child: Tab(
-                  text: 'add recipe',
+                  text: 'recipes',
                 ),
               )
             ],
@@ -43,15 +35,21 @@ class MainView extends StatelessWidget {
         ),
         body: Container(
           decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                    Color.fromRGBO(0, 0, 0, 0.15), BlendMode.dstATop),
+                image: AssetImage('assets/logo.png'),
+              ),
               gradient: LinearGradient(
-            colors: <Color>[
-              Color.fromRGBO(162, 146, 199, 01),
-              Color.fromRGBO(51, 51, 63, 1),
-            ],
-            stops: [0.2, 1.0],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(0.0, 1.0),
-          )),
+                colors: <Color>[
+                  Color.fromRGBO(204, 43, 94, 1),
+                  Color.fromRGBO(117, 58, 136, 1),
+                ],
+                stops: [0.2, 1.0],
+                begin: FractionalOffset(0.0, 0.0),
+                end: FractionalOffset(0.0, 1.0),
+              )),
           child: TabBarView(
             children: <Widget>[GetRecipePage(), AddRecipePage()],
           ),

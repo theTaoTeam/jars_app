@@ -5,25 +5,52 @@ import 'package:fude/pages/recipes/allrecipes/all_recipes_list.dart';
 
 Widget buildSideDrawer(BuildContext context, MainModel model) {
   return Drawer(
+      child: Container(
+    decoration: BoxDecoration(
+        gradient: LinearGradient(
+      colors: <Color>[
+        Color.fromRGBO(204, 43, 94, 1),
+        Color.fromRGBO(117, 58, 136, 1),
+      ],
+      stops: [0.2, 1.0],
+      begin: FractionalOffset(0.0, 0.0),
+      end: FractionalOffset(0.0, 1.0),
+    )),
     child: Column(
       children: <Widget>[
         UserAccountsDrawerHeader(
-          currentAccountPicture: CircleAvatar(
-            backgroundImage: AssetImage('assets/larry.jpg'),
-          ),
-          accountName: Text('füde'),
-          accountEmail: Text('powered by Tao Team'),
+          decoration: BoxDecoration(color: Colors.transparent),
+          accountName: Text('füde', style: TextStyle(fontSize: 35),),
+          accountEmail: Text('powered by The Tao Team', style: TextStyle(fontSize: 10),),
         ),
         Container(
           child: ListTile(
-            title: Text('home'),
+            title: Text('home', style: TextStyle(color: Colors.white),),
             onTap: () => Navigator.pushReplacementNamed(context, '/'),
           ),
         ),
         Container(
           child: ListTile(
-            title: Text('logout'),
+            title: Text('add jar', style: TextStyle(color: Colors.white)),
+            onTap: () => print('Add jar selected'),
+          ),
+        ),
+        Container(
+          child: ListTile(
+            title: Text('logout', style: TextStyle(color: Colors.white)),
             onTap: () => model.logout(),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+          height: 1,
+          margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'favortites',
+            style: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.5)),
           ),
         ),
         Column(
@@ -34,5 +61,5 @@ Widget buildSideDrawer(BuildContext context, MainModel model) {
         )
       ],
     ),
-  );
+  ));
 }

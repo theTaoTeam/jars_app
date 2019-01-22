@@ -4,71 +4,57 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/helpers/categories.dart';
+import 'package:fude/helpers/jars.dart';
+import 'package:fude/pages/home/get-recipe/category_picker.dart';
+import 'package:fude/pages/home/get-recipe/jar_picker.dart';
 
 class GetRecipePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _GetRecipeState();
+    return _GetRecipePageState();
   }
 }
 
-class _GetRecipeState extends State<GetRecipePage> {
-  String isSelected = categories[0];
-  Color selectedColor = Colors.white;
-  Color notSelectedColor = Colors.black;
-  final FixedExtentScrollController scrollController =
-      FixedExtentScrollController(initialItem: 0);
+class _GetRecipePageState extends State<GetRecipePage> {
+  String selectedCategory = categories[0];
+  String selectedJar = jars[0];
+
+  void selectCategory(int newVal) {
+    setState(() {
+      selectedCategory = categories[newVal];
+    });
+  }
+
+  void selectJar(int newVal) {
+    setState(() {
+      selectedJar = jars[newVal];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double _targetWidth =
+        deviceWidth > 550.0 ? 400.0 : deviceWidth * 0.65;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.2), BlendMode.dstATop),
-            image: AssetImage('assets/logo.png'),
-          ),
-        ),
-        child: CupertinoPicker(
+        padding: EdgeInsets.only(left: 5),
+        width: _targetWidth,
+        child: Row(
+          
           children: <Widget>[
-            Text(
-              categories[0],
-              style: TextStyle(
-                  color: isSelected == categories[0]
-                      ? selectedColor
-                      : notSelectedColor),
+            Container(
+              child: JarPicker(selectJar: selectJar, selectedJar: selectedJar),
             ),
-            Text(
-              categories[1],
-              style: TextStyle(
-                  color: isSelected == categories[1]
-                      ? selectedColor
-                      : notSelectedColor),
-            ),
-            Text(
-              categories[2],
-              style: TextStyle(
-                  color: isSelected == categories[2]
-                      ? selectedColor
-                      : notSelectedColor),
+            Container(
+              child: CategoryPicker(
+                  selectCategory: selectCategory,
+                  selectedCategory: selectedCategory),
             )
           ],
-          diameterRatio: 1,
-          useMagnifier: true,
-          magnification: 2,
-          backgroundColor: Colors.transparent,
-          itemExtent: 30.0,
-          onSelectedItemChanged: (int newVal) {
-            print('changed category to: ' + categories[newVal]);
-            setState(() {
-              isSelected = categories[newVal];
-            });
-          },
-          scrollController: scrollController,
         ),
+        // height: MediaQuery.of(context).size.height / 3,
       );
     });
   }
