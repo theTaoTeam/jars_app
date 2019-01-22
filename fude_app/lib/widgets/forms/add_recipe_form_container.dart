@@ -44,7 +44,7 @@ class AddRecipeForm extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         child: DropdownButton(
-                          hint: Text('category'),
+                          hint: Text('category', style: TextStyle(color: Colors.white)),
                           value: selectedCategory,
                           items: categories.map((String val) {
                             return DropdownMenuItem(
@@ -60,7 +60,7 @@ class AddRecipeForm extends StatelessWidget {
                       ),
                       Container(
                         child: DropdownButton(
-                          hint: Text('jar'),
+                          hint: Text('jar', style: TextStyle(color: Colors.white)),
                           value: selectedJar,
                           items: jars.map((String val) {
                             return DropdownMenuItem(

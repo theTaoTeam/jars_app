@@ -69,8 +69,6 @@ class _AddRecipePageState extends State<AddRecipePage> {
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Container(
-        decoration:
-            BoxDecoration(image: buildBackgroundImage(_formData['image'])),
         child: Container(
           child: ListView(
             padding: EdgeInsets.only(top: deviceHeight * 0.05),

@@ -25,7 +25,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
 
   Widget _buildEditButton(BuildContext context, int index, MainModel model) {
     return IconButton(
-      icon: Icon(Icons.edit),
+      icon: Icon(Icons.edit, color: Colors.white),
       onPressed: () {
         model.selectRecipe(model.allRecipes[index].id);
         Navigator.of(context).push(
@@ -65,8 +65,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
                 // decoration: BoxDecoration(border: Border.all(color: Colors.grey),),
                 child: ListTile(
                   leading: CircleAvatar(),
-                  title: Text(model.allRecipes[index].title),
-                  subtitle: Text(model.allRecipes[index].notes),
+                  title: Text(model.allRecipes[index].title, style: TextStyle(color: Colors.white)),
                   trailing: _buildEditButton(context, index, model),
                 ),
               ),

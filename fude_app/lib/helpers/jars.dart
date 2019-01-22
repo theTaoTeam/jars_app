@@ -1,6 +1,6 @@
 
 
 List<String> jars = [
-  "scott & reba",
+  "scott&reba",
   "my jar",
 ];
