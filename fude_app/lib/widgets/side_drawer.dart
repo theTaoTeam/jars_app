@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/recipes/allrecipes/all_recipes_list.dart';
+import 'package:fude/helpers/custom_alert.dart';
 
 Widget buildSideDrawer(BuildContext context, MainModel model) {
+  _openAddJarForm() {
+      Navigator.pop(context);
+      buildAddJarAlert(context);
+  }
+
   return Drawer(
       child: Container(
     decoration: BoxDecoration(
@@ -32,7 +38,7 @@ Widget buildSideDrawer(BuildContext context, MainModel model) {
         Container(
           child: ListTile(
             title: Text('add jar', style: TextStyle(color: Colors.white)),
-            onTap: () => print('Add jar selected'),
+            onTap: () => _openAddJarForm(),
           ),
         ),
         Container(

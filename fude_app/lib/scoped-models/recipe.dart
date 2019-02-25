@@ -1,10 +1,13 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fude/helpers/recipes.dart';
 import 'package:fude/models/recipe.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 mixin RecipeModel on Model {
+  final Firestore _firestore = Firestore.instance;
+
   List<Recipe> _recipes = recipeCollection;
   String _selRecipeId;
 
@@ -48,19 +51,60 @@ mixin RecipeModel on Model {
     return fetchedProductList;
   }
 
-  void toggleRecipeFavoriteStatus() {
-    final bool isFavorite = selectedRecipe.isFavorite;
-    final bool newFavoriteStatus = !isFavorite;
+//   Future<bool> updateFavorites(String uid, String recipeId) {
+//   DocumentReference favoritesReference =
+//       Firestore.instance.collection('users').document(uid);
 
-    final Recipe updatedRecipe = Recipe(
-      id: selectedRecipe.id,
-      category: selectedRecipe.category,
-      title: selectedRecipe.title,
-      link: selectedRecipe.link,
-      notes: selectedRecipe.notes,
-      isFavorite: newFavoriteStatus,
-    );
-    _recipes[selectedRecipeIndex] = updatedRecipe;
-    notifyListeners();
-  }
+//   return Firestore.instance.runTransaction((Transaction tx) async {
+//     DocumentSnapshot postSnapshot = await tx.get(favoritesReference);
+//     if (postSnapshot.exists) {
+//       // Extend 'favorites' if the list does not contain the recipe ID:
+//       if (!postSnapshot.data['favorites'].contains(recipeId)) {
+//         await tx.update(favoritesReference, <String, dynamic>{
+//           'favorites': FieldValue.arrayUnion([recipeId])
+//         });
+//       // Delete the recipe ID from 'favorites':
+//       } else {
+//         await tx.update(favoritesReference, <String, dynamic>{
+//           'favorites': FieldValue.arrayRemove([recipeId])
+//         });
+//       }
+//     } else {
+//       // Create a document for the current user in collection 'users'
+//       // and add a new array 'favorites' to the document:
+//       await tx.set(favoritesReference, {
+//         'favorites': [recipeId]
+//       });
+//     }
+//   }).then((result) {
+//     return true;
+//   }).catchError((error) {
+//     print('Error: $error');
+//     return false;
+//   });
+// }
+
+// Future<List<String>> getFavorites(String uid) async {
+//     DocumentSnapshot querySnapshot = await Firestore.instance
+//         .collection('users')
+//         .document(uid)
+//         .get();
+//     if (querySnapshot.exists &&
+//         querySnapshot.data.containsKey('favorites') &&
+//         querySnapshot.data['favorites'] is List) {
+//       // Create a new List<String> from List<dynamic>
+//       return List<String>.from(querySnapshot.data['favorites']);
+//     }
+//     return [];
+//   }
+
+//   void addRecipe(String title, String link, String notes, String category,
+//       String jar) async {
+//     final Recipe newRecipe = Recipe(
+//         title: title, link: link, notes: notes, category: category);
+//     await _firestore
+//         .collection('recipes')
+//         .document()
+//         .setData({newRecipe});
+//   }
 }

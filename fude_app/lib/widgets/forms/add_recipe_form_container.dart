@@ -13,7 +13,7 @@ class AddRecipeForm extends StatelessWidget {
   final Function updateJar;
   final Function updateTitle;
   final Function updateLink;
-  final Function updateDescription;
+  final Function updateNotes;
   final Function updateImage;
 
   AddRecipeForm(
@@ -24,7 +24,7 @@ class AddRecipeForm extends StatelessWidget {
       this.updateJar,
       this.updateTitle,
       this.updateLink,
-      this.updateDescription,
+      this.updateNotes,
       this.updateImage});
 
   @override
@@ -85,8 +85,8 @@ class AddRecipeForm extends StatelessWidget {
                     updateLink: updateLink,
                   ),
                   AddRecipeInput(
-                    hint: "Description",
-                    updateDescription: updateDescription,
+                    hint: "Notes",
+                    updateNotes: updateNotes,
                   ),
                   ImageInput(updateImage: updateImage),
                 ],

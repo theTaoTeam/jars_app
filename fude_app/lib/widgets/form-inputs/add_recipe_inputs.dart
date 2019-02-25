@@ -4,9 +4,9 @@ class AddRecipeInput extends StatelessWidget {
   final String hint;
   final Function updateTitle;
   final Function updateLink;
-  final Function updateDescription;
+  final Function updateNotes;
   AddRecipeInput(
-      {this.hint, this.updateTitle, this.updateLink, this.updateDescription});
+      {this.hint, this.updateTitle, this.updateLink, this.updateNotes});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,8 +35,8 @@ class AddRecipeInput extends StatelessWidget {
             updateTitle(val);
           } else if(hint == 'Link') {
             updateLink(val);
-          } else if(hint == 'Description') {
-            updateDescription(val);
+          } else if(hint == 'Notes') {
+            updateNotes(val);
           }
         },
       ),

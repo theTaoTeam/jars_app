@@ -18,7 +18,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
   final Map<String, dynamic> _formData = {
     'title': '',
     'link': '',
-    'description': '',
+    'notes': '',
     'image': AssetImage('assets/logo.png'),
   };
   String selectedCategory;
@@ -50,9 +50,9 @@ class _AddRecipePageState extends State<AddRecipePage> {
     });
   }
 
-  void updateDescription(String value) {
+  void updateNotes(String value) {
     setState(() {
-      _formData['description'] = value;
+      _formData['notes'] = value;
     });
   }
 
@@ -87,7 +87,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         updateJar: updateJar,
                         updateTitle: updateTitle,
                         updateLink: updateLink,
-                        updateDescription: updateDescription,
+                        updateNotes: updateNotes,
                         updateImage: updateImage,
                       ),
                       model.isLoading
