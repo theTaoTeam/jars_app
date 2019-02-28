@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/pages/auth/login/login.dart';
 import 'package:fude/pages/auth/signup/signup.dart';
@@ -9,7 +10,7 @@ import 'package:fude/pages/home/home.dart';
 import 'package:fude/pages/recipes/allrecipes/all_recipes.dart';
 import 'package:fude/scoped-models/main.dart';
 
-void main() {
+Future<void> main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -35,7 +36,8 @@ Widget _buildApp(BuildContext context) {
         primaryColor: Colors.black,
       ),
       routes: {
-        '/': (BuildContext context) => model.currentUser != null ? HomePage() : LoginPage(),
+        '/': (BuildContext context) =>
+            model.currentUser != null ? HomePage() : LoginPage(),
         '/signup': (BuildContext context) => SignUpPage(),
         '/forgotpass': (BuildContext context) => ForgotPassPage(),
         '/allrecipes': (BuildContext context) => AllRecipesPage(model),

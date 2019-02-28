@@ -68,7 +68,7 @@ class RecipeCard extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 onPressed: () {
                   print('icon pressed');
-                  model.selectRecipe(model.allRecipes[index].id);
+                  // model.selectRecipe(model.allRecipes[index].id);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
