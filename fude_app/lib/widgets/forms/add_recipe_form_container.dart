@@ -36,6 +36,7 @@ class AddRecipeForm extends StatelessWidget {
         children: <Widget>[
           Form(
               key: formKey,
+              autovalidate: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[

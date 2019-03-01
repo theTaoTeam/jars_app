@@ -50,20 +50,22 @@ mixin RecipeModel on Model {
     CollectionReference recipeCollection = _firestore.collection('recipes');
     try {
       final user = await _auth.currentUser();
-      // print(_firestore.collection);
-      await recipeCollection.add(<String, dynamic>{
-        category: category,
-        jar: jar,
-        title: title,
-        notes: notes,
-        link: link,
+      // print(recipeCollection.document().setData({}));
+      
+      await recipeCollection.document().setData(<String, dynamic>{
+        'category': category,
+        'jar': jar,
+        'title': title,
+        'notes': notes,
+        'link': link,
+        'owner': user.uid,
       });
     } catch (e) {
       print(e);
     }
   }
 
-  // List<Recipe> fetchRecipes() {
+  // List<Recipe> fetchRecipes() {  
   //   _isLoading = true;
   //   notifyListeners();
   //   final List<Recipe> fetchedProductList = recipeCollection;

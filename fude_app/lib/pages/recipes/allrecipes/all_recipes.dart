@@ -4,7 +4,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
 
 import 'package:fude/widgets/recipes/recipes.dart';
-import 'package:fude/models/recipe.dart';
 
 class AllRecipesPage extends StatefulWidget {
   final MainModel model;
@@ -34,6 +33,7 @@ class _AllRecipesPageState extends State<AllRecipesPage> {
       }
       return content;
     }
+    return content;
   }
 
   @override

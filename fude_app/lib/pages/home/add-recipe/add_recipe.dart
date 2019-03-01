@@ -29,6 +29,10 @@ class _AddRecipePageState extends State<AddRecipePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void addRecipe(MainModel model) {
+    // First validate form.
+    if (this.formKey.currentState.validate()) {
+      formKey.currentState.save(); // Save our form now.
+    }
     model.addRecipe(_formData['category'], _formData['jar'], _formData['title'],
         _formData['notes'], _formData['link'], _formData['image']);
   }
@@ -43,7 +47,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
   void updateJar(dynamic value) {
     setState(() {
       selectedJar = value;
-      _formData['category'] = value;      
+      _formData['jar'] = value;      
     });
   }
 

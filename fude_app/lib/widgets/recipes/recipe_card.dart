@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -7,10 +8,9 @@ import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/recipes/allrecipes/recipe_edit.dart';
 
 class RecipeCard extends StatelessWidget {
-  final Recipe recipe;
-  final int index;
+  final DocumentSnapshot recipe;
 
-  RecipeCard(this.recipe, this.index);
+  RecipeCard(this.recipe);
 
   Widget _buildCategoryRow() {
     return Container(
@@ -18,7 +18,7 @@ class RecipeCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(recipe.category, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(recipe['category'], style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(
             width: 8.0,
           ),
@@ -33,7 +33,7 @@ class RecipeCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(recipe.title),
+          Text(recipe['title']),
           SizedBox(
             width: 8.0,
           ),
@@ -42,13 +42,13 @@ class RecipeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDescriptionPriceRow() {
+  Widget _buildNotesRow() {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(recipe.notes),
+          Text('notes...'),
           SizedBox(
             width: 8.0,
           ),
@@ -96,8 +96,8 @@ class RecipeCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           FadeInImage(
-            image: recipe.link != null
-                ? NetworkImage(recipe.link)
+            image: recipe['link'] != null
+                ? NetworkImage(recipe['link'])
                 : AssetImage('assets/tempfudeicon.png'),
             height: 300.0,
             fit: BoxFit.cover,
@@ -105,7 +105,7 @@ class RecipeCard extends StatelessWidget {
           ),
           _buildCategoryRow(),
           _buildTitleRow(),
-          _buildDescriptionPriceRow(),
+          _buildNotesRow(),
           _buildActionButtons(context)
         ],
       ),
