@@ -4,8 +4,9 @@ import 'package:fude/widgets/form-inputs/add_jar_inputs.dart';
 
 class AddJarForm extends StatelessWidget {
   final GlobalKey formKey;
+  final Function updateTitle;
 
-  AddJarForm({this.formKey});
+  AddJarForm({this.formKey, this.updateTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +17,19 @@ class AddJarForm extends StatelessWidget {
         children: <Widget>[
           Form(
               key: formKey,
+              autovalidate: true,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   AddJarInputField(
-                    hint: "Name",
-                    obscure: false,
-                    // updateEmail: updateEmail,
+                    hint: "Title",
+                    updateTitle: updateTitle,
                   ),
                   AddJarInputField(
                     hint: "Contributors",
-                    obscure: false,
-                    // updateEmail: updateEmail,
+                    // updateLink: updateLink,
                   ),
+                  
                 ],
               )),
         ],

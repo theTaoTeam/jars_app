@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/helpers/categories.dart';
-import 'package:fude/helpers/jars.dart';
 import 'package:fude/widgets/form-inputs/image.dart';
 import 'package:fude/widgets/form-inputs/add_recipe_inputs.dart';
 
@@ -9,6 +9,7 @@ class AddRecipeForm extends StatelessWidget {
   final GlobalKey formKey;
   final String selectedCategory;
   final String selectedJar;
+  final List<String> jarList;
   final Function updateCategory;
   final Function updateJar;
   final Function updateTitle;
@@ -18,6 +19,7 @@ class AddRecipeForm extends StatelessWidget {
 
   AddRecipeForm(
       {this.formKey,
+      this.jarList,
       this.selectedCategory,
       this.selectedJar,
       this.updateCategory,
@@ -63,7 +65,7 @@ class AddRecipeForm extends StatelessWidget {
                         child: DropdownButton(
                           hint: Text('jar', style: TextStyle(color: Colors.white)),
                           value: selectedJar,
-                          items: jars.map((String val) {
+                          items: jarList.map((val) {
                             return DropdownMenuItem(
                               value: val,
                               child: Text(val),

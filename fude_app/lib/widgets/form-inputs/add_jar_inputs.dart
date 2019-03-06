@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 
 class AddJarInputField extends StatelessWidget {
   final String hint;
-  final bool obscure;
-  final Function updateEmail;
-  final Function updatePassword;
-  AddJarInputField(
-      {this.hint, this.obscure, this.updateEmail, this.updatePassword});
+  final Function updateTitle;
+  AddJarInputField({this.hint, this.updateTitle});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +16,6 @@ class AddJarInputField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
-        obscureText: obscure,
         style: TextStyle(
           color: Colors.black,
         ),
@@ -31,7 +27,9 @@ class AddJarInputField extends StatelessWidget {
               EdgeInsets.only(top: 20.0, right: 20.0, bottom: 20.0, left: 5.0),
         ),
         onSaved: (String val) {
-          print(val);
+          if (hint == 'Title') {
+            updateTitle(val);
+          }
         },
       ),
     );

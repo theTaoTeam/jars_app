@@ -1,58 +1,50 @@
 import 'package:flutter/material.dart';
 
-import 'package:fude/pages/home/add-recipe/add_recipe.dart';
-import 'package:fude/pages/home/get-recipe/get_recipe.dart';
+import 'package:fude/scoped-models/main.dart';
+import 'package:fude/pages/home/recipes/recipes.dart';
+import 'package:fude/pages/home/jars/all-jars/all_jars.dart';
+import 'package:fude/pages/home/main-banner/main_banner.dart';
 
 class MainView extends StatelessWidget {
+  final MainModel model;
+
+  MainView({this.model});
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(100, 50, 115, 1),
-          ),
-          child: TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
-            indicatorColor: Color(0x00000000),
-            tabs: <Widget>[
-              Container(
-                height: 150,
-                child: Tab(
-                  text: 'jars',
-                ),
-              ),
-              Container(
-                height: 150,
-                child: Tab(
-                  text: 'recipes',
-                ),
-              )
-            ],
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double _targetWidth =
+        deviceWidth > 550.0 ? 100.0 : deviceWidth * 0.45;
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+        width: deviceWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Color.fromRGBO(0, 0, 0, 0.15), BlendMode.dstATop),
+            image: AssetImage('assets/logo.png'),
           ),
         ),
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                    Color.fromRGBO(0, 0, 0, 0.15), BlendMode.dstATop),
-                image: AssetImage('assets/logo.png'),
-              ),
-              gradient: LinearGradient(
-                colors: <Color>[
-                  Color.fromRGBO(204, 43, 94, 1),
-                  Color.fromRGBO(117, 58, 136, 1),
-                ],
-                stops: [0.2, 1.0],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(0.0, 1.0),
-              )),
-          child: TabBarView(
-            children: <Widget>[GetRecipePage(), AddRecipePage()],
-          ),
+        child: ListView(
+          padding: EdgeInsets.only(top: 10),
+          children: <Widget>[
+            MainBanner(),
+            SizedBox(),
+            Divider(
+              height: 20,
+              color: Colors.black,
+            ),
+            SizedBox(),
+            AllJars(model: model),
+            SizedBox(),
+            Divider(
+              height: 20,
+              color: Colors.black,
+            ),
+            SizedBox(),
+            Recipes(),
+          ],
         ),
       ),
     );

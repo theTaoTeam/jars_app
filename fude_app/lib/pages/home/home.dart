@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         drawer: buildSideDrawer(context, model),
-        body: Container(child: MainView()),
+        body: Container(child: MainView(model: model)),
       );
     });
   }
