@@ -30,7 +30,6 @@ class AddRecipeInput extends StatelessWidget {
               EdgeInsets.only(top: 30.0, right: 30.0, bottom: 30.0, left: 5.0),
         ),
         onSaved: (String val) {
-          print(val);
           if(hint == 'Title') {
             updateTitle(val);
           } else if(hint == 'Link') {

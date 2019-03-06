@@ -3,9 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fude/widgets/forms/add_recipe_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/helpers/background_image.dart';
-import 'package:fude/pages/home/add-recipe/add_recipe_button.dart';
-import 'package:fude/pages/recipes/allrecipes/all_recipes.dart';
 
 class AddRecipePage extends StatefulWidget {
   @override
@@ -15,26 +12,54 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
+  String selectedCategory;
+  String selectedJar;
+  MainModel model = MainModel();
+  List<String> jarList;
+
   final Map<String, dynamic> _formData = {
+    'category': '',
+    'jar': '',
     'title': '',
     'link': '',
     'notes': '',
     'image': AssetImage('assets/logo.png'),
   };
-  String selectedCategory;
-  String selectedJar;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+    });
+  }
+
+  void addRecipe(MainModel model) {
+    // First validate form.
+    if (this.formKey.currentState.validate()) {
+      formKey.currentState.save(); // Save our form now.
+      model.addRecipe(
+          _formData['category'],
+          _formData['jar'],
+          _formData['title'],
+          _formData['notes'],
+          _formData['link'],
+          _formData['image']);
+    }
+  }
 
   void updateCategory(dynamic value) {
     setState(() {
       selectedCategory = value;
+      _formData['category'] = value;
     });
   }
 
   void updateJar(dynamic value) {
     setState(() {
       selectedJar = value;
+      _formData['jar'] = value;
     });
   }
 
@@ -81,6 +106,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                     children: <Widget>[
                       AddRecipeForm(
                         formKey: formKey,
+                        jarList: jarList,
                         selectedCategory: selectedCategory,
                         updateCategory: updateCategory,
                         selectedJar: selectedJar,
@@ -92,39 +118,65 @@ class _AddRecipePageState extends State<AddRecipePage> {
                       ),
                       model.isLoading
                           ? CircularProgressIndicator()
-                          : AddRecipeButton(model: model),
+                          : GestureDetector(
+                              onTap: () {
+                                print('add recipe tapped');
+                                addRecipe(model);
+                              },
+                              child: Container(
+                                width: 320.0,
+                                height: 60.0,
+                                margin: EdgeInsets.only(top: 20),
+                                alignment: FractionalOffset.center,
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromRGBO(247, 64, 106, 1.0),
+                                  borderRadius: BorderRadius.all(
+                                      const Radius.circular(30.0)),
+                                ),
+                                child: Text(
+                                  "add recipe",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w300,
+                                    letterSpacing: 0.3,
+                                  ),
+                                ),
+                              ),
+                            ),
                       Container(
                           padding: EdgeInsets.only(top: 20),
                           child: Column(
                             children: <Widget>[
                               Icon(Icons.keyboard_arrow_up,
                                   color: Colors.white),
-                              GestureDetector(
-                                child: Text('swipe up to see all recipes',
-                                    style: TextStyle(color: Colors.white)),
-                                onVerticalDragStart:
-                                    (DragStartDetails details) {
-                                  print('swiped up' + details.toString());
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder:
-                                          (context, animation1, animation2) {
-                                        return AllRecipesPage(model);
-                                      },
-                                      transitionsBuilder: (context, animation1,
-                                          animation2, child) {
-                                        return FadeTransition(
-                                          opacity: animation1,
-                                          child: child,
-                                        );
-                                      },
-                                      transitionDuration:
-                                          Duration(milliseconds: 500),
-                                    ),
-                                  );
-                                },
-                              ),
+                              // GestureDetector(
+                              //   child: Text('swipe up to see all recipes',
+                              //       style: TextStyle(color: Colors.white)),
+                              //   onVerticalDragStart:
+                              //       (DragStartDetails details) {
+                              //     print('swiped up' + details.toString());
+                              //     Navigator.push(
+                              //       context,
+                              //       PageRouteBuilder(
+                              //         pageBuilder:
+                              //             (context, animation1, animation2) {
+                              //           return AllRecipesPage(model);
+                              //         },
+                              //         transitionsBuilder: (context, animation1,
+                              //             animation2, child) {
+                              //           return FadeTransition(
+                              //             opacity: animation1,
+                              //             child: child,
+                              //           );
+                              //         },
+                              //         transitionDuration:
+                              //             Duration(milliseconds: 500),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                             ],
                           ))
                     ],

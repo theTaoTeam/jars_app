@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/recipes/allrecipes/all_recipes_list.dart';
-import 'package:fude/helpers/custom_alert.dart';
 
 Widget buildSideDrawer(BuildContext context, MainModel model) {
-  _openAddJarForm() {
-      Navigator.pop(context);
-      buildAddJarAlert(context);
+  _navToAddJarForm() {
+      Navigator.popAndPushNamed(context, '/addjar');  
   }
 
   return Drawer(
@@ -38,7 +35,7 @@ Widget buildSideDrawer(BuildContext context, MainModel model) {
         Container(
           child: ListTile(
             title: Text('add jar', style: TextStyle(color: Colors.white)),
-            onTap: () => _openAddJarForm(),
+            onTap: () => _navToAddJarForm(),
           ),
         ),
         Container(
@@ -59,12 +56,12 @@ Widget buildSideDrawer(BuildContext context, MainModel model) {
             style: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.5)),
           ),
         ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            RecipeListPage(model),
-          ],
-        )
+        // Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: <Widget>[
+        //     RecipeListPage(model),
+        //   ],
+        // )
       ],
     ),
   ));
