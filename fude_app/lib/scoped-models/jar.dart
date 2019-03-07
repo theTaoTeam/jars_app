@@ -7,10 +7,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 mixin JarModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
+  DocumentSnapshot _selJar;
 
   bool _isLoading = false;
 
-  void addJar(String title) async {
+  DocumentSnapshot get selectedJar {
+    return _selJar;
+  }
+
+  void addJar(String title, List<dynamic> categories) async {
     print('in model.addJar: title: $title');
     CollectionReference jarCollection = _firestore.collection('jars');
     try {
@@ -18,6 +23,7 @@ mixin JarModel on Model {
       await jarCollection.document().setData(<String, dynamic>{
         'title': title,
         'owner': user.uid,
+        'categories': categories,
       });
     } catch (e) {
       print(e);
@@ -38,5 +44,20 @@ mixin JarModel on Model {
       print(e);
     }
     return jarList;
+  }
+
+  void getJarBySelectedId(String jarId) async {
+    try {
+      await _firestore.collection('jars').getDocuments().then((val) {
+        val.documents.forEach((jar) {
+          if (jar.documentID == jarId) {
+            _selJar = jar;
+            notifyListeners();
+          }
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

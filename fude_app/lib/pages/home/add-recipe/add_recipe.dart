@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:fude/widgets/forms/add_recipe_form_container.dart';
+import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/widgets/side_drawer.dart';
 
 class AddRecipePage extends StatefulWidget {
+  final List<dynamic> categories;
+
+  AddRecipePage({this.categories});
+
   @override
   State<StatefulWidget> createState() {
     return _AddRecipePageState();
@@ -31,8 +36,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-    });
+    setState(() {});
   }
 
   void addRecipe(MainModel model) {
@@ -90,11 +94,41 @@ class _AddRecipePageState extends State<AddRecipePage> {
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
-
-    return ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-      return Container(
-        child: Container(
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Color.fromRGBO(175, 31, 82, 1),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+      ),
+      drawer: buildSideDrawer(context, model),
+      floatingActionButton: Container(
+        padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            FloatingActionButton(
+              child: Icon(Icons.arrow_back),
+              backgroundColor: Colors.red,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+      body: ScopedModelDescendant<MainModel>(
+          builder: (BuildContext context, Widget child, MainModel model) {
+        return Container(
+          width: deviceWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Color.fromRGBO(0, 0, 0, 0.15), BlendMode.dstATop),
+              image: AssetImage('assets/logo.png'),
+            ),
+          ),
           child: ListView(
             padding: EdgeInsets.only(top: deviceHeight * 0.05),
             children: <Widget>[
@@ -104,13 +138,11 @@ class _AddRecipePageState extends State<AddRecipePage> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      AddRecipeForm(
+                      AddToJarForm(
                         formKey: formKey,
-                        jarList: jarList,
+                        categoryList: widget.categories,
                         selectedCategory: selectedCategory,
                         updateCategory: updateCategory,
-                        selectedJar: selectedJar,
-                        updateJar: updateJar,
                         updateTitle: updateTitle,
                         updateLink: updateLink,
                         updateNotes: updateNotes,
@@ -120,7 +152,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           ? CircularProgressIndicator()
                           : GestureDetector(
                               onTap: () {
-                                print('add recipe tapped');
+                                print('add to jar tapped');
                                 addRecipe(model);
                               },
                               child: Container(
@@ -135,7 +167,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                                       const Radius.circular(30.0)),
                                 ),
                                 child: Text(
-                                  "add recipe",
+                                  "add to jar",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20.0,
@@ -145,48 +177,14 @@ class _AddRecipePageState extends State<AddRecipePage> {
                                 ),
                               ),
                             ),
-                      Container(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Column(
-                            children: <Widget>[
-                              Icon(Icons.keyboard_arrow_up,
-                                  color: Colors.white),
-                              // GestureDetector(
-                              //   child: Text('swipe up to see all recipes',
-                              //       style: TextStyle(color: Colors.white)),
-                              //   onVerticalDragStart:
-                              //       (DragStartDetails details) {
-                              //     print('swiped up' + details.toString());
-                              //     Navigator.push(
-                              //       context,
-                              //       PageRouteBuilder(
-                              //         pageBuilder:
-                              //             (context, animation1, animation2) {
-                              //           return AllRecipesPage(model);
-                              //         },
-                              //         transitionsBuilder: (context, animation1,
-                              //             animation2, child) {
-                              //           return FadeTransition(
-                              //             opacity: animation1,
-                              //             child: child,
-                              //           );
-                              //         },
-                              //         transitionDuration:
-                              //             Duration(milliseconds: 500),
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
-                            ],
-                          ))
                     ],
                   ),
                 ],
               ),
             ],
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

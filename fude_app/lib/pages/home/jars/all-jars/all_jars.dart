@@ -9,53 +9,35 @@ class AllJars extends StatelessWidget {
 
   AllJars({this.model});
 
-  Widget _buildAllJarsRows(
-      BuildContext context, List<DocumentSnapshot> jars, double deviceWidth) {
-    List<JarIcon> jarIconList;
-
-    jars.forEach((jar) {
-      jarIconList.add(JarIcon(jarTitle: jar['title']));
-    });
-
-    return Container(
-        padding: EdgeInsets.all(10),
-        width: deviceWidth,
-        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[],
-            )
-          ],
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: Firestore.instance.collection('jars').snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            // print('snapshot hasData: ${snapshot.hasData}');
-            return Center(child: CircularProgressIndicator());
-          } else {
-            print('AllJars listview.builder...');
-            return GridView.builder(
-              shrinkWrap: true,
-              addSemanticIndexes: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-              ),
-              itemCount: snapshot.data.documents.length,
-              itemBuilder: (BuildContext context, int index) {
-                return JarIcon(
-                    jarTitle: snapshot.data.documents[index]['title']);
-              },
-            );
-          }
-        });
+    return Container(
+      padding: EdgeInsets.fromLTRB(15, 15, 15, 10),
+      child: StreamBuilder(
+          stream: Firestore.instance.collection('jars').snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              // print('snapshot hasData: ${snapshot.hasData}');
+              return Center(child: CircularProgressIndicator());
+            } else {
+              // print('AllJars listview.builder...');        
+              return GridView.builder(
+                shrinkWrap: true,
+                addSemanticIndexes: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                ),
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return JarIcon(
+                      jarTitle: snapshot.data.documents[index]['title'], jarId: snapshot.data.documents[index].documentID);
+                },
+              );
+            }
+          }),
+    );
   }
 }

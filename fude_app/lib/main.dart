@@ -8,6 +8,7 @@ import 'package:fude/pages/auth/signup/signup.dart';
 import 'package:fude/pages/auth/forgot-password/forgotpassword.dart';
 import 'package:fude/pages/home/home.dart';
 import 'package:fude/pages/home/jars/add-jar/add_jar.dart';
+import 'package:fude/pages/home/add-recipe/add_recipe.dart';
 import 'package:fude/scoped-models/main.dart';
 
 Future<void> main() async {
@@ -41,6 +42,7 @@ Widget _buildApp(BuildContext context) {
         '/signup': (BuildContext context) => SignUpPage(),
         '/forgotpass': (BuildContext context) => ForgotPassPage(),
         '/addjar': (BuildContext context) => AddJarPage(),
+        '/addrecipe': (BuildContext context) => AddRecipePage(),
       },
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(

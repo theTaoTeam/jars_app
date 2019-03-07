@@ -18,6 +18,11 @@ class HomePage extends StatelessWidget {
             color: Colors.white, //change your color here
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: Colors.red,
+          onPressed: () => Navigator.pushNamed(context, '/addjar'),
+        ),
         drawer: buildSideDrawer(context, model),
         body: Container(child: MainView(model: model)),
       );

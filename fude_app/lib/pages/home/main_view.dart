@@ -4,11 +4,15 @@ import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/home/recipes/recipes.dart';
 import 'package:fude/pages/home/jars/all-jars/all_jars.dart';
 import 'package:fude/pages/home/main-banner/main_banner.dart';
+import 'package:fude/helpers/design_helpers.dart';
 
 class MainView extends StatelessWidget {
   final MainModel model;
 
   MainView({this.model});
+
+  
+
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
@@ -16,7 +20,6 @@ class MainView extends StatelessWidget {
         deviceWidth > 550.0 ? 100.0 : deviceWidth * 0.45;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         width: deviceWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -27,23 +30,18 @@ class MainView extends StatelessWidget {
           ),
         ),
         child: ListView(
-          padding: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(top: 0),
           children: <Widget>[
-            MainBanner(),
-            SizedBox(),
-            Divider(
-              height: 20,
-              color: Colors.black,
-            ),
-            SizedBox(),
+            MainBanner(title: 'JARS APP'),
+            SizedBox(height: 20),
+            buildDivider(title: 'jars'),
+            SizedBox(height: 20),
             AllJars(model: model),
-            SizedBox(),
-            Divider(
-              height: 20,
-              color: Colors.black,
-            ),
-            SizedBox(),
+            SizedBox(height: 20),
+            buildDivider(title: 'all recipes'),
+            SizedBox(height: 20),
             Recipes(),
+            
           ],
         ),
       ),

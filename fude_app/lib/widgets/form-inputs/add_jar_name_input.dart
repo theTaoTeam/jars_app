@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AddJarInputField extends StatelessWidget {
+class AddJarNameField extends StatelessWidget {
   final String hint;
   final Function updateTitle;
-  AddJarInputField({this.hint, this.updateTitle});
+  AddJarNameField({this.hint, this.updateTitle});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +27,7 @@ class AddJarInputField extends StatelessWidget {
               EdgeInsets.only(top: 20.0, right: 20.0, bottom: 20.0, left: 5.0),
         ),
         onSaved: (String val) {
-          if (hint == 'Title') {
+          if (hint == 'Jar Name') {
             updateTitle(val);
           }
         },
