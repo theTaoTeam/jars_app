@@ -33,7 +33,7 @@ class AllJars extends StatelessWidget {
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (BuildContext context, int index) {
                   return JarIcon(
-                      jarTitle: snapshot.data.documents[index]['title'], jarId: snapshot.data.documents[index].documentID);
+                      jarTitle: snapshot.data.documents[index]['title'], jarId: snapshot.data.documents[index].documentID, model: model);
                 },
               );
             }

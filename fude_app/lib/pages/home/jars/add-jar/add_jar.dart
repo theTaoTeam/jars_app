@@ -29,6 +29,7 @@ class _AddJarPageState extends State<AddJarPage> {
       print('form saved.....sending to model');
     }
     model.addJar(_formData['title'], _formData['category']);
+    Navigator.pop(context);
   }
 
   void incrementCategoryCount() {

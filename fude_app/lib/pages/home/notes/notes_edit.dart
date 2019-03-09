@@ -5,14 +5,14 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/models/recipe.dart';
 import 'package:fude/scoped-models/main.dart';
 
-class RecipeEditPage extends StatefulWidget {
+class NotesEditPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _RecipeEditPageState();
+    return _NotesEditPageState();
   }
 }
 
-class _RecipeEditPageState extends State<RecipeEditPage> {
+class _NotesEditPageState extends State<NotesEditPage> {
   final Map<String, dynamic> _formData = {
     'title': null,
     'notes': null,

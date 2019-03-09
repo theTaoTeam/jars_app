@@ -30,22 +30,6 @@ mixin JarModel on Model {
     }
   }
 
-  fetchJars() async {
-    final user = await _auth.currentUser();
-    List<String> jarList = [];
-    QuerySnapshot jars;
-    try {
-      jars = await _firestore
-          .collection('jars')
-          .where('owner', isEqualTo: user.uid)
-          .getDocuments();
-      jars.documents.forEach((jar) => jarList.add(jar['title']));
-    } catch (e) {
-      print(e);
-    }
-    return jarList;
-  }
-
   void getJarBySelectedId(String jarId) async {
     try {
       await _firestore.collection('jars').getDocuments().then((val) {
@@ -56,6 +40,86 @@ mixin JarModel on Model {
           }
         });
       });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void addToJar(String category, String title, String notes, String link,
+      AssetImage image) async {
+    try {
+      await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .document()
+          .setData(<String, dynamic>{
+        'category': category,
+        'title': title,
+        'notes': notes,
+        'link': link,
+        'isFav': false,
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void toggleFavoriteStatus(DocumentSnapshot note) async {
+    print('in toggle fav status');
+    try {
+      await _firestore
+          .collection('favoriteNotes')
+          .getDocuments()
+          .then((snapshot) {
+        if (snapshot.documents.length > 0) {
+          snapshot.documents.forEach((doc) {
+            if (doc.documentID == note.documentID) {
+              print('found note in favnotes....deleting....');
+              deleteFavNote(note.documentID);
+            } else {
+              print('no document with this note id in favnotes...adding....');
+              addFavNote(note);
+            }
+          });
+        } else {
+          addFavNote(note);
+        }
+      }).catchError((err) => print(err));
+
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void addFavNote(DocumentSnapshot note) async {
+    try {
+      //add note to favoriteNotes collections
+      await _firestore
+          .collection('favoriteNotes')
+          .document()
+          .setData(<String, dynamic>{
+        'category': note['category'],
+        'title': note['title'],
+        'notes': note['notes'],
+        'link': note['link'],
+      });
+      //update original note's isFav field
+      await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .document(note.documentID)
+          .updateData({'isFav': !note.data['isFav']});
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void deleteFavNote(String docID) async {
+    try {
+      await _firestore.collection('favoriteNotes').document(docID).delete();
     } catch (e) {
       print(e);
     }

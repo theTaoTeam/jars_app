@@ -5,18 +5,18 @@ import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/side_drawer.dart';
 
-class AddRecipePage extends StatefulWidget {
+class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;
 
-  AddRecipePage({this.categories});
+  AddNotePage({this.categories});
 
   @override
   State<StatefulWidget> createState() {
-    return _AddRecipePageState();
+    return _AddNotePageState();
   }
 }
 
-class _AddRecipePageState extends State<AddRecipePage> {
+class _AddNotePageState extends State<AddNotePage> {
   String selectedCategory;
   String selectedJar;
   MainModel model = MainModel();
@@ -39,31 +39,24 @@ class _AddRecipePageState extends State<AddRecipePage> {
     setState(() {});
   }
 
-  void addRecipe(MainModel model) {
+  void addToJar(MainModel model) {
     // First validate form.
     if (this.formKey.currentState.validate()) {
       formKey.currentState.save(); // Save our form now.
-      model.addRecipe(
+      model.addToJar(
           _formData['category'],
-          _formData['jar'],
           _formData['title'],
           _formData['notes'],
           _formData['link'],
           _formData['image']);
+      Navigator.pop(context);
     }
   }
 
   void updateCategory(dynamic value) {
     setState(() {
       selectedCategory = value;
-      _formData['category'] = value;
-    });
-  }
-
-  void updateJar(dynamic value) {
-    setState(() {
-      selectedJar = value;
-      _formData['jar'] = value;
+      _formData['category'] = value.toString();
     });
   }
 
@@ -153,7 +146,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           : GestureDetector(
                               onTap: () {
                                 print('add to jar tapped');
-                                addRecipe(model);
+                                addToJar(model);
                               },
                               child: Container(
                                 width: 320.0,

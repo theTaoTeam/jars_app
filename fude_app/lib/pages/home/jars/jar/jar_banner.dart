@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:fude/pages/home/add-recipe/add_recipe.dart';
-
 class JarBanner extends StatelessWidget {
-  final List<dynamic> categories;
+  final String title;
 
-  JarBanner({this.categories});
+  JarBanner({this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +15,7 @@ class JarBanner extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddRecipePage(categories: categories),
-                    ),
-                  ),
-            ),
-            Text('add to your jar')
+            Text('$title Jar')
           ],
         ));
   }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:fude/pages/home/recipes/recipe_edit.dart';
+import 'package:fude/pages/home/notes/notes_edit.dart';
+import 'package:fude/scoped-models/main.dart';
 
-class RecipeCard extends StatelessWidget {
-  final DocumentSnapshot recipe;
+class NotesCard extends StatelessWidget {
+  final DocumentSnapshot note;
+  final MainModel model;
 
-  RecipeCard({this.recipe});
+  NotesCard({this.note, this.model});
 
   Widget _buildCategoryTitleRow() {
     return Container(
@@ -14,15 +16,15 @@ class RecipeCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(recipe['category'],
+          Text(note['category'],
               style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(recipe['title'])
+          Text(note['title'])
         ],
       ),
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(BuildContext context, DocumentSnapshot note) {
     return ButtonBar(
             mainAxisSize: MainAxisSize.min,
             alignment: MainAxisAlignment.center,
@@ -36,7 +38,7 @@ class RecipeCard extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return RecipeEditPage();
+                        return NotesEditPage();
                       },
                     ),
                   );
@@ -44,10 +46,11 @@ class RecipeCard extends StatelessWidget {
               ),
               IconButton(
                 iconSize: 20,
-                icon: Icon(Icons.favorite_border),
+                icon: note.data['isFav'] != false ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
                 color: Colors.red,
                 onPressed: () {
                   print('trying to favorite');
+                  model.toggleFavoriteStatus(note);
                 },
               ),
             ]);
@@ -77,12 +80,12 @@ class RecipeCard extends StatelessWidget {
                   _buildCategoryTitleRow(),
                 ],
               ),
-              _buildActionButtons(context),
+              _buildActionButtons(context, note),
             ],
           )
         ],
       ),
     );
-    ;
+    
   }
 }
