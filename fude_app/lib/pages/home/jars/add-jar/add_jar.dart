@@ -19,7 +19,6 @@ class _AddJarPageState extends State<AddJarPage> {
     'title': '',
     'category': [],
   };
-  var categoryCount = 1;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void addJar(MainModel model) {
@@ -30,12 +29,6 @@ class _AddJarPageState extends State<AddJarPage> {
     }
     model.addJar(_formData['title'], _formData['category']);
     Navigator.pop(context);
-  }
-
-  void incrementCategoryCount() {
-    setState(() {
-      categoryCount += 1;
-    });
   }
 
   void updateTitle(String val) {
@@ -82,7 +75,6 @@ class _AddJarPageState extends State<AddJarPage> {
                 formKey: formKey,
                 updateTitle: updateTitle,
                 updateCategory: updateCategory,
-                incrementCategoryCount: incrementCategoryCount,
               ),
               model.isLoading
                   ? CircularProgressIndicator()

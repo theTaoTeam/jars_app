@@ -28,44 +28,29 @@ class JarPage extends StatelessWidget {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.favorite),
-                ),
-                Tab(
                   icon: Icon(Icons.list),
                 ),
-              ],
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.add_circle_outline),
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            AddNotePage(categories: jar['categories']),
-                      ),
-                    ),
-              ),
-            ],
-          ),
-          drawer: buildSideDrawer(context, model),
-          floatingActionButton: Container(
-            padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                FloatingActionButton(
-                  child: Icon(Icons.arrow_back),
-                  backgroundColor: Colors.red,
-                  onPressed: () => Navigator.pop(context),
+                Tab(
+                  icon: Icon(Icons.favorite),
                 ),
               ],
             ),
+          ),
+          drawer: buildSideDrawer(context, model),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: Colors.red,
+            onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          AddNotePage(categories: jar['categories'])),
+                ),
           ),
           body: TabBarView(
             children: <Widget>[
+              AllNotesTab(jar: jar, model: model),
               FavTab(jar: jar, model: model),
-              AllNotesTab(jar: jar,model: model),
             ],
           )),
     );

@@ -28,6 +28,7 @@ dependencies:
   cloud_functions: ^0.0.5
   cloud_firestore: ^0.7.4
   image_picker: ^0.4.12
+  flutter_speed_dial: ^1.1.1
   
 
 dev_dependencies:

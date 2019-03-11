@@ -19,7 +19,11 @@ class AllNotes extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: StreamBuilder(
-          stream: Firestore.instance.collection('jars').document(jar.documentID).collection('jarNotes').snapshots(),
+          stream: Firestore.instance
+              .collection('jars')
+              .document(jar.documentID)
+              .collection('jarNotes')
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               print('snapshot hasData: ${snapshot.hasData}');

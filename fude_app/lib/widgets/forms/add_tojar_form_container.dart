@@ -25,6 +25,7 @@ class AddToJarForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(categoryList);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -42,8 +43,8 @@ class AddToJarForm extends StatelessWidget {
                     value: selectedCategory,
                     items: categoryList.map((val) {
                       return DropdownMenuItem(
-                        value: val,
-                        child: Text(val),
+                        value: val.toString(),
+                        child: Text(val.toString()),
                       );
                     }).toList(),
                     onChanged: (dynamic val) {
