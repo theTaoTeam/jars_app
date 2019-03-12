@@ -11,7 +11,11 @@ class FavNotes extends StatelessWidget {
   FavNotes({this.jar, this.model});
 
   _buildNoteListItem(BuildContext context, DocumentSnapshot document) {
-    return NotesCard(note: document, model: model);
+    if (document.data['isFav'] == true) {
+      return NotesCard(note: document, model: model);
+    } else {
+      print('not favorited: $document');
+    }
   }
 
   @override
@@ -19,7 +23,11 @@ class FavNotes extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: StreamBuilder(
-          stream: Firestore.instance.collection('favoriteNotes').snapshots(),
+          stream: Firestore.instance
+              .collection('jars')
+              .document(jar.documentID)
+              .collection('jarNotes')
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               print('snapshot hasData: ${snapshot.hasData}');

@@ -16,8 +16,7 @@ class NotesCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text(note['category'],
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(note['category'], style: TextStyle(fontWeight: FontWeight.bold)),
           Text(note['title'])
         ],
       ),
@@ -26,36 +25,36 @@ class NotesCard extends StatelessWidget {
 
   Widget _buildActionButtons(BuildContext context, DocumentSnapshot note) {
     return ButtonBar(
-            mainAxisSize: MainAxisSize.min,
-            alignment: MainAxisAlignment.center,
-            children: <Widget>[
-              IconButton(
-                iconSize: 20,
-                icon: Icon(Icons.info),
-                color: Theme.of(context).accentColor,
-                onPressed: () {
-                  print('icon pressed');
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return NotesEditPage();
-                      },
-                    ),
-                  );
-                },
-              ),
-              IconButton(
-                iconSize: 20,
-                icon: note.data['isFav'] != false ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
-                color: Colors.red,
-                onPressed: () {
-                  print('trying to favorite');
-                  model.toggleFavoriteStatus(note);
-                },
-              ),
-            ]);
-      
-    
+        mainAxisSize: MainAxisSize.min,
+        alignment: MainAxisAlignment.center,
+        children: <Widget>[
+          IconButton(
+            iconSize: 20,
+            icon: Icon(Icons.info),
+            color: Theme.of(context).accentColor,
+            onPressed: () {
+              print('icon pressed');
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return NotesEditPage();
+                  },
+                ),
+              );
+            },
+          ),
+          IconButton(
+            iconSize: 20,
+            icon: note.data['isFav'] != false
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
+            color: Colors.red,
+            onPressed: () {
+              print('trying to favorite');
+              model.toggleFavoriteStatus(note);
+            },
+          ),
+        ]);
   }
 
   @override
@@ -67,11 +66,17 @@ class NotesCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           FadeInImage(
-            image: AssetImage('assets/tempfudeicon.png'),
+            image: note['image'] != null
+                ? NetworkImage(note['image'])
+                : NetworkImage(
+                    'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=aec9a64b-6269-4751-bbec-fdd7016d8f47',
+                    scale: 0.1),
             height: 100.0,
             width: _targetWidth,
-            fit: BoxFit.cover,
-            placeholder: AssetImage('assets/tempfudeicon.png'),
+            fit: BoxFit.contain,
+            placeholder: NetworkImage(
+                    'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=aec9a64b-6269-4751-bbec-fdd7016d8f47',
+                    scale: 0.1),
           ),
           Column(
             children: <Widget>[
@@ -86,6 +91,5 @@ class NotesCard extends StatelessWidget {
         ],
       ),
     );
-    
   }
 }

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
+import 'dart:io';
+import 'dart:math';
 
 mixin JarModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
+  List<String> favoriteNotes;
 
   bool _isLoading = false;
 
@@ -48,6 +53,7 @@ mixin JarModel on Model {
   void addToJar(String category, String title, String notes, String link,
       AssetImage image) async {
     try {
+      String imageStorageLink = await uploadNoteImageToStorage(image.assetName);
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
@@ -59,67 +65,51 @@ mixin JarModel on Model {
         'notes': notes,
         'link': link,
         'isFav': false,
+        'image': imageStorageLink
       });
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<String> uploadNoteImageToStorage(String filepath) async {
+    String _path;
+
+    final ByteData bytes = await rootBundle.load(filepath);
+    final Directory tempDir = Directory.systemTemp;
+    final String fileName = "${Random().nextInt(1000)}.png";
+    final File file = File('${tempDir.path}/$fileName');
+    file.writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
+
+    final StorageReference ref = FirebaseStorage.instance.ref().child(fileName);
+    final StorageUploadTask task = ref.putFile(file);
+    final Uri downloadUrl = (await task.future).downloadUrl;
+    _path = downloadUrl.toString();
+    print('_path: $_path');
+
+    return _path;
   }
 
   void toggleFavoriteStatus(DocumentSnapshot note) async {
     print('in toggle fav status');
     try {
       await _firestore
-          .collection('favoriteNotes')
-          .getDocuments()
-          .then((snapshot) {
-        if (snapshot.documents.length > 0) {
-          snapshot.documents.forEach((doc) {
-            if (doc.documentID == note.documentID) {
-              print('found note in favnotes....deleting....');
-              deleteFavNote(note.documentID);
-            } else {
-              print('no document with this note id in favnotes...adding....');
-              addFavNote(note);
-            }
-          });
-        } else {
-          addFavNote(note);
-        }
-      }).catchError((err) => print(err));
-
-      notifyListeners();
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void addFavNote(DocumentSnapshot note) async {
-    try {
-      //add note to favoriteNotes collections
-      await _firestore
-          .collection('favoriteNotes')
-          .document()
-          .setData(<String, dynamic>{
-        'category': note['category'],
-        'title': note['title'],
-        'notes': note['notes'],
-        'link': note['link'],
-      });
-      //update original note's isFav field
-      await _firestore
           .collection('jars')
           .document(_selJar.documentID)
           .collection('jarNotes')
           .document(note.documentID)
           .updateData({'isFav': !note.data['isFav']});
-    } catch (e) {
-      print(e);
-    }
-  }
+      if (favoriteNotes.length > 0) {
+        favoriteNotes.forEach((id) {
+          if (id == note.documentID) {
+            favoriteNotes.remove(id);
+          } else {
+            favoriteNotes.add(note.documentID);
+          }
+        });
+      }
 
-  void deleteFavNote(String docID) async {
-    try {
-      await _firestore.collection('favoriteNotes').document(docID).delete();
+      notifyListeners();
     } catch (e) {
       print(e);
     }
