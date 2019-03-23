@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddRecipeInput extends StatelessWidget {
+class AddToJarInput extends StatelessWidget {
   final String hint;
   final Function updateTitle;
   final Function updateLink;
   final Function updateNotes;
-  AddRecipeInput(
+  AddToJarInput(
       {this.hint, this.updateTitle, this.updateLink, this.updateNotes});
   @override
   Widget build(BuildContext context) {
@@ -23,18 +23,21 @@ class AddRecipeInput extends StatelessWidget {
           color: Colors.white,
         ),
         decoration: InputDecoration(
+          filled: true,
+          fillColor: Color.fromRGBO(0, 0, 0, 0.8),
           border: InputBorder.none,
           hintText: hint,
           hintStyle: TextStyle(color: Colors.white, fontSize: 15.0),
           contentPadding:
-              EdgeInsets.only(top: 30.0, right: 30.0, bottom: 30.0, left: 5.0),
+              EdgeInsets.only(top: 20.0, right: 20.0, bottom: 5.0, left: 5.0),
+          
         ),
         onSaved: (String val) {
-          if(hint == 'Title') {
+          if (hint == 'Title') {
             updateTitle(val);
-          } else if(hint == 'Link') {
+          } else if (hint == 'Link') {
             updateLink(val);
-          } else if(hint == 'Notes') {
+          } else if (hint == 'Notes') {
             updateNotes(val);
           }
         },

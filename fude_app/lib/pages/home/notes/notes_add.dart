@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/side_drawer.dart';
+import 'dart:io';
 
 class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;
@@ -20,7 +21,6 @@ class _AddNotePageState extends State<AddNotePage> {
   String selectedCategory;
   String selectedJar;
   MainModel model = MainModel();
-  List<String> jarList;
 
   final Map<String, dynamic> _formData = {
     'category': '',
@@ -28,7 +28,7 @@ class _AddNotePageState extends State<AddNotePage> {
     'title': '',
     'link': '',
     'notes': '',
-    'image': AssetImage('assets/logo.png'),
+    'image': null,
   };
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -43,6 +43,7 @@ class _AddNotePageState extends State<AddNotePage> {
     // First validate form.
     if (this.formKey.currentState.validate()) {
       formKey.currentState.save(); // Save our form now.
+      print('adding to jar ${_formData['image']}');
       model.addToJar(
           _formData['category'],
           _formData['title'],
@@ -78,7 +79,8 @@ class _AddNotePageState extends State<AddNotePage> {
     });
   }
 
-  void updateImage(Image image) {
+  void updateImage(File image) {
+    print(image);
     setState(() {
       _formData['image'] = image;
     });

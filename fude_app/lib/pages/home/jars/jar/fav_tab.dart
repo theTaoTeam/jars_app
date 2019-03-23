@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/helpers/design_helpers.dart';
 import 'package:fude/pages/home/jars/jar/jar_banner.dart';
-import 'package:fude/pages/home/jars/jar/fav_notes.dart';
+import 'package:fude/pages/home/notes/fav-notes/fav_notes.dart';
 import 'package:fude/scoped-models/main.dart';
 
 class FavTab extends StatelessWidget {

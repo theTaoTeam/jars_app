@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/pages/home/notes/notes_edit.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/helpers/design_helpers.dart';
 
 class NotesCard extends StatelessWidget {
   final DocumentSnapshot note;
@@ -37,7 +38,7 @@ class NotesCard extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    return NotesEditPage();
+                    return NotesEditPage(note: note, model: model);
                   },
                 ),
               );
@@ -66,17 +67,11 @@ class NotesCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           FadeInImage(
-            image: note['image'] != null
-                ? NetworkImage(note['image'])
-                : NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=aec9a64b-6269-4751-bbec-fdd7016d8f47',
-                    scale: 0.1),
+            image: note['image'] != null ? NetworkImage(note['image'], scale: 0.1) :logoInStorage(),
             height: 100.0,
             width: _targetWidth,
             fit: BoxFit.contain,
-            placeholder: NetworkImage(
-                    'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=aec9a64b-6269-4751-bbec-fdd7016d8f47',
-                    scale: 0.1),
+            placeholder: logoInStorage(),
           ),
           Column(
             children: <Widget>[

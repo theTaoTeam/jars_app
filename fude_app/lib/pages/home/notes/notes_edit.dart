@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-import 'package:scoped_model/scoped_model.dart';
-
-import 'package:fude/models/recipe.dart';
+import 'package:fude/widgets/forms/edit_note_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
+import 'package:fude/widgets/side_drawer.dart';
+import 'package:fude/helpers/design_helpers.dart';
 
 class NotesEditPage extends StatefulWidget {
+  final DocumentSnapshot note;
+  final MainModel model;
+
+  NotesEditPage({this.note, this.model});
+
   @override
   State<StatefulWidget> createState() {
     return _NotesEditPageState();
@@ -14,182 +21,147 @@ class NotesEditPage extends StatefulWidget {
 
 class _NotesEditPageState extends State<NotesEditPage> {
   final Map<String, dynamic> _formData = {
-    'title': null,
-    'notes': null,
-    'price': null,
-    'image': 'assets/food.jpg'
+    'title': '',
+    'notes': '',
+    'category': '',
+    'link': '',
+    'image': null
   };
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _titleFocusNode = FocusNode();
-  final _notesFocusNode = FocusNode();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String selectedCategory;
+  String selectedJar;
 
-  Widget _buildImageField(Recipe recipe) {
-    return FadeInImage(
-      image: recipe.link != null
-          ? NetworkImage(recipe.link)
-          : AssetImage('assets/tempfudeicon.png'),
-      height: 300.0,
-      fit: BoxFit.cover,
-      placeholder: AssetImage('assets/tempfudeicon.png'),
-    );
-  }
-
-  Widget _buildTitleTextField(Recipe recipe) {
-    return TextFormField(
-      focusNode: _titleFocusNode,
-      decoration: InputDecoration(labelText: 'Recipe Title'),
-      initialValue: recipe == null ? '' : recipe.title,
-      validator: (String value) {
-        // if (value.trim().length <= 0) {
-        if (value.isEmpty || value.length < 5) {
-          return 'Title is required and should be 5+ characters long.';
-        }
-      },
-      onSaved: (String value) {
-        _formData['title'] = value;
-      },
-    );
-  }
-
-  Widget _buildNotesTextField(Recipe recipe) {
-    return TextFormField(
-      focusNode: _notesFocusNode,
-      maxLines: 4,
-      decoration: InputDecoration(labelText: 'Recipe notes'),
-      initialValue: recipe == null ? '' : recipe.notes,
-      validator: (String value) {
-        // if (value.trim().length <= 0) {
-        if (value.isEmpty || value.length < 10) {
-          return 'notes is required and should be 10+ characters long.';
-        }
-      },
-      onSaved: (String value) {
-        _formData['notes'] = value;
-      },
-    );
-  }
-
-  Widget _buildSubmitButton() {
-    return ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-      return model.isLoading
-          ? Center(child: CircularProgressIndicator())
-          : RaisedButton(
-              child: Text('Save'),
-              textColor: Colors.white,
-              onPressed: () {
-                print("Submit Button presses");
-              },
-              // _submitForm(
-              // model.addRecipe,
-              // model.updateRecipe,
-              // model.selectRecipe,
-              // model.selectedRecipeIndex),
-            );
+  void updateCategory(dynamic value) {
+    setState(() {
+      selectedCategory = value;
+      _formData['category'] = value.toString();
     });
   }
 
-  Widget _buildPageContent(BuildContext context, Recipe recipe) {
-    final double deviceWidth = MediaQuery.of(context).size.width;
-    final double targetWidth = deviceWidth > 550.0 ? 500.0 : deviceWidth * 0.95;
-    final double targetPadding = deviceWidth - targetWidth;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: targetPadding / 2),
-            children: <Widget>[
-              _buildImageField(recipe),
-              _buildTitleTextField(recipe),
-              _buildNotesTextField(recipe),
-              SizedBox(
-                height: 10.0,
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              _buildSubmitButton(),
-              // GestureDetector(
-              //   onTap: _submitForm,
-              //   child: Container(
-              //     color: Colors.green,
-              //     padding: EdgeInsets.all(5.0),
-              //     child: Text('My Button'),
-              //   ),
-              // )
-            ],
-          ),
-        ),
-      ),
-    );
+  void updateTitle(String value) {
+    setState(() {
+      _formData['title'] = value;
+    });
   }
 
-  void _submitForm(
-      Function addProduct, Function updateProduct, Function setSelectedProduct,
-      [int selectedProductIndex]) {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
-    if (selectedProductIndex == -1) {
-      addProduct(
-        _formData['title'],
-        _formData['notes'],
-        _formData['image'],
-        _formData['price'],
-      ).then((bool success) {
-        if (success) {
-          Navigator.pushReplacementNamed(context, '/products')
-              .then((_) => setSelectedProduct(null));
-        } else {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Something went wrong'),
-                  content: Text('Please try again!'),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Okay'),
-                    )
-                  ],
-                );
-              });
-        }
-      });
-    } else {
-      updateProduct(
-        _formData['title'],
-        _formData['notes'],
-        _formData['image'],
-        _formData['price'],
-      ).then((_) => Navigator.pushReplacementNamed(context, '/products')
-          .then((_) => setSelectedProduct(null)));
+  void updateLink(String value) {
+    setState(() {
+      _formData['link'] = value;
+    });
+  }
+
+  void updateNotes(String value) {
+    print('updating notes');
+    setState(() {
+      _formData['notes'] = value;
+    });
+  }
+
+  void updateImage(File image) {
+    print('updating image');
+    setState(() {
+      _formData['image'] = image;
+    });
+  }
+
+  void updateNote() {
+     // First validate form.
+    if (this.formKey.currentState.validate()) {
+      formKey.currentState.save(); // Save our form now.
+      widget.model.updateNote(
+          widget.note,
+          _formData['category'],
+          _formData['title'],
+          _formData['notes'],
+          _formData['link'],
+          _formData['image']);
+      Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        // final Widget pageContent =
-        //     _buildPageContent(context, model.selectedRecipe);
-        // return model.selectedRecipeIndex == -1
-        //     ? pageContent
-        //     : Scaffold(
-        //         appBar: AppBar(
-        //           title: Text('Edit Recipe'),
-        //         ),
-        //         body: pageContent,
-        //       );
-        return Text('Edit');
-      },
+    double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Color.fromRGBO(175, 31, 82, 1),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+      ),
+      drawer: buildSideDrawer(context, widget.model),
+      floatingActionButton: Container(
+        padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            FloatingActionButton(
+              child: Icon(Icons.arrow_back),
+              backgroundColor: Colors.red,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(top: deviceHeight * 0.10),
+        width: deviceWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter:
+                ColorFilter.mode(Color.fromRGBO(0, 0, 0, 0.7), BlendMode.dstATop),
+            image: widget.note['image'] != ''
+                ? NetworkImage(widget.note['image'])
+                : logoInStorage(),
+          ),
+        ),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            EditNoteForm(
+              model: widget.model,
+              note: widget.note,
+              formKey: formKey,
+              updateCategory: updateCategory,
+              updateImage: updateImage,
+              updateLink: updateLink,
+              updateNotes: updateNotes,
+              updateTitle: updateTitle,
+            ),
+            widget.model.isLoading
+                ? CircularProgressIndicator()
+                : GestureDetector(
+                    onTap: () {
+                      print('save tapped');
+                      updateNote();
+                    },
+                    child: Container(
+                      width: 320.0,
+                      height: 60.0,
+                      margin: EdgeInsets.only(top: 10),
+                      alignment: FractionalOffset.center,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(247, 64, 106, 1.0),
+                        borderRadius:
+                            BorderRadius.all(const Radius.circular(30.0)),
+                      ),
+                      child: Text(
+                        "save",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.3,
+                        ),
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:fude/helpers/design_helpers.dart';
+
 class MainBanner extends StatelessWidget {
   final String title;
+  final String image;
 
-  MainBanner({this.title});
+  MainBanner({this.title, this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +17,7 @@ class MainBanner extends StatelessWidget {
         width: deviceWidth,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(title)
-          ],
+          children: <Widget>[Text(title)],
         ));
   }
 }

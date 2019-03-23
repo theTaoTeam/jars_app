@@ -5,7 +5,7 @@ import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/side_drawer.dart';
 import 'package:fude/pages/home/jars/jar/fav_tab.dart';
 import 'package:fude/pages/home/jars/jar/all_notes_tab.dart';
-import 'package:fude/pages/home/add-note/add_note.dart';
+import 'package:fude/pages/home/notes/notes_add.dart';
 
 class JarPage extends StatelessWidget {
   final MainModel model;
@@ -28,10 +28,10 @@ class JarPage extends StatelessWidget {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
-                  icon: Icon(Icons.list),
+                  icon: Icon(Icons.favorite),
                 ),
                 Tab(
-                  icon: Icon(Icons.favorite),
+                  icon: Icon(Icons.list),
                 ),
               ],
             ),
@@ -49,8 +49,8 @@ class JarPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: <Widget>[
-              AllNotesTab(jar: jar, model: model),
               FavTab(jar: jar, model: model),
+              AllNotesTab(jar: jar, model: model),
             ],
           )),
     );

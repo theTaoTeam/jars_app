@@ -23,14 +23,9 @@ class _ImageInputState extends State<ImageInput> {
       setState(() {
         _imageFile = image;
       });
-      // print(_imageFile);
-      // _updateImage(_imageFile);
+      widget.updateImage(image);
       Navigator.pop(context);
     });
-  }
-
-  void _updateImage(File image) {
-    // widget.updateImage(AssetImage(image.toString()));
   }
 
   void _openImagePicker(BuildContext context) {
@@ -67,8 +62,9 @@ class _ImageInputState extends State<ImageInput> {
       children: <Widget>[
         _imageFile == null
             ? OutlineButton(
+                color: Color.fromRGBO(0, 0, 0, 0.8),
                 borderSide: BorderSide(
-                  color: buttonColor,
+                  color: Colors.white,
                   width: 2.0,
                 ),
                 onPressed: () {
@@ -79,15 +75,11 @@ class _ImageInputState extends State<ImageInput> {
                   children: <Widget>[
                     Icon(
                       Icons.camera_alt,
-                      color: buttonColor,
+                      color: Colors.white,
                     ),
                     SizedBox(
                       width: 5.0,
                     ),
-                    Text(
-                      'Add Image',
-                      style: TextStyle(color: buttonColor),
-                    )
                   ],
                 ),
               )
@@ -95,7 +87,8 @@ class _ImageInputState extends State<ImageInput> {
                 width: 150,
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green, width: 2.0)),
+                    border: Border.all(color: Colors.green, width: 2.0),
+                    color: Color.fromRGBO(0, 0, 0, 0.8)),
                 child: Icon(Icons.check, color: Colors.green))
       ],
     );
