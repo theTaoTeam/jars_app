@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/widgets/form-inputs/image.dart';
-import 'package:fude/widgets/form-inputs/add_tojar_inputs.dart';
+import 'package:fude/widgets/form-inputs/edit_note_input.dart';
+import 'package:fude/scoped-models/main.dart';
 
-class AddToJarForm extends StatelessWidget {
+class EditNoteForm extends StatelessWidget {
+  final MainModel model;
+  final DocumentSnapshot note;
   final GlobalKey formKey;
   final String selectedCategory;
-  final List<dynamic> categoryList;
   final Function updateCategory;
   final Function updateTitle;
   final Function updateLink;
   final Function updateNotes;
   final Function updateImage;
 
-  AddToJarForm(
-      {this.formKey,
-      this.categoryList,
+  EditNoteForm(
+      {this.model,
+      this.note,
+      this.formKey,
       this.selectedCategory,
       this.updateCategory,
       this.updateTitle,
@@ -25,7 +29,8 @@ class AddToJarForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(categoryList);
+    print(model.selectedJar['categories']);
+    final List<dynamic> categoryList = model.selectedJar['categories'];
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -38,8 +43,8 @@ class AddToJarForm extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   DropdownButton(
-                    hint:
-                        Text('category', style: TextStyle(color: Colors.white)),
+                    hint: Text(note.data['category'],
+                        style: TextStyle(color: Colors.white)),
                     value: selectedCategory,
                     items: categoryList.map((val) {
                       return DropdownMenuItem(
@@ -54,16 +59,19 @@ class AddToJarForm extends StatelessWidget {
                   ),
                 ],
               ),
-              AddToJarInput(
+              EditNoteInput(
+                initialVal: note.data['title'],
                 hint: "Title",
                 updateTitle: updateTitle,
               ),
-              AddToJarInput(
+              EditNoteInput(
+                initialVal: note.data['link'],
                 hint: "Link",
                 updateLink: updateLink,
               ),
-              AddToJarInput(
-                hint: "Notes",
+              EditNoteInput(
+                initialVal: note.data['notes'],
+                hint: 'Notes',
                 updateNotes: updateNotes,
               ),
               ImageInput(updateImage: updateImage),

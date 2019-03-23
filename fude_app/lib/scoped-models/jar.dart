@@ -3,10 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
 import 'dart:io';
-import 'dart:math';
 
 mixin JarModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -51,9 +48,13 @@ mixin JarModel on Model {
   }
 
   void addToJar(String category, String title, String notes, String link,
-      AssetImage image) async {
+      File image) async {
+    print('image: ----------- $image');
+    Uri imageLocation;
     try {
-      String imageStorageLink = await uploadNoteImageToStorage(image.assetName);
+      if (image != null) {
+        imageLocation = await uploadNoteImageToStorage(image);
+      }
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
@@ -65,29 +66,51 @@ mixin JarModel on Model {
         'notes': notes,
         'link': link,
         'isFav': false,
-        'image': imageStorageLink
+        'image': imageLocation.toString(),
       });
     } catch (e) {
       print(e);
     }
   }
 
-  Future<String> uploadNoteImageToStorage(String filepath) async {
-    String _path;
+  Future<Uri> uploadNoteImageToStorage(File image) async {
+    final StorageReference ref =
+        FirebaseStorage.instance.ref().child('images/');
+    //Upload the file to firebase
+    StorageUploadTask uploadTask = ref.putFile(image);
+    // Waits till the file is uploaded then stores the download url
+    Uri location = (await uploadTask.future).downloadUrl;
+    //returns the download url
+    print(location);
+    return location;
+  }
 
-    final ByteData bytes = await rootBundle.load(filepath);
-    final Directory tempDir = Directory.systemTemp;
-    final String fileName = "${Random().nextInt(1000)}.png";
-    final File file = File('${tempDir.path}/$fileName');
-    file.writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
-
-    final StorageReference ref = FirebaseStorage.instance.ref().child(fileName);
-    final StorageUploadTask task = ref.putFile(file);
-    final Uri downloadUrl = (await task.future).downloadUrl;
-    _path = downloadUrl.toString();
-    print('_path: $_path');
-
-    return _path;
+  void updateNote(DocumentSnapshot note, String category, String title,
+      String notes, String link, File image) async {
+    print('$category, $title, $notes, $link, $image');
+    Uri imageLocation;
+    try {
+      if (image != null) {
+        imageLocation = await uploadNoteImageToStorage(image);
+      }
+      print(imageLocation);
+      await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .document(note.documentID)
+          .updateData({
+        'category': category,
+        'title': title,
+        'notes': notes,
+        'link': link,
+        'isFav': note['isFav'],
+        'image':
+            imageLocation == null ? note['image'] : imageLocation.toString()
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   void toggleFavoriteStatus(DocumentSnapshot note) async {

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/helpers/design_helpers.dart';
 import 'package:fude/pages/home/jars/jar/jar_banner.dart';
-import 'package:fude/pages/home/jars/jar/all_notes.dart';
+import 'package:fude/pages/home/notes/all-notes/all_notes.dart';
 import 'package:fude/scoped-models/main.dart';
 
 class AllNotesTab extends StatelessWidget {

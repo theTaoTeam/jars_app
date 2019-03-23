@@ -25,13 +25,12 @@ class MainView extends StatelessWidget {
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Color.fromRGBO(0, 0, 0, 0.15), BlendMode.dstATop),
-            image: AssetImage('assets/logo.png'),
+            image: logoInStorage(),
           ),
         ),
         child: ListView(
           padding: EdgeInsets.only(top: 0),
           children: <Widget>[
-            MainBanner(title: 'JARS APP'),
             SizedBox(height: 20),
             buildDivider(title: 'jars'),
             SizedBox(height: 20),

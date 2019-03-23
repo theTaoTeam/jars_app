@@ -14,7 +14,7 @@ class FavNotes extends StatelessWidget {
     if (document.data['isFav'] == true) {
       return NotesCard(note: document, model: model);
     } else {
-      print('not favorited: $document');
+      print('not favorited: ${document.data}');
     }
   }
 
