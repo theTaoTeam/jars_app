@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/helpers/design_helpers.dart';
-import 'package:fude/pages/home/jars/jar/jar_banner.dart';
-import 'package:fude/pages/home/notes/all-notes/all_notes.dart';
+import 'package:fude/pages/home/jars/jar_banner.dart';
+import 'package:fude/pages/home/notes/fav-notes/fav_notes.dart';
 import 'package:fude/scoped-models/main.dart';
 
-class AllNotesTab extends StatelessWidget {
-  final DocumentSnapshot jar;
+class FavTab extends StatelessWidget {
   final MainModel model;
+  final DocumentSnapshot jar;
 
-
-  AllNotesTab({this.model, this.jar});
+  FavTab({this.jar, this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +29,8 @@ class AllNotesTab extends StatelessWidget {
         padding: EdgeInsets.only(top: 0),
         children: <Widget>[
           JarBanner(title: jar['title']),
-          buildDivider(title: 'all'),
-          AllNotes(jar: jar, model: model),
+          buildDivider(title: 'favorites'),
+          FavNotes(jar: jar, model: model),
         ],
       ),
     );
