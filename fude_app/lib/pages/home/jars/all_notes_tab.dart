@@ -31,7 +31,7 @@ class AllNotesTab extends StatelessWidget {
         children: <Widget>[
           JarBanner(title: jar['title']),
           buildDivider(title: 'all'),
-          AllNotes(jar: jar, model: model),
+          AllNotes(model: model),
         ],
       ),
     );
