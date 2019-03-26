@@ -51,7 +51,7 @@ class _JarPageState extends State<JarPage> {
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 pinned: true,
-                expandedHeight: 650.0,
+                expandedHeight: 550.0,
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(model.selectedJar.data['title']),
                   collapseMode: CollapseMode.parallax,

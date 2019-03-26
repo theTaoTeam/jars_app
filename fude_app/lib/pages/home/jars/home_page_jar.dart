@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/home/jars/jar.dart';
+import 'package:fude/pages/home/jars/jar_edit.dart';
 
 class HomePageJar extends StatelessWidget {
   HomePageJar({
@@ -82,11 +83,12 @@ class HomePageJar extends StatelessWidget {
                   onPressed: () {
                     print('jar pressed, ${jar.documentID}');
                     model.getJarBySelectedId(jar.documentID);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return JarPage();
-                        },
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        curve: Curves.linear,
+                        type: PageTransitionType.downToUp,
+                        child: EditJarPage(),
                       ),
                     );
                   },
