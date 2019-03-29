@@ -16,6 +16,7 @@ class AddJarNameField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        initialValue: hint != "Name" ? hint : null ,
         style: TextStyle(
           color: Color.fromRGBO(236, 240, 241, 1),
         ),

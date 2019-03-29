@@ -6,7 +6,6 @@ import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/forms/edit_jar.dart';
 
 class EditJarPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _JarPageState();
@@ -28,7 +27,8 @@ class _JarPageState extends State<EditJarPage> {
       formKey.currentState.save(); // Save our form now.
       print('form saved.....sending to model');
     }
-    // model.updateJar(_formData['title'], _formData['category']);
+    print(_formData);
+    model.updateJar(_formData);
     Navigator.pop(context);
   }
 
@@ -42,14 +42,14 @@ class _JarPageState extends State<EditJarPage> {
   }
 
   void updateCategory(String val) {
-    print('update category called: $_formData');
+    print('update category called: $val');
     setState(() {
       _formData['categories'].add(val);
     });
   }
 
   void updateImage(File image) {
-    print(image);
+    print('image: $image');
     setState(() {
       _formData['image'] = image;
     });
@@ -100,6 +100,7 @@ class _JarPageState extends State<EditJarPage> {
                       updateCategory: updateCategory,
                       updateTitle: updateTitle,
                       categoryCount: categoryCount,
+                      updateImage: updateImage,
                       updateCategoryCount: updateCategoryCount,
                     ),
                     SizedBox(height: 40),
@@ -113,7 +114,9 @@ class _JarPageState extends State<EditJarPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Text('UPDATE JAR'),
-                          onPressed: () {},
+                          onPressed: () {
+                            updateJar(model);
+                          },
                         )
                       ],
                     )

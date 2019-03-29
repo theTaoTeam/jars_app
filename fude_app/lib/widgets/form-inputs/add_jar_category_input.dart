@@ -16,6 +16,7 @@ class AddJarCategoryField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        initialValue: hint != "Category" ? hint : null,
         style: TextStyle(
           color: Color.fromRGBO(236, 240, 241, 1),
         ),
@@ -27,7 +28,7 @@ class AddJarCategoryField extends StatelessWidget {
               EdgeInsets.only(top: 5.0, right: 20.0, bottom: 20.0, left: 15.0),
         ),
         onSaved: (String val) {
-          if (hint == 'Category') {
+          if (hint != null) {
             updateCategory(val);
           }
         },

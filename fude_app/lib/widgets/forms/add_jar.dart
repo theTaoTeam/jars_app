@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/widgets/form-inputs/add_jar_name_input.dart';
 import 'package:fude/widgets/form-inputs/add_jar_category_input.dart';
@@ -10,20 +11,23 @@ class AddJarForm extends StatelessWidget {
   final Function updateTitle;
   final Function updateCategory;
   final Function updateImage;
-  final Function incrementCategoryCount;
+  final Function updateCategoryCount;
+  final DocumentSnapshot jar;
 
   AddJarForm(
       {this.formKey,
+      this.jar,
       this.categoryCount,
       this.updateTitle,
       this.updateCategory,
       this.updateImage,
-      this.incrementCategoryCount});
+      this.updateCategoryCount});
 
-  
   Widget _buildFormTitles(String title) {
     return Row(
-      mainAxisAlignment: title == "ADD SOME CATEGORIES" ?MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+      mainAxisAlignment: title == "CATEGORIES"
+          ? MainAxisAlignment.spaceBetween
+          : MainAxisAlignment.start,
       children: <Widget>[
         Text(
           title,
@@ -31,16 +35,56 @@ class AddJarForm extends StatelessWidget {
               TextStyle(color: Color.fromRGBO(236, 240, 241, 1), fontSize: 16),
           textAlign: TextAlign.start,
         ),
-        title == "ADD SOME CATEGORIES"
+        title == "CATEGORIES"
             ? IconButton(
                 icon: Icon(Icons.add_circle_outline),
                 iconSize: 20,
                 color: Color.fromRGBO(236, 240, 241, 0.7),
                 onPressed: () {
-                  incrementCategoryCount();
+                  updateCategoryCount();
                 })
             : Container()
       ],
+    );
+  }
+
+  Column _buildExistingCategoryInputs() {
+    var children = <Widget>[];
+    for (var i = 0; i <= jar['categories'].length - 1; i++) {
+      children.add(
+        Column(
+          children: <Widget>[
+            AddJarCategoryField(
+              hint: jar['categories'][i],
+              updateCategory: updateCategory,
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      );
+    }
+    return Column(
+      children: children,
+    );
+  }
+
+  Column _addCategoryInputs() {
+    var children = <Widget>[];
+    for (var i = 0; i < categoryCount; i++) {
+      children.add(
+        Column(
+          children: <Widget>[
+            AddJarCategoryField(
+              hint: 'Category',
+              updateCategory: updateCategory,
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      );
+    }
+    return Column(
+      children: children,
     );
   }
 
@@ -57,26 +101,24 @@ class AddJarForm extends StatelessWidget {
               _buildFormTitles("YOUR JAR NAME"),
               SizedBox(height: 40),
               AddJarNameField(
-                hint: "Name",
+                hint: jar == null ? 'Name' : jar['title'],
                 updateTitle: updateTitle,
               ),
               SizedBox(height: 40),
-              _buildFormTitles("ADD SOME CATEGORIES"),
+              _buildFormTitles("CATEGORIES"),
               SizedBox(height: 40),
-              AddJarCategoryField(
-                hint: 'Category',
-                updateCategory: updateCategory,
-              ),
-              SizedBox(height: 20),
-              AddJarCategoryField(
-                hint: 'Category',
-                updateCategory: updateCategory,
-              ),
-              SizedBox(height: 20),
-              AddJarCategoryField(
-                hint: 'Category',
-                updateCategory: updateCategory,
-              ),
+              jar != null
+                  ? _buildExistingCategoryInputs()
+                  : Column(
+                      children: <Widget>[
+                        AddJarCategoryField(
+                          hint: 'Category',
+                          updateCategory: updateCategory,
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+              categoryCount > 0 ? _addCategoryInputs() : Container(),
               SizedBox(height: 40),
               _buildFormTitles("HOW ABOUT AN IMAGE?"),
               SizedBox(height: 30),

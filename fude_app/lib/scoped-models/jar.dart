@@ -17,15 +17,46 @@ mixin JarModel on Model {
     return _selJar;
   }
 
-  void addJar(String title, List<dynamic> categories) async {
-    print('in model.addJar: title: $title');
+  void addJar(Map<String, dynamic> data) async {
+    print('in model.addJar: data: $data');
     CollectionReference jarCollection = _firestore.collection('jars');
+    Uri imageLocation;
     try {
+      if (data['image'] != null) {
+        imageLocation = await uploadNoteImageToStorage(data['image']);
+      }
       final user = await _auth.currentUser();
       await jarCollection.document().setData(<String, dynamic>{
-        'title': title,
+        'title': data['title'],
         'owner': user.uid,
-        'categories': categories,
+        'categories': data['categories'],
+        'image': imageLocation == null
+            ? 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'
+            : imageLocation.toString(),
+        'isFav': false
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void updateJar(Map<String, dynamic> data) async {
+    print('$data');
+    Uri imageLocation;
+    try {
+      if (data['image'] != null) {
+        imageLocation = await uploadNoteImageToStorage(data['image']);
+      }
+      print(imageLocation);
+      await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .updateData({
+        'categories': data['categories'],
+        'title': data['title'],
+        'image':
+            imageLocation == null ? _selJar['image'] : imageLocation.toString(),
+        'isFav': _selJar['isFav']
       });
     } catch (e) {
       print(e);
