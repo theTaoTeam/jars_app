@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/helpers/design_helpers.dart';
 import 'package:fude/pages/home/notes/all-notes/all_notes.dart';
+import 'package:fude/pages/home/notes/notes_add.dart';
 
 class JarPage extends StatefulWidget {
   @override
@@ -23,16 +24,18 @@ class _JarPageState extends State<JarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
         body: Container(
+          height: height,
           decoration: BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                    Color.fromRGBO(33, 38, 43, 0.3), BlendMode.darken),
+                    Color.fromRGBO(33, 38, 43, 0.6), BlendMode.darken),
                 image: model.selectedJar.data['image'] != null
                     ? NetworkImage(model.selectedJar.data['image'])
                     : logoInStorage()),
@@ -40,8 +43,8 @@ class _JarPageState extends State<JarPage> {
               begin: FractionalOffset.bottomCenter,
               end: FractionalOffset.topCenter,
               colors: [
-                Color.fromRGBO(33, 38, 43, 0.7),
-                Color.fromRGBO(33, 38, 43, 1),
+                Color.fromRGBO(235, 237, 238, 1),
+                Color.fromRGBO(253, 251, 251, 1),
               ],
             ),
           ),
@@ -62,7 +65,7 @@ class _JarPageState extends State<JarPage> {
                     icon: Icon(Icons.add),
                     iconSize: 40,
                     color: Color.fromRGBO(236, 240, 241, 1),
-                    onPressed: () => print('add to jar pressed'),
+                    onPressed: () => Navigator.pushNamed(context, '/addnote'),
                   )
                 ],
               ),

@@ -1,91 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
-import 'package:fude/widgets/forms/add_tojar_form_container.dart';
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/widgets/side_drawer.dart';
 import 'dart:io';
 
-class AddNotePage extends StatefulWidget {
-  final List<dynamic> categories;
+import 'package:fude/scoped-models/main.dart';
+import 'package:fude/widgets/forms/edit_jar.dart';
 
-  AddNotePage({this.categories});
-
+class EditJarPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _AddNotePageState();
+    return _JarPageState();
   }
 }
 
-class _AddNotePageState extends State<AddNotePage> {
-  String selectedCategory;
-  String selectedJar;
-  MainModel model = MainModel();
-
+class _JarPageState extends State<EditJarPage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  int categoryCount = 0;
   final Map<String, dynamic> _formData = {
-    'category': '',
-    'jar': '',
     'title': '',
-    'link': '',
-    'notes': '',
+    'categories': [],
     'image': null,
   };
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
-
-  void addToJar(MainModel model) {
+  void updateJar(MainModel model) {
     // First validate form.
     if (this.formKey.currentState.validate()) {
       formKey.currentState.save(); // Save our form now.
-      print('adding to jar ${_formData['image']}');
-      model.addToJar(_formData['category'], _formData['title'],
-          _formData['notes'], _formData['link'], _formData['image']);
-      Navigator.pop(context);
+      print('form saved.....sending to model');
+    }
+    print(_formData);
+    model.updateJar(_formData);
+    Navigator.pop(context);
+  }
+
+  void updateTitle(String val) {
+    print('update title called: $_formData');
+    if (val != null) {
+      setState(() {
+        _formData['title'] = val;
+      });
     }
   }
 
-  void updateCategory(dynamic value) {
+  void updateCategory(String val) {
+    print('update category called: $val');
     setState(() {
-      selectedCategory = value;
-      _formData['category'] = value.toString();
-    });
-  }
-
-  void updateTitle(String value) {
-    setState(() {
-      _formData['title'] = value;
-    });
-  }
-
-  void updateLink(String value) {
-    setState(() {
-      _formData['link'] = value;
-    });
-  }
-
-  void updateNotes(String value) {
-    setState(() {
-      _formData['notes'] = value;
+      _formData['categories'].add(val);
     });
   }
 
   void updateImage(File image) {
-    print(image);
+    print('image: $image');
     setState(() {
       _formData['image'] = image;
     });
   }
 
+  void updateCategoryCount() {
+    print(categoryCount);
+    setState(() {
+      categoryCount += 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
-    final double deviceWidth = MediaQuery.of(context).size.width;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -116,15 +94,14 @@ class _AddNotePageState extends State<AddNotePage> {
                     SizedBox(
                       height: 35,
                     ),
-                    AddToJarForm(
+                    EditJarForm(
                       formKey: formKey,
-                      categoryList: widget.categories,
-                      selectedCategory: selectedCategory,
+                      jar: model.selectedJar,
                       updateCategory: updateCategory,
                       updateTitle: updateTitle,
-                      updateLink: updateLink,
-                      updateNotes: updateNotes,
+                      categoryCount: categoryCount,
                       updateImage: updateImage,
+                      updateCategoryCount: updateCategoryCount,
                     ),
                     SizedBox(height: 40),
                     Row(
@@ -136,9 +113,9 @@ class _AddNotePageState extends State<AddNotePage> {
                         RaisedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          child: Text('ADD TO JAR'),
+                          child: Text('UPDATE JAR'),
                           onPressed: () {
-                            addToJar(model);
+                            updateJar(model);
                           },
                         )
                       ],

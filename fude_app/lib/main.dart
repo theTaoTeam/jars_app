@@ -7,7 +7,7 @@ import 'package:fude/pages/auth/login/login.dart';
 import 'package:fude/pages/auth/signup/signup.dart';
 import 'package:fude/pages/auth/forgot-password/forgotpassword.dart';
 import 'package:fude/pages/home/home.dart';
-import 'package:fude/pages/home/jars/add_jar.dart';
+import 'package:fude/pages/home/jars/jar_add.dart';
 import 'package:fude/pages/home/notes/notes_add.dart';
 import 'package:fude/scoped-models/main.dart';
 

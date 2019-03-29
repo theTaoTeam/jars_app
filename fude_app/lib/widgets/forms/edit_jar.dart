@@ -5,7 +5,7 @@ import 'package:fude/widgets/form-inputs/add_jar_name_input.dart';
 import 'package:fude/widgets/form-inputs/add_jar_category_input.dart';
 import 'package:fude/widgets/form-inputs/image.dart';
 
-class AddJarForm extends StatelessWidget {
+class EditJarForm extends StatelessWidget {
   final GlobalKey formKey;
   final int categoryCount;
   final Function updateTitle;
@@ -14,7 +14,7 @@ class AddJarForm extends StatelessWidget {
   final Function updateCategoryCount;
   final DocumentSnapshot jar;
 
-  AddJarForm(
+  EditJarForm(
       {this.formKey,
       this.jar,
       this.categoryCount,
@@ -49,6 +49,7 @@ class AddJarForm extends StatelessWidget {
   }
 
   Column _buildExistingCategoryInputs() {
+    print(jar['categories']);
     var children = <Widget>[];
     for (var i = 0; i <= jar['categories'].length - 1; i++) {
       children.add(
@@ -63,9 +64,7 @@ class AddJarForm extends StatelessWidget {
         ),
       );
     }
-    return Column(
-      children: children,
-    );
+    return Column(children: children,);
   }
 
   Column _addCategoryInputs() {
@@ -83,9 +82,7 @@ class AddJarForm extends StatelessWidget {
         ),
       );
     }
-    return Column(
-      children: children,
-    );
+    return Column(children: children,);
   }
 
   @override
@@ -101,24 +98,14 @@ class AddJarForm extends StatelessWidget {
               _buildFormTitles("YOUR JAR NAME"),
               SizedBox(height: 40),
               AddJarNameField(
-                hint: jar == null ? 'Name' : jar['title'],
+                hint: jar['title'],
                 updateTitle: updateTitle,
               ),
               SizedBox(height: 40),
               _buildFormTitles("CATEGORIES"),
               SizedBox(height: 40),
-              jar != null
-                  ? _buildExistingCategoryInputs()
-                  : Column(
-                      children: <Widget>[
-                        AddJarCategoryField(
-                          hint: 'Category',
-                          updateCategory: updateCategory,
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-              categoryCount > 0 ? _addCategoryInputs() : Container(),
+              _buildExistingCategoryInputs(),
+              categoryCount > 0 ? _addCategoryInputs() :Container(),
               SizedBox(height: 40),
               _buildFormTitles("HOW ABOUT AN IMAGE?"),
               SizedBox(height: 30),

@@ -9,25 +9,26 @@ class AddJarNameField extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
+          left: BorderSide(
             width: 0.5,
-            color: Colors.black,
+            color: Color.fromRGBO(236, 240, 241, 1),
           ),
         ),
       ),
       child: TextFormField(
+        initialValue: hint != "Name" ? hint : null ,
         style: TextStyle(
-          color: Colors.black,
+          color: Color.fromRGBO(236, 240, 241, 1),
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hint,
-          hintStyle: TextStyle(color: Colors.black, fontSize: 15.0),
+          hintStyle: TextStyle(color: Color.fromRGBO(236, 240, 241, 0.7), fontSize: 15.0),
           contentPadding:
-              EdgeInsets.only(top: 20.0, right: 20.0, bottom: 20.0, left: 5.0),
+              EdgeInsets.only(top: 5.0, right: 20.0, bottom: 20.0, left: 15.0),
         ),
         onSaved: (String val) {
-          if (hint == 'Jar Name') {
+          if (hint != null) {
             updateTitle(val);
           }
         },
