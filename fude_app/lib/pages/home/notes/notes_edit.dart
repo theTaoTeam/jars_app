@@ -1,44 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/widgets/forms/edit_note_form_container.dart';
+import 'package:fude/pages/home/notes/note.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/widgets/side_drawer.dart';
-import 'package:fude/helpers/design_helpers.dart';
+import 'dart:io';
 
-class NotesEditPage extends StatefulWidget {
+class NoteEditPage extends StatefulWidget {
   final DocumentSnapshot note;
-  final MainModel model;
 
-  NotesEditPage({this.note, this.model});
+  NoteEditPage({this.note});
 
   @override
   State<StatefulWidget> createState() {
-    return _NotesEditPageState();
+    return _AddNotePageState();
   }
 }
 
-class _NotesEditPageState extends State<NotesEditPage> {
-  final Map<String, dynamic> _formData = {
-    'title': '',
-    'notes': '',
-    'category': '',
-    'link': '',
-    'image': null
-  };
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class _AddNotePageState extends State<NoteEditPage> {
   String selectedCategory;
   String selectedJar;
 
+  final Map<String, dynamic> _formData = {
+    'category': '',
+    'title': '',
+    'link': '',
+    'notes': '',
+    'image': null,
+  };
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      selectedCategory = widget.note['category'];
+    });
+  }
+
+  void updateNote(MainModel model) {
+    // First validate form.
+    if (this.formKey.currentState.validate()) {
+      formKey.currentState.save(); // Save our form now.
+      print('adding to jar ${_formData['image']}');
+      model.updateNote(widget.note, _formData['category'], _formData['title'],
+          _formData['notes'], _formData['link'], _formData['image']);
+      Navigator.pop(context);
+    }
+  }
+
   void updateCategory(dynamic value) {
+    print("updating cateogory: $value");
     setState(() {
       selectedCategory = value;
       _formData['category'] = value.toString();
     });
   }
 
-  void updateTitle(String value) {
+  void updateName(String value) {
     setState(() {
       _formData['title'] = value;
     });
@@ -51,117 +73,95 @@ class _NotesEditPageState extends State<NotesEditPage> {
   }
 
   void updateNotes(String value) {
-    print('updating notes');
     setState(() {
       _formData['notes'] = value;
     });
   }
 
   void updateImage(File image) {
-    print('updating image');
+    print(image);
     setState(() {
       _formData['image'] = image;
     });
   }
 
-  void updateNote() {
-     // First validate form.
-    if (this.formKey.currentState.validate()) {
-      formKey.currentState.save(); // Save our form now.
-      widget.model.updateNote(
-          widget.note,
-          _formData['category'],
-          _formData['title'],
-          _formData['notes'],
-          _formData['link'],
-          _formData['image']);
-      Navigator.pop(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
-    final double deviceWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Color.fromRGBO(175, 31, 82, 1),
-        iconTheme: IconThemeData(
-          color: Colors.white, //change your color here
-        ),
-      ),
-      drawer: buildSideDrawer(context, widget.model),
-      floatingActionButton: Container(
-        padding: EdgeInsets.fromLTRB(40, 0, 0, 0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            FloatingActionButton(
-              child: Icon(Icons.arrow_back),
-              backgroundColor: Colors.red,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        ),
-      ),
-      body: Container(
-        padding: EdgeInsets.only(top: deviceHeight * 0.10),
-        width: deviceWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            colorFilter:
-                ColorFilter.mode(Color.fromRGBO(0, 0, 0, 0.7), BlendMode.dstATop),
-            image: widget.note['image'] != ''
-                ? NetworkImage(widget.note['image'])
-                : logoInStorage(),
-          ),
-        ),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            EditNoteForm(
-              model: widget.model,
-              note: widget.note,
-              formKey: formKey,
-              updateCategory: updateCategory,
-              updateImage: updateImage,
-              updateLink: updateLink,
-              updateNotes: updateNotes,
-              updateTitle: updateTitle,
-            ),
-            widget.model.isLoading
-                ? CircularProgressIndicator()
-                : GestureDetector(
-                    onTap: () {
-                      print('save tapped');
-                      updateNote();
-                    },
-                    child: Container(
-                      width: 320.0,
-                      height: 60.0,
-                      margin: EdgeInsets.only(top: 10),
-                      alignment: FractionalOffset.center,
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(247, 64, 106, 1.0),
-                        borderRadius:
-                            BorderRadius.all(const Radius.circular(30.0)),
-                      ),
-                      child: Text(
-                        "save",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w300,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
+    final double height = MediaQuery.of(context).size.height;
+
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: Container(),
+          backgroundColor: Color.fromRGBO(33, 38, 43, 1),
+          elevation: 0,
+          actions: <Widget>[
+            IconButton(
+              padding: EdgeInsets.only(right: 25),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              icon: Icon(Icons.close),
+              color: Color.fromRGBO(236, 240, 241, 1),
+              iconSize: 34,
+              onPressed: () => Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.upToDown,
+                      child: NotePage(note: widget.note),
                     ),
                   ),
+            )
           ],
         ),
-      ),
-    );
+        body: Container(
+            height: height,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(33, 38, 43, 1),
+            ),
+            child: ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 35,
+                    ),
+                    EditNoteForm(
+                      formKey: formKey,
+                      note: widget.note,
+                      categoryList: model.selectedJar.data['categories'],
+                      selectedCategory: selectedCategory,
+                      updateCategory: updateCategory,
+                      updateName: updateName,
+                      updateLink: updateLink,
+                      updateNotes: updateNotes,
+                      updateImage: updateImage,
+                    ),
+                    SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 20,
+                        ),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Text('ADD TO JAR'),
+                          onPressed: () {
+                            updateNote(model);
+                          },
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            )),
+      );
+    });
   }
 }
