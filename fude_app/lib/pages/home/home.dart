@@ -47,7 +47,21 @@ class _HomePageState extends State<HomePage> {
     final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(253, 251, 251, 1),
+        elevation: 0.0,
+        title: GestureDetector(
+          child: Image.network(
+            'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
+            height: height * 0.2,
+            width: width * 0.2,
+          ),
+          onTap: () => print('invert theme pressed'),
+        ),
+      ),
       body: Container(
+        height: height,
+        width: width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: FractionalOffset.bottomCenter,
@@ -56,64 +70,61 @@ class _HomePageState extends State<HomePage> {
                 Color.fromRGBO(235, 237, 238, 1),
                 Color.fromRGBO(253, 251, 251, 1),
               ]),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          // borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(0, height * 0.2, 0, height * 0.2),
-              width: width,
-              height: height * 0.55,
-              child: StreamBuilder(
-                  stream: Firestore.instance.collection('jars').snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      print('no jars');
-                      return Container();
-                    } else {
-                      hasJars = true;
-                      return Container(
-                        child: PageTransformer(
-                          pageViewBuilder: (context, visibilityResolver) {
-                            return PageView.builder(
-                              reverse: true,
-                              controller: PageController(
-                                  viewportFraction: 0.88, initialPage: 1),
-                              itemCount: snapshot.data.documents.length,
-                              itemBuilder: (context, index) {
-                                final PageVisibility pageVisibility =
-                                    visibilityResolver
-                                        .resolvePageVisibility(index);
+            StreamBuilder(
+                stream: Firestore.instance.collection('jars').snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    print('no jars');
+                    return Container();
+                  } else {
+                    hasJars = true;
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
+                      width: width,
+                      height: height * 0.55,
+                      child: PageTransformer(
+                        pageViewBuilder: (context, visibilityResolver) {
+                          return PageView.builder(
+                            reverse: true,
+                            controller: PageController(
+                                viewportFraction: 0.88, initialPage: 1),
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) {
+                              final PageVisibility pageVisibility =
+                                  visibilityResolver
+                                      .resolvePageVisibility(index);
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    widget.model.getJarBySelectedId(snapshot
-                                        .data.documents[index].documentID);
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        curve: Curves.linear,
-                                        type: PageTransitionType.fade,
-                                        child: JarPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: HomePageJar(
-                                    model: widget.model,
-                                    jar: snapshot.data.documents[index],
-                                    pageVisibility: pageVisibility,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    }
-                  }),
-            ),
-            Text('Powered by Tao Team'),
-
+                              return GestureDetector(
+                                onTap: () {
+                                  widget.model.getJarBySelectedId(snapshot
+                                      .data.documents[index].documentID);
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      curve: Curves.linear,
+                                      type: PageTransitionType.fade,
+                                      child: JarPage(model: widget.model),
+                                    ),
+                                  );
+                                },
+                                child: HomePageJar(
+                                  model: widget.model,
+                                  jar: snapshot.data.documents[index],
+                                  pageVisibility: pageVisibility,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }),
           ],
         ),
       ),

@@ -10,12 +10,17 @@ mixin JarModel on Model {
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
   List<String> favoriteNotes;
+  // List<DocumentSnapshot> _jarNotesByCategory = [];
 
   bool _isLoading = false;
 
   DocumentSnapshot get selectedJar {
     return _selJar;
   }
+
+  // List<DocumentSnapshot> get jarNotesByCategory {
+  //   return _jarNotesByCategory;
+  // }
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
@@ -97,7 +102,8 @@ mixin JarModel on Model {
         'notes': notes,
         'link': link,
         'isFav': false,
-        'image': imageLocation.toString(),
+        'image':
+            imageLocation == null ? _selJar['image'] : imageLocation.toString(),
       });
     } catch (e) {
       print(e);
@@ -131,7 +137,7 @@ mixin JarModel on Model {
           .collection('jarNotes')
           .document(note.documentID)
           .updateData({
-        'category': category,
+        'category': category == '' ? note['category'] : category,
         'title': title,
         'notes': notes,
         'link': link,
@@ -167,5 +173,26 @@ mixin JarModel on Model {
     } catch (e) {
       print(e);
     }
+  }
+
+Future<List<DocumentSnapshot>> fetchJarNotesByCategory(String category) async {
+    List<DocumentSnapshot> _jarNotesByCategory = [];
+    QuerySnapshot notes;
+    try {
+      notes = await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .getDocuments();
+    } catch (e) {
+      print(e);
+    }
+    notes.documents.forEach((doc) {
+      if (doc.data['category'] == category) {
+        // print(doc.documentID);
+        _jarNotesByCategory.add(doc);
+      }
+    });
+    return _jarNotesByCategory;
   }
 }

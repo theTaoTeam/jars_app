@@ -8,7 +8,7 @@ class AddToJarForm extends StatelessWidget {
   final String selectedCategory;
   final List<dynamic> categoryList;
   final Function updateCategory;
-  final Function updateTitle;
+  final Function updateName;
   final Function updateLink;
   final Function updateNotes;
   final Function updateImage;
@@ -18,10 +18,25 @@ class AddToJarForm extends StatelessWidget {
       this.categoryList,
       this.selectedCategory,
       this.updateCategory,
-      this.updateTitle,
+      this.updateName,
       this.updateLink,
       this.updateNotes,
       this.updateImage});
+
+  Widget _buildTextSections(String hint) {
+    Function update;
+    if (hint == "Name") {
+      update = updateName;
+    } else if (hint == "Link") {
+      update = updateLink;
+    } else if (hint == 'Notes') {
+      update = updateNotes;
+    }
+    return AddToJarInput(
+      hint: hint,
+      update: update,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +44,41 @@ class AddToJarForm extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
-          key: formKey,
-          autovalidate: true,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  DropdownButton(
-                    hint:
-                        Text('category', style: TextStyle(color: Colors.white)),
-                    value: selectedCategory,
-                    items: categoryList.map((val) {
-                      return DropdownMenuItem(
-                        value: val.toString(),
-                        child: Text(val.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (dynamic val) {
-                      print(val);
-                      updateCategory(val);
-                    },
-                  ),
-                ],
-              ),
-              AddToJarInput(
-                hint: "Title",
-                updateTitle: updateTitle,
-              ),
-              AddToJarInput(
-                hint: "Link",
-                updateLink: updateLink,
-              ),
-              AddToJarInput(
-                hint: "Notes",
-                updateNotes: updateNotes,
-              ),
-              ImageInput(updateImage: updateImage),
-            ],
-          )),
+        key: formKey,
+        autovalidate: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                DropdownButton(
+                  hint: Text('category', style: TextStyle(color: Colors.white)),
+                  value: selectedCategory,
+                  items: categoryList.map((val) {
+                    return DropdownMenuItem(
+                      value: val.toString(),
+                      child: Text(val.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (dynamic val) {
+                    print(val);
+                    updateCategory(val);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 40),
+            _buildTextSections('Name'),
+            SizedBox(height: 30),
+            _buildTextSections('Link'),
+            SizedBox(height: 30),
+            _buildTextSections('Notes'),
+            SizedBox(height: 40),
+            ImageInput(updateImage: updateImage),
+          ],
+        ),
+      ),
     );
   }
 }

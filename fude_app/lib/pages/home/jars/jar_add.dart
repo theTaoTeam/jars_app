@@ -82,47 +82,48 @@ class _JarPageState extends State<AddJarPage> {
           ],
         ),
         body: Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(33, 38, 43, 1),
-            ),
-            child: ListView(
-              // shrinkWrap: true,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 35,
-                    ),
-                    AddJarForm(
-                      formKey: formKey,
-                      updateCategory: updateCategory,
-                      updateTitle: updateTitle,
-                      updateImage: updateImage,
-                      updateCategoryCount: updateCategoryCount,
-                      categoryCount: categoryCount,
-                    ),
-                    SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 20,
-                        ),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Text('ADD JAR'),
-                          onPressed: () {
-                            addJar(model);
-                          },
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            )),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(33, 38, 43, 1),
+          ),
+          child: ListView(
+            // shrinkWrap: true,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 35,
+                  ),
+                  AddJarForm(
+                    formKey: formKey,
+                    updateCategory: updateCategory,
+                    updateTitle: updateTitle,
+                    updateImage: updateImage,
+                    updateCategoryCount: updateCategoryCount,
+                    categoryCount: categoryCount,
+                  ),
+                  SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 20,
+                      ),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: Text('ADD JAR'),
+                        onPressed: () {
+                          addJar(model);
+                        },
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       );
     });
   }

@@ -3,7 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 
 import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/widgets/side_drawer.dart';
 import 'dart:io';
 
 class AddNotePage extends StatefulWidget {
@@ -57,7 +56,7 @@ class _AddNotePageState extends State<AddNotePage> {
     });
   }
 
-  void updateTitle(String value) {
+  void updateName(String value) {
     setState(() {
       _formData['title'] = value;
     });
@@ -84,8 +83,8 @@ class _AddNotePageState extends State<AddNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
-    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -96,6 +95,8 @@ class _AddNotePageState extends State<AddNotePage> {
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 25),
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               icon: Icon(Icons.close),
               color: Color.fromRGBO(236, 240, 241, 1),
               iconSize: 34,
@@ -104,11 +105,12 @@ class _AddNotePageState extends State<AddNotePage> {
           ],
         ),
         body: Container(
+            height: height,
             decoration: BoxDecoration(
               color: Color.fromRGBO(33, 38, 43, 1),
             ),
             child: ListView(
-              // shrinkWrap: true,
+              shrinkWrap: true,
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,10 +120,10 @@ class _AddNotePageState extends State<AddNotePage> {
                     ),
                     AddToJarForm(
                       formKey: formKey,
-                      categoryList: widget.categories,
+                      categoryList: model.selectedJar.data['categories'],
                       selectedCategory: selectedCategory,
                       updateCategory: updateCategory,
-                      updateTitle: updateTitle,
+                      updateName: updateName,
                       updateLink: updateLink,
                       updateNotes: updateNotes,
                       updateImage: updateImage,
