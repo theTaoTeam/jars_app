@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/pages/home/notes/note.dart';
+import 'package:fude/pages/notes/note.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/helpers/design_helpers.dart';
 

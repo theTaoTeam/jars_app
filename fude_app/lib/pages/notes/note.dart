@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/home/notes/notes_edit.dart';
-import 'package:fude/pages/home/jars/jar_notes.dart';
-import 'package:fude/pages/home/jars/jar.dart';
+import 'package:fude/pages/notes/notes_edit.dart';
+import 'package:fude/pages/jars/jar_notes.dart';
+import 'package:fude/pages/jars/jar.dart';
 
 class NotePage extends StatelessWidget {
   final DocumentSnapshot note;

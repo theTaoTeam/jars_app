@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/widgets/forms/edit_note_form_container.dart';
-import 'package:fude/pages/home/notes/note.dart';
+import 'package:fude/pages/notes/note.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'dart:io';
 

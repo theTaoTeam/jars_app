@@ -5,8 +5,8 @@ import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/home/jars/jar_edit.dart';
-import 'package:fude/pages/home/jars/jar_add.dart';
+import 'package:fude/pages/jars/jar_edit.dart';
+import 'package:fude/pages/jars/jar_add.dart';
 
 class HomePageJar extends StatelessWidget {
   HomePageJar({
@@ -113,17 +113,18 @@ class HomePageJar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
-                      icon: Icon(Icons.add),
-                      iconSize: 82,
-                      color: Color.fromRGBO(236, 240, 241, 1),
-                      onPressed: () => Navigator.push(
-                            context,
-                            PageTransition(
-                              curve: Curves.linear,
-                              type: PageTransitionType.downToUp,
-                              child: AddJarPage(),
-                            ),
-                          )),
+                    icon: Icon(Icons.add),
+                    iconSize: 82,
+                    color: Color.fromRGBO(236, 240, 241, 1),
+                    onPressed: () => Navigator.push(
+                          context,
+                          PageTransition(
+                            curve: Curves.linear,
+                            type: PageTransitionType.downToUp,
+                            child: AddJarPage(),
+                          ),
+                        ),
+                  ),
                   Text(
                     jar['title'].toUpperCase(),
                     style: TextStyle(
@@ -156,12 +157,12 @@ class HomePageJar extends StatelessWidget {
     var imageOverlayGradient = DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: FractionalOffset.bottomCenter,
-          end: FractionalOffset.topCenter,
+          begin: FractionalOffset.topCenter,
+          end: FractionalOffset.bottomCenter,
           colors: jar['title'] != 'Add Jar'
               ? [
-                  Color.fromRGBO(33, 38, 43, 0.7),
-                  Color.fromRGBO(33, 38, 43, 1),
+                  Color.fromRGBO(33, 38, 43, 0.1),
+                  Color.fromRGBO(33, 38, 43, 0.5),
                 ]
               : [
                   Color.fromRGBO(137, 247, 254, 1),
@@ -177,16 +178,19 @@ class HomePageJar extends StatelessWidget {
         vertical: 26.0,
         horizontal: 10.0,
       ),
-      child: Material(
-        elevation: 4.0,
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            imageOverlayGradient,
-            image,
-            _buildTextContainer(context),
-          ],
+      child: Hero(
+        tag: jar['title'],
+        child: Material(
+          elevation: 4.0,
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              image,
+              imageOverlayGradient,
+              _buildTextContainer(context),
+            ],
+          ),
         ),
       ),
     );
