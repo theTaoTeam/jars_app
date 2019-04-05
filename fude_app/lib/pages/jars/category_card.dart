@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'dart:ui';
 
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
 import 'package:fude/scoped-models/main.dart';
@@ -40,30 +41,15 @@ class CategoryCard extends StatelessWidget {
   _buildTextContainer(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    var titleText = _applyTextEffects(
-      translationFactor: 200.0,
-      child: Padding(
+    var titleText = Padding(
         padding: EdgeInsets.only(top: 16.0),
         child: Text(
           category.toUpperCase(),
           style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              .copyWith(color: Color.fromRGBO(45, 45, 45, 1), fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,
         ),
-      ),
-    );
-
-    var pullFromJarButton = _applyTextEffects(
-      translationFactor: 200.0,
-      child: Padding(
-        padding: EdgeInsets.only(top: 16.0),
-        child: Text(
-          category.toUpperCase(),
-          style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.left,
-        ),
-      ),
+      
     );
 
     return Positioned(
@@ -94,56 +80,50 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var image = ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: Image.network(
-        'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-        fit: BoxFit.cover,
-        alignment: FractionalOffset(
-          0.5 + (pageVisibility.pagePosition / 3),
-          0.5,
-        ),
-      ),
-    );
+    // var image = ClipRRect(
+    //   borderRadius: BorderRadius.circular(20.0),
+    //   child: BackdropFilter(
+    //     filter: ImageFilter.blur(),
+    //     child: Image.network(
+    //       'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
+    //       fit: BoxFit.cover,
+    //       alignment: FractionalOffset(
+    //         0.5 + (pageVisibility.pagePosition / 3),
+    //         0.5,
+    //       ),
+    //     ),
+    //   ),
+    // );
 
-    var imageOverlayGradient = DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: FractionalOffset.topCenter,
-          end: FractionalOffset.bottomCenter,
-          colors: index % 2 == 0
-              ? [
-                  Color.fromRGBO(137, 247, 254, 0.5),
-                  Color.fromRGBO(102, 166, 255, 0.9),
-                ]
-              : [
-                  Color.fromRGBO(255, 195, 160, 0.5),
-                  Color.fromRGBO(255, 175, 189, 0.9),
-                ],
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+    var imageOverlayGradient = Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(235, 237, 238, 1),
+                Color.fromRGBO(253, 251, 251, 1),
+          ]),
+          borderRadius: BorderRadius.circular(20),
+        
       ),
     );
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: 26.0,
+        vertical: 25.0,
         horizontal: 10.0,
       ),
       child: Material(
-        elevation: 4.0,
-        borderRadius: BorderRadius.all(Radius.circular(30)),
+        elevation: 8.0,
+        borderRadius: BorderRadius.all(Radius.circular(50)),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            image,
             imageOverlayGradient,
-            _applyTextEffects(
-              translationFactor: 200.0,
-              child: Center(
-                child: Text('pull'),
-              ),
-            ),
+            // _applyTextEffects(
+            //   translationFactor: 50.0,
+            //   child: Center(
+            //     child: ,
+            //   ),
+            // ),
             _buildTextContainer(context),
           ],
         ),

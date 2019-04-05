@@ -56,7 +56,7 @@ class HomePageJar extends StatelessWidget {
     // );
 
     var titleText = _applyTextEffects(
-      translationFactor: 200.0,
+      translationFactor: 100.0,
       child: Padding(
         padding: EdgeInsets.only(top: 16.0),
         child: Text(
@@ -140,7 +140,7 @@ class HomePageJar extends StatelessWidget {
   Widget build(BuildContext context) {
     var image = jar['title'] != 'Add Jar'
         ? ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(30.0),
             child: Image.network(
               jar['image'] != null
                   ? jar['image']
@@ -162,14 +162,14 @@ class HomePageJar extends StatelessWidget {
           colors: jar['title'] != 'Add Jar'
               ? [
                   Color.fromRGBO(33, 38, 43, 0.1),
-                  Color.fromRGBO(33, 38, 43, 0.5),
+                  Color.fromRGBO(33, 38, 43, 0.4),
                 ]
               : [
                   Color.fromRGBO(137, 247, 254, 1),
                   Color.fromRGBO(102, 166, 255, 1),
                 ],
         ),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
     );
 

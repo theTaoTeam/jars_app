@@ -59,12 +59,11 @@ class _HomePageState extends State<HomePage> {
             'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
             height: height * 0.2,
             width: width * 0.2,
-            
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color:Color.fromRGBO(235, 237, 238, 1),
+        color: Color.fromRGBO(235, 237, 238, 1),
         elevation: 0,
         child: Container(height: 20),
       ),
@@ -73,11 +72,11 @@ class _HomePageState extends State<HomePage> {
         width: width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: FractionalOffset.bottomCenter,
-              end: FractionalOffset.topCenter,
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
               colors: [
-                Color.fromRGBO(235, 237, 238, 1),
                 Color.fromRGBO(253, 251, 251, 1),
+                Color.fromRGBO(235, 237, 238, 1),
               ]),
           // borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
@@ -89,7 +88,9 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     print('no jars');
-                    return Container(child: CircularProgressIndicator(),);
+                    return Container(
+                      child: CircularProgressIndicator(),
+                    );
                   } else {
                     return Container(
                       margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
@@ -99,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                         pageViewBuilder: (context, visibilityResolver) {
                           return PageView.builder(
                             reverse: true,
+                            pageSnapping: true,
                             controller: PageController(
                                 viewportFraction: 0.88,
                                 initialPage: snapshot.data.documents.length),
@@ -108,26 +110,33 @@ class _HomePageState extends State<HomePage> {
                                   visibilityResolver
                                       .resolvePageVisibility(index);
 
-                              return GestureDetector(
-                                onTap: () {
-                                  widget.model.getJarBySelectedId(snapshot
-                                      .data.documents[index].documentID);
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      curve: Curves.linear,
-                                      duration: Duration(seconds: 1),
-                                      type: PageTransitionType.fade,
-                                      child: JarPage(model: widget.model),
-                                    ),
-                                  );
-                                },
-                                child: HomePageJar(
-                                  model: widget.model,
-                                  jar: snapshot.data.documents[index],
-                                  pageVisibility: pageVisibility,
-                                ),
-                              );
+                              return snapshot.data.documents[index]['title'] !=
+                                      'Add Jar'
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        widget.model.getJarBySelectedId(snapshot
+                                            .data.documents[index].documentID);
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            curve: Curves.linear,
+                                            duration: Duration(seconds: 1),
+                                            type: PageTransitionType.fade,
+                                            child: JarPage(model: widget.model),
+                                          ),
+                                        );
+                                      },
+                                      child: HomePageJar(
+                                        model: widget.model,
+                                        jar: snapshot.data.documents[index],
+                                        pageVisibility: pageVisibility,
+                                      ),
+                                    )
+                                  : HomePageJar(
+                                      model: widget.model,
+                                      jar: snapshot.data.documents[index],
+                                      pageVisibility: pageVisibility,
+                                    );
                             },
                           );
                         },

@@ -25,7 +25,7 @@ class _AddNotePageState extends State<AddNotePage> {
     'category': '',
     'jar': '',
     'title': '',
-    'link': '',
+    'link': null,
     'notes': '',
     'image': null,
   };

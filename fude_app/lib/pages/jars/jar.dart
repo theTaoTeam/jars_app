@@ -4,12 +4,14 @@ import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar_notes.dart';
-import 'package:fude/pages/notes/note.dart';
 import 'package:fude/pages/jars/category_card.dart';
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
+
+import 'package:fude/helpers/popupModal.dart';
 
 class JarPage extends StatefulWidget {
   final MainModel model;
@@ -67,35 +69,47 @@ class _JarPageState extends State<JarPage> {
       print(e);
     }
     randomNote = notes[_random.nextInt(notes.length)];
-    Navigator.pushReplacement(
-      context,
-      PageTransition(
-        curve: Curves.linear,
-        type: PageTransitionType.downToUp,
-        child: NotePage(note: randomNote, isRandom: true),
-      ),
-    );
+    showRandomNote(context, randomNote, model);
   }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    var image = Image.network(
-      widget.model.selectedJar.data['image'] != null
-          ? widget.model.selectedJar.data['image']
-          : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-      fit: BoxFit.cover,
+    var image = Positioned(
+      top: 0,
+      left: width * 0.01,
+      right: width * 0.01,
+      height: height * 0.5,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+              widget.model.selectedJar.data['image'] != null
+                  ? widget.model.selectedJar.data['image']
+                  : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
+              scale: 0.5,
+            ),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
     );
-    var imageOverlayGradient = DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: FractionalOffset.topCenter,
-            end: FractionalOffset.bottomCenter,
-            colors: [
-              Color.fromRGBO(33, 38, 43, 0.1),
-              Color.fromRGBO(33, 38, 43, 0.5),
-            ]),
+
+    var imageOverlayGradient = BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      child: Container(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [
+                  Color.fromRGBO(33, 38, 43, 0.4),
+                  Color.fromRGBO(33, 38, 43, 0.2),
+                ]),
+          ),
+        ),
       ),
     );
 
@@ -119,83 +133,114 @@ class _JarPageState extends State<JarPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
+                width: width,
+                height: height,
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Hero(
                       tag: model.selectedJar.data['title'],
                       child: Container(
                         height: height,
+                        width: width,
                         child: Material(
-                          elevation: 1.0,
+                          elevation: 0,
                           child: Stack(
                             fit: StackFit.expand,
                             children: [
+                              image,
                               imageOverlayGradient,
                               Container(
-                                padding: EdgeInsets.only(top: 40),
+                                color: Colors.transparent,
+                                padding: EdgeInsets.fromLTRB(
+                                    width * 0.02, height * 0.05, 0, 0),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     AnimatedOpacity(
                                       opacity: _swiperVisible ? 1.0 : 0.0,
                                       duration: Duration(milliseconds: 1000),
                                       child: Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(20, 0, 20, 0),
                                         child: IconButton(
-                                          icon: Icon(
-                                            Icons.keyboard_arrow_down,
-                                            color: Colors.white,
-                                          ),
-                                          iconSize: 40,
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                        ),
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Color.fromRGBO(
+                                                  253, 251, 251, 1),
+                                            ),
+                                            iconSize: 40,
+                                            onPressed: () {
+                                              _swiperVisible = false;
+                                              Navigator.pop(context);
+                                            }),
+                                      ),
+                                    ),
+                                    AnimatedOpacity(
+                                      opacity: _swiperVisible ? 1.0 : 0.0,
+                                      duration: Duration(milliseconds: 1000),
+                                      child: Container(
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.filter_list,
+                                              color: Color.fromRGBO(
+                                                  253, 251, 251, 1),
+                                            ),
+                                            iconSize: 39,
+                                            onPressed: () {
+                                              _swiperVisible = false;
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  curve: Curves.linear,
+                                                  type: PageTransitionType
+                                                      .rightToLeftWithFade,
+                                                  child: JarNotes(model: model),
+                                                ),
+                                              );
+                                            }),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               Positioned(
-                                left: width / 3,
-                                right: width / 3,
-                                bottom: 700,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      model.selectedJar.data['title']
-                                          .toUpperCase(),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 22),
-                                      textAlign:TextAlign.center,
-                                    ),
-                                  ],
+                                top: height * 0.24,
+                                left: width * 0.07,
+                                right: width * 0.07,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Text(
+                                    model.selectedJar.data['title']
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(253, 251, 251, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 38,
+                                        letterSpacing: 23),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
                               //SWIPER
-                              AnimatedOpacity(
-                                opacity: _swiperVisible ? 1.0 : 0.0,
-                                duration: Duration(milliseconds: 500),
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  width: width,
-                                  height: height * 0.4,
+                              Positioned(
+                                top: height * 0.46,
+                                // left: width * 0.47,
+                                width: width,
+                                height: height * 0.35,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 500),
                                   child: PageTransformer(
                                     pageViewBuilder:
                                         (context, visibilityResolver) {
                                       return PageView.builder(
                                         reverse: true,
+                                        pageSnapping: true,
+                                        scrollDirection: Axis.horizontal,
                                         controller: PageController(
-                                            viewportFraction: 0.7,
+                                            viewportFraction: .57,
                                             initialPage: model.selectedJar
                                                 .data['categories'].length),
                                         itemCount: model.selectedJar
@@ -204,9 +249,11 @@ class _JarPageState extends State<JarPage> {
                                           final PageVisibility pageVisibility =
                                               visibilityResolver
                                                   .resolvePageVisibility(index);
-
                                           return GestureDetector(
-                                            onTap: () {},
+                                            onTap: () => _pullRandomNote(
+                                                model,
+                                                model.selectedJar
+                                                    .data['categories'][index]),
                                             child: CategoryCard(
                                               model: widget.model,
                                               category: model.selectedJar
@@ -221,7 +268,57 @@ class _JarPageState extends State<JarPage> {
                                   ),
                                 ),
                               ),
-                              
+                              Positioned(
+                                bottom: height * 0.09,
+                                left: width * 0.07,
+                                right: width * 0.07,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Text(
+                                    'SELECT CATEGORY',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(253, 251, 251, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        letterSpacing: 3),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              // Positioned(
+                              //   bottom: height * 0.07,
+                              //   left: width * 0.2,
+                              //   right: width * 0.2,
+                              //   child: AnimatedOpacity(
+                              //     opacity: _swiperVisible ? 1.0 : 0.0,
+                              //     duration: Duration(milliseconds: 2000),
+                              //     child: Container(
+                              //       width: width,
+                              //       child: RaisedButton(
+                              //         highlightElevation: 0,
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(25)),
+                              //         textColor:
+                              //             Color.fromRGBO(253, 251, 251, 1),
+                              //         color: Colors.black,
+                              //         splashColor: Colors.transparent,
+                              //         highlightColor: Colors.grey,
+                              //         child: Text('ALL JAR IDEAS'),
+                              //         onPressed: () => Navigator.push(
+                              //               context,
+                              //               PageTransition(
+                              //                 curve: Curves.linear,
+                              //                 type: PageTransitionType
+                              //                     .rightToLeftWithFade,
+                              //                 child: JarNotes(model: model),
+                              //               ),
+                              //             ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         ),
@@ -230,44 +327,6 @@ class _JarPageState extends State<JarPage> {
                   ],
                 ),
               ),
-
-              // Expanded(
-              //   child: Align(
-              //     alignment: Alignment.bottomLeft,
-              //     child: AnimatedOpacity(
-              //       opacity: _swiperVisible ? 1.0 : 0.0,
-              //       duration: Duration(milliseconds: 2000),
-              //       child: Container(
-              //         height: height * 0.1,
-              //         padding: EdgeInsets.fromLTRB(20, 0, 0, 25),
-              //         child: GestureDetector(
-              //           onTap: () => Navigator.push(
-              //                 context,
-              //                 PageTransition(
-              //                   curve: Curves.linear,
-              //                   type: PageTransitionType.rightToLeftWithFade,
-              //                   child: JarNotes(model: model),
-              //                 ),
-              //               ),
-              //           child: Row(
-              //             children: <Widget>[
-              //               Text(
-              //                 'ALL IDEAS',
-              //                 style:
-              //                     TextStyle(color: Colors.black, fontSize: 16),
-              //               ),
-              //               Icon(
-              //                 Icons.arrow_forward_ios,
-              //                 color: Colors.black,
-              //                 size: 16,
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),

@@ -3,7 +3,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:fude/helpers/exceptions.dart';
-import 'package:fude/models/recipe.dart';
 
 
 mixin UserModel on Model {
