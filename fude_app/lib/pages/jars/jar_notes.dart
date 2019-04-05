@@ -28,86 +28,83 @@ class _JarNotesState extends State<JarNotes> {
   }
 
   _buildNoteListItem(BuildContext context, DocumentSnapshot document) {
-    if (document != null) {
-      if (isFavorite) {
-        if (document.data['isFav']) {
-          return NotesCard(note: document, model: widget.model);
-        }
-      } else {
-        return NotesCard(note: document, model: widget.model);
-      }
-    } else {
-      return Text('add a note to get started!');
-    }
+    return NotesCard(note: document, model: widget.model);
   }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    DocumentSnapshot jar = widget.model.selectedJar;
     final double width = MediaQuery.of(context).size.width;
+    DocumentSnapshot jar = widget.model.selectedJar;
+
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(
-              context,
-              PageTransition(
-                curve: Curves.linear,
-                type: PageTransitionType.fade,
-                child: AddNotePage(
-                    categories: widget.model.selectedJar.data['categories']),
-              ),
-            ),
-        tooltip: 'ADD ${widget.model.selectedJar.data['title']} IDEA',
-        child: Icon(Icons.add),
-        elevation: 2.0,
-        backgroundColor: Colors.black,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(236, 240, 241, 1),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () => Navigator.pop(
-                      context,
-                      PageTransition(
-                        curve: Curves.linear,
-                        type: PageTransitionType.upToDown,
-                        child: JarPage(),
-                      ),
-                    ),
-                color: Colors.black,
-                iconSize: 22,
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_arrow_left),
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          onPressed: () => Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  curve: Curves.linear,
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: JarPage(model: widget.model),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(right: 10),
-              child: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                icon: isFavorite
-                    ? Icon(Icons.favorite)
-                    : Icon(Icons.favorite_border),
-                iconSize: 30,
-                color: Color.fromRGBO(33, 38, 43, 1),
-                onPressed: () => toggleFavoriteFilter(),
-              ),
-            ),
-          ],
+          color: Colors.black,
+          iconSize: 40,
         ),
+        actions: <Widget>[
+          Container(
+            padding: EdgeInsets.only(
+              right: width * 0.025,
+            ),
+            child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              icon: Icon(Icons.add),
+              iconSize: 35,
+              color: Color.fromRGBO(33, 38, 43, 1),
+              onPressed: () => Navigator.push(
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.fade,
+                      child: AddNotePage(
+                          categories:
+                              widget.model.selectedJar.data['categories']),
+                    ),
+                  ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              right: width * 0.03,
+            ),
+            child: IconButton(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            icon:
+                isFavorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+            iconSize: 30,
+            color: Color.fromRGBO(33, 38, 43, 1),
+            onPressed: () => toggleFavoriteFilter(),
+          ),),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
-            color: Color.fromRGBO(236, 240, 241, 1),
-            borderRadius: BorderRadius.all(Radius.circular(25))),
-        padding: EdgeInsets.fromLTRB(15, 40, 15, 0),
+          gradient: LinearGradient(
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: [
+                Color.fromRGBO(253, 251, 251, 1),
+                Color.fromRGBO(235, 237, 238, 1),
+              ]),
+        ),
+        padding: EdgeInsets.fromLTRB(0, height * 0.03, 0, 0),
         child: StreamBuilder(
             stream: Firestore.instance
                 .collection('jars')
@@ -119,26 +116,46 @@ class _JarNotesState extends State<JarNotes> {
                 print('snapshot hasData: ${snapshot.hasData}');
                 return Center(child: CircularProgressIndicator());
               } else {
-                print('returning listview.builder...');
                 return snapshot.data.documents.length > 0
                     ? Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              SizedBox(width: width * .20),
-                            ],
-                          ),
                           ListView.builder(
-                            padding: EdgeInsets.only(top: 25),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            physics: ClampingScrollPhysics(),
                             itemCount: snapshot.data.documents.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return _buildNoteListItem(
-                                  context, snapshot.data.documents[index]);
+                              if (isFavorite) {
+                                if (snapshot.data.documents[index]['isFav']) {
+                                  return _buildNoteListItem(
+                                      context, snapshot.data.documents[index]);
+                                }
+                              } else {
+                                return _buildNoteListItem(
+                                    context, snapshot.data.documents[index]);
+                              }
                             },
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                  height: height * 0.15,
+                                  // width: width,
+                                  padding: EdgeInsets.fromLTRB(
+                                      width * 0.04, 0, width * 0.025, 0.15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        !isFavorite
+                                            ? 'ALL IDEAS'
+                                            : 'FAVORITE IDEAS',
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                    ],
+                                  )),
+                            ),
                           ),
                         ],
                       )
