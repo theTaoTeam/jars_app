@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/widgets/forms/edit_note_form_container.dart';
-import 'package:fude/pages/home/notes/note.dart';
+import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'dart:io';
 
-class NoteEditPage extends StatefulWidget {
-  final DocumentSnapshot note;
+class AddNotePage extends StatefulWidget {
+  final List<dynamic> categories;
 
-  NoteEditPage({this.note});
+  AddNotePage({this.categories});
 
   @override
   State<StatefulWidget> createState() {
@@ -19,14 +16,16 @@ class NoteEditPage extends StatefulWidget {
   }
 }
 
-class _AddNotePageState extends State<NoteEditPage> {
+class _AddNotePageState extends State<AddNotePage> {
   String selectedCategory;
   String selectedJar;
+  MainModel model = MainModel();
 
   final Map<String, dynamic> _formData = {
     'category': '',
+    'jar': '',
     'title': '',
-    'link': '',
+    'link': null,
     'notes': '',
     'image': null,
   };
@@ -36,24 +35,21 @@ class _AddNotePageState extends State<NoteEditPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      selectedCategory = widget.note['category'];
-    });
+    setState(() {});
   }
 
-  void updateNote(MainModel model) {
+  void addToJar(MainModel model) {
     // First validate form.
     if (this.formKey.currentState.validate()) {
       formKey.currentState.save(); // Save our form now.
       print('adding to jar ${_formData['image']}');
-      model.updateNote(widget.note, _formData['category'], _formData['title'],
+      model.addToJar(_formData['category'], _formData['title'],
           _formData['notes'], _formData['link'], _formData['image']);
       Navigator.pop(context);
     }
   }
 
   void updateCategory(dynamic value) {
-    print("updating cateogory: $value");
     setState(() {
       selectedCategory = value;
       _formData['category'] = value.toString();
@@ -104,14 +100,7 @@ class _AddNotePageState extends State<NoteEditPage> {
               icon: Icon(Icons.close),
               color: Color.fromRGBO(236, 240, 241, 1),
               iconSize: 34,
-              onPressed: () => Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                      curve: Curves.linear,
-                      type: PageTransitionType.upToDown,
-                      child: NotePage(note: widget.note),
-                    ),
-                  ),
+              onPressed: () => Navigator.pop(context),
             )
           ],
         ),
@@ -129,9 +118,8 @@ class _AddNotePageState extends State<NoteEditPage> {
                     SizedBox(
                       height: 35,
                     ),
-                    EditNoteForm(
+                    AddToJarForm(
                       formKey: formKey,
-                      note: widget.note,
                       categoryList: model.selectedJar.data['categories'],
                       selectedCategory: selectedCategory,
                       updateCategory: updateCategory,
@@ -152,7 +140,7 @@ class _AddNotePageState extends State<NoteEditPage> {
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Text('ADD TO JAR'),
                           onPressed: () {
-                            updateNote(model);
+                            addToJar(model);
                           },
                         )
                       ],

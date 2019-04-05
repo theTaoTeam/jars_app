@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/home/jars/jar.dart';
+import 'package:fude/pages/jars/jar.dart';
 import 'package:fude/helpers/design_helpers.dart';
 
 class JarCard extends StatelessWidget {

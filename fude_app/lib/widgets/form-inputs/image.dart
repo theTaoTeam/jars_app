@@ -38,13 +38,6 @@ class _ImageInputState extends State<ImageInput> {
             child: Column(children: [
               FlatButton(
                 textColor: Theme.of(context).primaryColor,
-                child: Text('Use Camera'),
-                onPressed: () {
-                  _getImage(context, ImageSource.camera);
-                },
-              ),
-              FlatButton(
-                textColor: Theme.of(context).primaryColor,
                 child: Text('Use Gallery'),
                 onPressed: () {
                   _getImage(context, ImageSource.gallery);

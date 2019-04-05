@@ -1,0 +1,336 @@
+import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:fude/scoped-models/main.dart';
+import 'package:fude/pages/jars/jar_notes.dart';
+import 'package:fude/pages/jars/category_card.dart';
+import 'package:fude/widgets/page_transformer/page_transformer.dart';
+
+import 'package:fude/helpers/popupModal.dart';
+
+class JarPage extends StatefulWidget {
+  final MainModel model;
+
+  JarPage({this.model});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _JarPageState();
+  }
+}
+
+class _JarPageState extends State<JarPage> {
+  bool isFavorite = false;
+  bool _swiperVisible = false;
+  String selectedCategory;
+  PageController controller;
+
+  @override
+  void initState() {
+    selectedCategory = widget.model.selectedJar.data['categories'][0];
+    Timer(Duration(milliseconds: 500), fadeInstructions);
+    controller = PageController(
+      keepPage: false,
+      viewportFraction: .85,
+    );
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void toggleFavoriteFilter() {
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
+  void fadeInstructions() {
+    setState(() {
+      _swiperVisible = true;
+    });
+  }
+
+  void _pullRandomNote(MainModel model, String category) async {
+    final _random = Random();
+    List<DocumentSnapshot> notes = [];
+    DocumentSnapshot randomNote;
+    try {
+      notes = await model.fetchJarNotesByCategory(category);
+    } catch (e) {
+      print(e);
+    }
+    randomNote = notes[_random.nextInt(notes.length)];
+    showRandomNote(context, randomNote, model);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    var image = Positioned(
+      top: 0,
+      left: width * 0.01,
+      right: width * 0.01,
+      height: height * 0.5,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+              widget.model.selectedJar.data['image'] != null
+                  ? widget.model.selectedJar.data['image']
+                  : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
+              scale: 0.5,
+            ),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
+    );
+
+    var imageOverlayGradient = BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      child: Container(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [
+                  Color.fromRGBO(33, 38, 43, 0.4),
+                  Color.fromRGBO(33, 38, 43, 0.2),
+                ]),
+          ),
+        ),
+      ),
+    );
+
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+      return Scaffold(
+        body: Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: FractionalOffset.bottomCenter,
+              end: FractionalOffset.topCenter,
+              colors: [
+                Color.fromRGBO(235, 237, 238, 1),
+                Color.fromRGBO(253, 251, 251, 1),
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: width,
+                height: height,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Hero(
+                      tag: model.selectedJar.data['title'],
+                      child: Container(
+                        height: height,
+                        width: width,
+                        child: Material(
+                          elevation: 0,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              image,
+                              imageOverlayGradient,
+                              Container(
+                                color: Colors.transparent,
+                                padding: EdgeInsets.fromLTRB(
+                                    width * 0.02, height * 0.05, 0, 0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    AnimatedOpacity(
+                                      opacity: _swiperVisible ? 1.0 : 0.0,
+                                      duration: Duration(milliseconds: 1000),
+                                      child: Container(
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down,
+                                              color: Color.fromRGBO(
+                                                  253, 251, 251, 1),
+                                            ),
+                                            iconSize: 40,
+                                            onPressed: () {
+                                              _swiperVisible = false;
+                                              Navigator.pop(context);
+                                            }),
+                                      ),
+                                    ),
+                                    AnimatedOpacity(
+                                      opacity: _swiperVisible ? 1.0 : 0.0,
+                                      duration: Duration(milliseconds: 1000),
+                                      child: Container(
+                                        child: IconButton(
+                                            icon: Icon(
+                                              Icons.filter_list,
+                                              color: Color.fromRGBO(
+                                                  253, 251, 251, 1),
+                                            ),
+                                            iconSize: 39,
+                                            onPressed: () {
+                                              _swiperVisible = false;
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  curve: Curves.linear,
+                                                  type: PageTransitionType
+                                                      .rightToLeftWithFade,
+                                                  child: JarNotes(model: model),
+                                                ),
+                                              );
+                                            }),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Positioned(
+                                top: height * 0.24,
+                                left: width * 0.07,
+                                right: width * 0.07,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Text(
+                                    model.selectedJar.data['title']
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(253, 251, 251, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 38,
+                                        letterSpacing: 23),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              //SWIPER
+                              Positioned(
+                                top: height * 0.46,
+                                // left: width * 0.47,
+                                width: width,
+                                height: height * 0.35,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 500),
+                                  child: PageTransformer(
+                                    pageViewBuilder:
+                                        (context, visibilityResolver) {
+                                      return PageView.builder(
+                                        reverse: true,
+                                        pageSnapping: true,
+                                        scrollDirection: Axis.horizontal,
+                                        controller: PageController(
+                                            viewportFraction: .57,
+                                            initialPage: model.selectedJar
+                                                .data['categories'].length),
+                                        itemCount: model.selectedJar
+                                            .data['categories'].length,
+                                        itemBuilder: (context, index) {
+                                          final PageVisibility pageVisibility =
+                                              visibilityResolver
+                                                  .resolvePageVisibility(index);
+                                          return GestureDetector(
+                                            onTap: () => _pullRandomNote(
+                                                model,
+                                                model.selectedJar
+                                                    .data['categories'][index]),
+                                            child: CategoryCard(
+                                              model: widget.model,
+                                              category: model.selectedJar
+                                                  .data['categories'][index],
+                                              index: index,
+                                              pageVisibility: pageVisibility,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: height * 0.09,
+                                left: width * 0.07,
+                                right: width * 0.07,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Text(
+                                    'SELECT CATEGORY',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(253, 251, 251, 1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        letterSpacing: 3),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              // Positioned(
+                              //   bottom: height * 0.07,
+                              //   left: width * 0.2,
+                              //   right: width * 0.2,
+                              //   child: AnimatedOpacity(
+                              //     opacity: _swiperVisible ? 1.0 : 0.0,
+                              //     duration: Duration(milliseconds: 2000),
+                              //     child: Container(
+                              //       width: width,
+                              //       child: RaisedButton(
+                              //         highlightElevation: 0,
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(25)),
+                              //         textColor:
+                              //             Color.fromRGBO(253, 251, 251, 1),
+                              //         color: Colors.black,
+                              //         splashColor: Colors.transparent,
+                              //         highlightColor: Colors.grey,
+                              //         child: Text('ALL JAR IDEAS'),
+                              //         onPressed: () => Navigator.push(
+                              //               context,
+                              //               PageTransition(
+                              //                 curve: Curves.linear,
+                              //                 type: PageTransitionType
+                              //                     .rightToLeftWithFade,
+                              //                 child: JarNotes(model: model),
+                              //               ),
+                              //             ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}

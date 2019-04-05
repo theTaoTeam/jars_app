@@ -64,6 +64,8 @@ class _JarPageState extends State<AddJarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -82,11 +84,12 @@ class _JarPageState extends State<AddJarPage> {
           ],
         ),
         body: Container(
+          height: height,
           decoration: BoxDecoration(
             color: Color.fromRGBO(33, 38, 43, 1),
           ),
           child: ListView(
-            // shrinkWrap: true,
+            shrinkWrap: true,
             children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

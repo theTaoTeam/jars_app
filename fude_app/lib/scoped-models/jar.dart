@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 
 mixin JarModel on Model {
@@ -17,10 +18,6 @@ mixin JarModel on Model {
   DocumentSnapshot get selectedJar {
     return _selJar;
   }
-
-  // List<DocumentSnapshot> get jarNotesByCategory {
-  //   return _jarNotesByCategory;
-  // }
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
@@ -195,4 +192,15 @@ Future<List<DocumentSnapshot>> fetchJarNotesByCategory(String category) async {
     });
     return _jarNotesByCategory;
   }
+
+  void launchURL(String url) async {
+    if(!url.startsWith('https://') || !url.startsWith('http://')) {
+      url = "https://$url";
+    }
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }
