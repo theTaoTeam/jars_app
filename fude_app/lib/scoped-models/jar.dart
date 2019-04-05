@@ -156,7 +156,7 @@ mixin JarModel on Model {
           .collection('jarNotes')
           .document(note.documentID)
           .updateData({'isFav': !note.data['isFav']});
-      if (favoriteNotes.length > 0) {
+      if (favoriteNotes != null) {
         favoriteNotes.forEach((id) {
           if (id == note.documentID) {
             favoriteNotes.remove(id);

@@ -16,7 +16,9 @@ import 'package:fude/helpers/popupModal.dart';
 class JarPage extends StatefulWidget {
   final MainModel model;
 
-  JarPage({this.model});
+  JarPage({
+    @required this.model,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -25,13 +27,13 @@ class JarPage extends StatefulWidget {
 }
 
 class _JarPageState extends State<JarPage> {
-  bool isFavorite = false;
   bool _swiperVisible = false;
   String selectedCategory;
   PageController controller;
 
   @override
   void initState() {
+    print('rendering jarpage');
     selectedCategory = widget.model.selectedJar.data['categories'][0];
     Timer(Duration(milliseconds: 500), fadeInstructions);
     controller = PageController(
@@ -45,12 +47,6 @@ class _JarPageState extends State<JarPage> {
   dispose() {
     controller.dispose();
     super.dispose();
-  }
-
-  void toggleFavoriteFilter() {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
   }
 
   void fadeInstructions() {
@@ -189,7 +185,7 @@ class _JarPageState extends State<JarPage> {
                                             iconSize: 39,
                                             onPressed: () {
                                               _swiperVisible = false;
-                                              Navigator.push(
+                                              Navigator.pushReplacement(
                                                 context,
                                                 PageTransition(
                                                   curve: Curves.linear,

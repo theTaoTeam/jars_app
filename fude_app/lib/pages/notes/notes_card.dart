@@ -15,32 +15,30 @@ class NotesCard extends StatelessWidget {
   Widget makeListTile(
       DocumentSnapshot note, double _targetWidth, BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 00.0, vertical: 15.0),
       leading: Container(
-        padding: EdgeInsets.only(right: 12.0),
-        decoration: BoxDecoration(
-          border: Border(
-            right: BorderSide(width: 1.0, color: Colors.white24),
-          ),
-        ),
-        child: Container(
-          width: _targetWidth * 0.5,
-          child: note['image'] != null
-              ? Image.network(note['image'], scale: 0.1)
-              : logoInStorage(),
+        width: _targetWidth * 0.55,
+        child: note['image'] != null
+            ? Image.network(note['image'], scale: 0.1)
+            : logoInStorage(),
+      ),
+      title: Container(
+        child: Text(
+          note['title'].toUpperCase(),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
       ),
-      title: Text(
-        note['title'],
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      subtitle: Container(
+          margin: EdgeInsets.only(top: 5),
+          child: Text(note['category'].toUpperCase(),
+              style: TextStyle(color: Colors.black, fontSize: 16))),
+      trailing: IconButton(
+        icon:
+            !note['isFav'] ? Icon(Icons.favorite_border) : Icon(Icons.favorite),
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: () => model.toggleFavoriteStatus(note),
       ),
-      subtitle: Row(
-        children: <Widget>[
-          Text(note['category'], style: TextStyle(color: Colors.white))
-        ],
-      ),
-      trailing:
-          Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
     );
   }
 
@@ -55,19 +53,27 @@ class NotesCard extends StatelessWidget {
           context,
           PageTransition(
             curve: Curves.linear,
-            type: PageTransitionType.rightToLeftWithFade,
-            child: NotePage(note: note, isRandom: false,),
+            type: PageTransitionType.downToUp,
+            child: NotePage(
+              note: note,
+              isRandom: false,
+            ),
           ),
         );
       },
       child: Card(
-        elevation: 8.0,
-        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(64, 75, 96, .9),
-          ),
-          child: makeListTile(note, _targetWidth, context),
+        color: Color.fromRGBO(253, 251, 251, 1),
+        elevation: 6.0,
+        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: makeListTile(note, _targetWidth, context),
+            ),
+          ],
         ),
       ),
     );
