@@ -40,29 +40,14 @@ class HomePageJar extends StatelessWidget {
   }
 
   _buildTextContainer(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-    // var categoryText = _applyTextEffects(
-    //   translationFactor: 300.0,
-    //   child: Text(
-    //     'asdf',
-    //     style: textTheme.caption.copyWith(
-    //       color: Colors.white70,
-    //       fontWeight: FontWeight.bold,
-    //       letterSpacing: 2.0,
-    //       fontSize: 14.0,
-    //     ),
-    //     textAlign: TextAlign.center,
-    //   ),
-    // );
-
     var titleText = _applyTextEffects(
       translationFactor: 100.0,
       child: Padding(
         padding: EdgeInsets.only(top: 16.0),
         child: Text(
           jar['title'].toUpperCase(),
-          style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.subhead,
           textAlign: TextAlign.left,
         ),
       ),
@@ -91,7 +76,8 @@ class HomePageJar extends StatelessWidget {
                       IconButton(
                         padding: EdgeInsets.fromLTRB(15, 12, 0, 0),
                         icon: Icon(Icons.edit),
-                        color: Color.fromRGBO(236, 240, 241, 1),
+                        iconSize: 26,
+                        color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
                           print('jar pressed, ${jar.documentID}');
                           model.getJarBySelectedId(jar.documentID);
@@ -114,8 +100,10 @@ class HomePageJar extends StatelessWidget {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.add),
-                    iconSize: 82,
-                    color: Color.fromRGBO(236, 240, 241, 1),
+                    iconSize: 70,
+                    color: model.darkTheme
+                        ? Color.fromRGBO(40, 40, 40, 1)
+                        : Color.fromRGBO(242, 242, 242, 1),
                     onPressed: () => Navigator.push(
                           context,
                           PageTransition(
@@ -128,8 +116,12 @@ class HomePageJar extends StatelessWidget {
                   Text(
                     jar['title'].toUpperCase(),
                     style: TextStyle(
-                      color: Color.fromRGBO(236, 240, 241, 1),
-                      fontSize: 18,
+                      color: model.darkTheme
+                          ? Color.fromRGBO(40, 40, 40, 1)
+                          : Color.fromRGBO(242, 242, 242, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      letterSpacing: 5,
                     ),
                   ),
                 ],
@@ -156,19 +148,25 @@ class HomePageJar extends StatelessWidget {
 
     var imageOverlayGradient = DecoratedBox(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: FractionalOffset.topCenter,
-          end: FractionalOffset.bottomCenter,
-          colors: jar['title'] != 'Add Jar'
-              ? [
-                  Color.fromRGBO(33, 38, 43, 0.1),
-                  Color.fromRGBO(33, 38, 43, 0.4),
-                ]
-              : [
-                  Color.fromRGBO(137, 247, 254, 1),
-                  Color.fromRGBO(102, 166, 255, 1),
-                ],
-        ),
+        color: jar['title'] == 'Add Jar'
+            ? Theme.of(context).secondaryHeaderColor
+            : null,
+        gradient: jar['title'] != 'Add Jar'
+            ? LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: jar['title'] != 'Add Jar'
+                    ? !model.darkTheme
+                        ? [
+                            Color.fromRGBO(242, 242, 242, 0),
+                            Color.fromRGBO(40, 40, 40, 1),
+                          ]
+                        : [
+                            Color.fromRGBO(40, 40, 40, 0),
+                            Color.fromRGBO(242, 242, 242, 1),
+                          ]
+                    : null)
+            : null,
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
     );
@@ -181,7 +179,8 @@ class HomePageJar extends StatelessWidget {
       child: Hero(
         tag: jar['title'],
         child: Material(
-          elevation: 4.0,
+          elevation: model.darkTheme ? 4.0 : 8,
+          shadowColor: Theme.of(context).secondaryHeaderColor,
           borderRadius: BorderRadius.all(Radius.circular(30)),
           child: Stack(
             fit: StackFit.expand,

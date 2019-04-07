@@ -11,25 +11,32 @@ class AddJarCategoryField extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 0.5,
-            color: Color.fromRGBO(236, 240, 241, 1),
+            color: Theme.of(context).secondaryHeaderColor,
           ),
         ),
       ),
       child: TextFormField(
         initialValue: hint != "Category" ? hint : null,
         style: TextStyle(
-          color: Color.fromRGBO(236, 240, 241, 1),
+          color: Theme.of(context).secondaryHeaderColor,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hint,
-          hintStyle: TextStyle(color: Color.fromRGBO(236, 240, 241, 0.7), fontSize: 15.0),
+          hintStyle: TextStyle(color:  Color.fromRGBO(131, 129, 129, 1), fontSize: 15.0),
           contentPadding:
               EdgeInsets.only(top: 5.0, right: 20.0, bottom: 20.0, left: 15.0),
         ),
+        validator: (String val) {
+          String finalVal = val.trim();
+          if(finalVal.isEmpty) {
+            return 'Please add at least one category ';
+          }
+        },
         onSaved: (String val) {
           if (hint != null) {
-            updateCategory(val);
+          String finalVal = val.trim();
+            updateCategory(finalVal);
           }
         },
       ),

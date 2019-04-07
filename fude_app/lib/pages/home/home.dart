@@ -42,28 +42,25 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(253, 251, 251, 1),
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Hero(
-        tag: 'taoIcon',
-        child: FloatingActionButton(
-          shape: CircleBorder(),
-          elevation: 0,
-          backgroundColor: Color.fromRGBO(235, 237, 238, 1),
-          foregroundColor: Color.fromRGBO(235, 237, 238, 1),
-          highlightElevation: 0,
-          onPressed: () => print('tao icon pressed'),
-          child: Image.network(
-            'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
-            height: height * 0.2,
-            width: width * 0.2,
-          ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        elevation: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+        foregroundColor: Theme.of(context).primaryColor,
+        highlightElevation: 0,
+        onPressed: () => widget.model.invertTheme(),
+        child: Image.network(
+          'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
+          height: height * 0.2,
+          width: width * 0.2,
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color.fromRGBO(235, 237, 238, 1),
+        color: Theme.of(context).primaryColor,
         elevation: 0,
         child: Container(height: 20),
       ),
@@ -71,14 +68,7 @@ class _HomePageState extends State<HomePage> {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-              colors: [
-                Color.fromRGBO(253, 251, 251, 1),
-                Color.fromRGBO(235, 237, 238, 1),
-              ]),
-          // borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Theme.of(context).primaryColor,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,

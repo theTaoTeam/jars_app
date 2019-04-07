@@ -13,7 +13,7 @@ mixin JarModel on Model {
   List<String> favoriteNotes;
   // List<DocumentSnapshot> _jarNotesByCategory = [];
 
-  bool _isLoading = false;
+  bool darkTheme = false;
 
   DocumentSnapshot get selectedJar {
     return _selJar;
@@ -172,7 +172,8 @@ mixin JarModel on Model {
     }
   }
 
-Future<List<DocumentSnapshot>> fetchJarNotesByCategory(String category) async {
+  Future<List<DocumentSnapshot>> fetchJarNotesByCategory(
+      String category) async {
     List<DocumentSnapshot> _jarNotesByCategory = [];
     QuerySnapshot notes;
     try {
@@ -184,23 +185,32 @@ Future<List<DocumentSnapshot>> fetchJarNotesByCategory(String category) async {
     } catch (e) {
       print(e);
     }
-    notes.documents.forEach((doc) {
-      if (doc.data['category'] == category) {
-        // print(doc.documentID);
-        _jarNotesByCategory.add(doc);
-      }
-    });
+    if (notes.documents.length > 0) {
+      notes.documents.forEach((doc) {
+        if (doc.data['category'] == category) {
+          // print(doc.documentID);
+          _jarNotesByCategory.add(doc);
+        }
+      });
+    } else {
+      return null;
+    }
     return _jarNotesByCategory;
   }
 
   void launchURL(String url) async {
-    if(!url.startsWith('https://') || !url.startsWith('http://')) {
+    if (!url.startsWith('https://') || !url.startsWith('http://')) {
       url = "https://$url";
     }
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
+
+  void invertTheme() {
+    darkTheme = !darkTheme;
+    notifyListeners();
+  }
 }

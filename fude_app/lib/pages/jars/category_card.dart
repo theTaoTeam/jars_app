@@ -39,17 +39,13 @@ class CategoryCard extends StatelessWidget {
   }
 
   _buildTextContainer(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-
-    var titleText = Padding(
-        padding: EdgeInsets.only(top: 16.0),
-        child: Text(
-          category.toUpperCase(),
-          style: textTheme.title
-              .copyWith(color: Color.fromRGBO(45, 45, 45, 1), fontWeight: FontWeight.bold),
-          textAlign: TextAlign.left,
-        ),
-      
+    var titleText = Expanded(
+      child: Text(
+        category.toUpperCase(),
+        overflow: TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.subhead,
+        textAlign: TextAlign.left,
+      ),
     );
 
     return Positioned(
@@ -96,13 +92,20 @@ class CategoryCard extends StatelessWidget {
     // );
 
     var imageOverlayGradient = Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Color.fromRGBO(235, 237, 238, 1),
-                Color.fromRGBO(253, 251, 251, 1),
-          ]),
-          borderRadius: BorderRadius.circular(20),
-        
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+            colors: !model.darkTheme
+                ? [
+                    Color.fromRGBO(40, 40, 40, 0.6),
+                    Color.fromRGBO(40, 40, 40, 1),
+                  ]
+                : [
+                    Color.fromRGBO(40, 40, 40, 0),
+                    Color.fromRGBO(242, 242, 242, 1),
+                  ]),
       ),
     );
 
@@ -113,7 +116,7 @@ class CategoryCard extends StatelessWidget {
       ),
       child: Material(
         elevation: 8.0,
-        borderRadius: BorderRadius.all(Radius.circular(50)),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         child: Stack(
           fit: StackFit.expand,
           children: [

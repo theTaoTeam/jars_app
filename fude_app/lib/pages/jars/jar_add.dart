@@ -23,13 +23,14 @@ class _JarPageState extends State<AddJarPage> {
 
   void addJar(MainModel model) {
     // First validate form.
-    if (this.formKey.currentState.validate()) {
+    if (!this.formKey.currentState.validate()) {
+      return;
+    } else {
       formKey.currentState.save(); // Save our form now.
-      // print('form saved.....sending to model');
+      print(_formData);
+      model.addJar(_formData);
+      Navigator.pop(context);
     }
-    print(_formData);
-    model.addJar(_formData);
-    Navigator.pop(context);
   }
 
   void updateTitle(String val) {
@@ -71,14 +72,16 @@ class _JarPageState extends State<AddJarPage> {
       return Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Color.fromRGBO(33, 38, 43, 1),
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 0,
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 25),
               icon: Icon(Icons.close),
-              color: Color.fromRGBO(236, 240, 241, 1),
-              iconSize: 34,
+              color: Theme.of(context).iconTheme.color,
+              iconSize: Theme.of(context).iconTheme.size,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               onPressed: () => Navigator.pop(context),
             )
           ],
@@ -86,7 +89,7 @@ class _JarPageState extends State<AddJarPage> {
         body: Container(
           height: height,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(33, 38, 43, 1),
+            color: Theme.of(context).primaryColor,
           ),
           child: ListView(
             shrinkWrap: true,
@@ -113,9 +116,15 @@ class _JarPageState extends State<AddJarPage> {
                         width: 20,
                       ),
                       RaisedButton(
+                        padding: EdgeInsets.all(5),
+                        color: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0)),
-                        child: Text('ADD JAR'),
+                        child: Text('ADD',
+                            style: TextStyle(
+                                color: Theme.of(context).textTheme.title.color,
+                                fontSize: 20,
+                                letterSpacing: 3)),
                         onPressed: () {
                           addJar(model);
                         },
