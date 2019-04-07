@@ -33,12 +33,19 @@ class _ImageInputState extends State<ImageInput> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 150.0,
+            decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+            height: 90.0,
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
               FlatButton(
                 textColor: Theme.of(context).primaryColor,
-                child: Text('Use Gallery'),
+                child: Text(
+                  'GALLERY',
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 20,
+                      letterSpacing: 5),
+                ),
                 onPressed: () {
                   _getImage(context, ImageSource.gallery);
                 },
@@ -50,39 +57,47 @@ class _ImageInputState extends State<ImageInput> {
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor = Theme.of(context).primaryColor;
-    return Column(
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         _imageFile == null
-            ? OutlineButton(
-                color: Color.fromRGBO(0, 0, 0, 0.8),
-                borderSide: BorderSide(
-                  color: Colors.white,
-                  width: 2.0,
-                ),
-                onPressed: () {
-                  _openImagePicker(context);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
+            ? Container(
+                width: width * 0.2,
+                height: height * 0.1,
+                child: OutlineButton(
+                  color: Color.fromRGBO(131, 129, 129, 1),
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(131, 129, 129, 1),
+                    width: 0.5,
+                  ),
+                  onPressed: () {
+                    _openImagePicker(context);
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      color: Color.fromRGBO(131, 129, 129, 1),
+                      size: 30,
                     ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                  ],
+                  ),
                 ),
               )
             : Container(
-                width: 150,
+                width: width * 0.2,
+                height: height * 0.1,
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green, width: 2.0),
-                    color: Color.fromRGBO(0, 0, 0, 0.8)),
-                child: Icon(Icons.check, color: Colors.green))
+                    color: Theme.of(context).primaryColor),
+                child: Center(
+                  child: Icon(
+                    Icons.check,
+                    color: Theme.of(context).secondaryHeaderColor,
+                    size: 30,
+                  ),
+                ),
+              ),
       ],
     );
   }

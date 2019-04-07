@@ -23,7 +23,7 @@ class AddJarForm extends StatelessWidget {
       this.updateImage,
       this.updateCategoryCount});
 
-  Widget _buildFormTitles(String title) {
+  Widget _buildFormTitles(String title, BuildContext context) {
     return Row(
       mainAxisAlignment: title == "CATEGORIES"
           ? MainAxisAlignment.spaceBetween
@@ -31,15 +31,19 @@ class AddJarForm extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style:
-              TextStyle(color: Color.fromRGBO(236, 240, 241, 1), fontSize: 16),
+          style: TextStyle(
+            color: Theme.of(context).secondaryHeaderColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            letterSpacing: 3,
+          ),
           textAlign: TextAlign.start,
         ),
         title == "CATEGORIES"
             ? IconButton(
-                icon: Icon(Icons.add_circle_outline),
-                iconSize: 20,
-                color: Color.fromRGBO(236, 240, 241, 0.7),
+                icon: Icon(Icons.add),
+                iconSize: 36,
+                color: Theme.of(context).iconTheme.color,
                 onPressed: () {
                   updateCategoryCount();
                 })
@@ -48,7 +52,7 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-  Column _buildExistingCategoryInputs() {
+  Column _buildExistingCategoryInputs(BuildContext context) {
     var children = <Widget>[];
     for (var i = 0; i <= jar['categories'].length - 1; i++) {
       children.add(
@@ -68,7 +72,7 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-  Column _addCategoryInputs() {
+  Column _addCategoryInputs(BuildContext context) {
     var children = <Widget>[];
     for (var i = 0; i < categoryCount; i++) {
       children.add(
@@ -92,23 +96,24 @@ class AddJarForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
+      decoration: BoxDecoration(color: Theme.of(context).primaryColor),
       child: Form(
           key: formKey,
-          autovalidate: true,
+          autovalidate: false,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _buildFormTitles("YOUR JAR NAME"),
+              _buildFormTitles("JAR NAME", context),
               SizedBox(height: 40),
               AddJarNameField(
                 hint: jar == null ? 'Name' : jar['title'],
                 updateTitle: updateTitle,
               ),
               SizedBox(height: 40),
-              _buildFormTitles("CATEGORIES"),
+              _buildFormTitles("CATEGORIES", context),
               SizedBox(height: 40),
               jar != null
-                  ? _buildExistingCategoryInputs()
+                  ? _buildExistingCategoryInputs(context)
                   : Column(
                       children: <Widget>[
                         AddJarCategoryField(
@@ -118,9 +123,9 @@ class AddJarForm extends StatelessWidget {
                         SizedBox(height: 20),
                       ],
                     ),
-              categoryCount > 0 ? _addCategoryInputs() : Container(),
+              categoryCount > 0 ? _addCategoryInputs(context) : Container(),
               SizedBox(height: 40),
-              _buildFormTitles("HOW ABOUT AN IMAGE?"),
+              _buildFormTitles("JAR IMAGE", context),
               SizedBox(height: 30),
               ImageInput(
                 updateImage: updateImage,

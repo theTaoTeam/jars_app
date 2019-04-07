@@ -64,8 +64,10 @@ class _JarPageState extends State<JarPage> {
     } catch (e) {
       print(e);
     }
-    randomNote = notes[_random.nextInt(notes.length)];
-    showRandomNote(context, randomNote, model);
+    if (notes != null) {
+      randomNote = notes[_random.nextInt(notes.length)];
+      showRandomNote(context, randomNote, model);
+    }
   }
 
   @override
@@ -98,12 +100,18 @@ class _JarPageState extends State<JarPage> {
         child: DecoratedBox(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                begin: FractionalOffset.topCenter,
-                end: FractionalOffset.bottomCenter,
-                colors: [
-                  Color.fromRGBO(33, 38, 43, 0.4),
-                  Color.fromRGBO(33, 38, 43, 0.2),
-                ]),
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
+              colors: !widget.model.darkTheme
+                  ? [
+                      Color.fromRGBO(242, 242, 242, 0.5),
+                      Color.fromRGBO(40, 40, 40, 0.5),
+                    ]
+                  : [
+                      Color.fromRGBO(40, 40, 40, 0.5),
+                      Color.fromRGBO(242, 242, 242, 1),
+                    ],
+            ),
           ),
         ),
       ),
@@ -117,11 +125,11 @@ class _JarPageState extends State<JarPage> {
           width: width,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: FractionalOffset.bottomCenter,
-              end: FractionalOffset.topCenter,
+              begin: FractionalOffset.topCenter,
+              end: FractionalOffset.bottomCenter,
               colors: [
-                Color.fromRGBO(235, 237, 238, 1),
-                Color.fromRGBO(253, 251, 251, 1),
+                Theme.of(context).primaryColor,
+                Theme.of(context).secondaryHeaderColor,
               ],
             ),
           ),
@@ -162,8 +170,9 @@ class _JarPageState extends State<JarPage> {
                                         child: IconButton(
                                             icon: Icon(
                                               Icons.keyboard_arrow_down,
-                                              color: Color.fromRGBO(
-                                                  253, 251, 251, 1),
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color,
                                             ),
                                             iconSize: 40,
                                             onPressed: () {
@@ -179,8 +188,9 @@ class _JarPageState extends State<JarPage> {
                                         child: IconButton(
                                             icon: Icon(
                                               Icons.filter_list,
-                                              color: Color.fromRGBO(
-                                                  253, 251, 251, 1),
+                                              color: Theme.of(context)
+                                                  .iconTheme
+                                                  .color,
                                             ),
                                             iconSize: 39,
                                             onPressed: () {
@@ -210,21 +220,38 @@ class _JarPageState extends State<JarPage> {
                                   child: Text(
                                     model.selectedJar.data['title']
                                         .toUpperCase(),
+                                    overflow: TextOverflow.clip,
+                                    style: Theme.of(context).textTheme.title,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: height * 0.46,
+                                left: width * 0.07,
+                                right: width * 0.07,
+                                child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Text(
+                                    'SELECT CATEGORY',
                                     style: TextStyle(
-                                        color: Color.fromRGBO(253, 251, 251, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 38,
-                                        letterSpacing: 23),
+                                      color: Theme.of(context)
+                                          .secondaryHeaderColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      letterSpacing: 3,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
                               //SWIPER
                               Positioned(
-                                top: height * 0.46,
+                                top: height * 0.53,
                                 // left: width * 0.47,
                                 width: width,
-                                height: height * 0.35,
+                                height: height * 0.34,
                                 child: AnimatedOpacity(
                                   opacity: _swiperVisible ? 1.0 : 0.0,
                                   duration: Duration(milliseconds: 500),
@@ -236,7 +263,7 @@ class _JarPageState extends State<JarPage> {
                                         pageSnapping: true,
                                         scrollDirection: Axis.horizontal,
                                         controller: PageController(
-                                            viewportFraction: .57,
+                                            viewportFraction: .62,
                                             initialPage: model.selectedJar
                                                 .data['categories'].length),
                                         itemCount: model.selectedJar
@@ -264,57 +291,6 @@ class _JarPageState extends State<JarPage> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                bottom: height * 0.09,
-                                left: width * 0.07,
-                                right: width * 0.07,
-                                child: AnimatedOpacity(
-                                  opacity: _swiperVisible ? 1.0 : 0.0,
-                                  duration: Duration(milliseconds: 1000),
-                                  child: Text(
-                                    'SELECT CATEGORY',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(253, 251, 251, 1),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        letterSpacing: 3),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                              // Positioned(
-                              //   bottom: height * 0.07,
-                              //   left: width * 0.2,
-                              //   right: width * 0.2,
-                              //   child: AnimatedOpacity(
-                              //     opacity: _swiperVisible ? 1.0 : 0.0,
-                              //     duration: Duration(milliseconds: 2000),
-                              //     child: Container(
-                              //       width: width,
-                              //       child: RaisedButton(
-                              //         highlightElevation: 0,
-                              //         shape: RoundedRectangleBorder(
-                              //             borderRadius:
-                              //                 BorderRadius.circular(25)),
-                              //         textColor:
-                              //             Color.fromRGBO(253, 251, 251, 1),
-                              //         color: Colors.black,
-                              //         splashColor: Colors.transparent,
-                              //         highlightColor: Colors.grey,
-                              //         child: Text('ALL JAR IDEAS'),
-                              //         onPressed: () => Navigator.push(
-                              //               context,
-                              //               PageTransition(
-                              //                 curve: Curves.linear,
-                              //                 type: PageTransitionType
-                              //                     .rightToLeftWithFade,
-                              //                 child: JarNotes(model: model),
-                              //               ),
-                              //             ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                         ),

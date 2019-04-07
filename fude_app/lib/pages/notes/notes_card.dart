@@ -15,7 +15,7 @@ class NotesCard extends StatelessWidget {
   Widget makeListTile(
       DocumentSnapshot note, double _targetWidth, BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 00.0, vertical: 15.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
       leading: Container(
         width: _targetWidth * 0.55,
         child: note['image'] != null
@@ -25,18 +25,23 @@ class NotesCard extends StatelessWidget {
       title: Container(
         child: Text(
           note['title'].toUpperCase(),
-          style: TextStyle(color: Colors.black, fontSize: 18),
+          style: Theme.of(context).textTheme.headline,
         ),
       ),
       subtitle: Container(
-          margin: EdgeInsets.only(top: 5),
-          child: Text(note['category'].toUpperCase(),
-              style: TextStyle(color: Colors.black, fontSize: 16))),
+        margin: EdgeInsets.only(top: 5),
+        child: Text(
+          note['category'].toUpperCase(),
+          style: Theme.of(context).textTheme.caption,
+        ),
+      ),
       trailing: IconButton(
         icon:
             !note['isFav'] ? Icon(Icons.favorite_border) : Icon(Icons.favorite),
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
+        color: Theme.of(context).primaryColor,
+        iconSize: 24,
         onPressed: () => model.toggleFavoriteStatus(note),
       ),
     );
@@ -61,19 +66,30 @@ class NotesCard extends StatelessWidget {
           ),
         );
       },
-      child: Card(
-        color: Color.fromRGBO(253, 251, 251, 1),
-        elevation: 6.0,
-        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        shape: RoundedRectangleBorder(
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).primaryColor,
+              blurRadius: 20.0,
+            )
+          ],
           borderRadius: BorderRadius.circular(15.0),
         ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: makeListTile(note, _targetWidth, context),
-            ),
-          ],
+        child: Card(
+          color: Theme.of(context).cardColor,
+          elevation: 6.0,
+          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: makeListTile(note, _targetWidth, context),
+              ),
+            ],
+          ),
         ),
       ),
     );

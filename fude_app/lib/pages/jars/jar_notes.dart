@@ -39,7 +39,7 @@ class _JarNotesState extends State<JarNotes> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.keyboard_arrow_left),
@@ -49,29 +49,29 @@ class _JarNotesState extends State<JarNotes> {
                 context,
                 PageTransition(
                   curve: Curves.linear,
-                  type: PageTransitionType.rightToLeftWithFade,
+                  type: PageTransitionType.leftToRightWithFade,
                   child: JarPage(model: widget.model),
                 ),
               ),
-          color: Colors.black,
-          iconSize: 40,
+          iconSize: Theme.of(context).iconTheme.size,
+          color: Theme.of(context).iconTheme.color,
         ),
         actions: <Widget>[
           Container(
             padding: EdgeInsets.only(
-              right: width * 0.025,
+              right: width * 0.04,
             ),
             child: IconButton(
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
               icon: Icon(Icons.add),
-              iconSize: 35,
-              color: Color.fromRGBO(33, 38, 43, 1),
+              iconSize: Theme.of(context).iconTheme.size,
+              color: Theme.of(context).iconTheme.color,
               onPressed: () => Navigator.push(
                     context,
                     PageTransition(
                       curve: Curves.linear,
-                      type: PageTransitionType.fade,
+                      type: PageTransitionType.downToUp,
                       child: AddNotePage(
                           categories:
                               widget.model.selectedJar.data['categories']),
@@ -79,30 +79,11 @@ class _JarNotesState extends State<JarNotes> {
                   ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(
-              right: width * 0.03,
-            ),
-            child: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon:
-                isFavorite ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
-            iconSize: 30,
-            color: Color.fromRGBO(33, 38, 43, 1),
-            onPressed: () => toggleFavoriteFilter(),
-          ),),
         ],
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-              colors: [
-                Color.fromRGBO(253, 251, 251, 1),
-                Color.fromRGBO(235, 237, 238, 1),
-              ]),
+          color: Theme.of(context).primaryColor,
         ),
         padding: EdgeInsets.fromLTRB(0, height * 0.03, 0, 0),
         child: StreamBuilder(
@@ -119,8 +100,38 @@ class _JarNotesState extends State<JarNotes> {
                 return snapshot.data.documents.length > 0
                     ? Column(
                         children: <Widget>[
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    // height: height * 0.01,
+                                    // width: width,
+                                    padding: EdgeInsets.fromLTRB(
+                                        width * 0.05, 0, 0, height * 0.02),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          !isFavorite
+                                              ? 'ALL IDEAS'
+                                              : 'FAVORITE IDEAS',
+                                          style: TextStyle(
+                                            color: Color.fromRGBO(131,129,129, 1),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            letterSpacing: 5,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
                           ListView.builder(
                             shrinkWrap: true,
+                            reverse: false,
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data.documents.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -139,28 +150,25 @@ class _JarNotesState extends State<JarNotes> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Container(
-                                  height: height * 0.15,
-                                  // width: width,
-                                  padding: EdgeInsets.fromLTRB(
-                                      width * 0.04, 0, width * 0.025, 0.15),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        !isFavorite
-                                            ? 'ALL IDEAS'
-                                            : 'FAVORITE IDEAS',
-                                        style: TextStyle(fontSize: 22),
-                                      ),
-                                    ],
-                                  )),
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 0, width * 0.04, width * 0.05),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: isFavorite
+                                      ? Icon(Icons.favorite)
+                                      : Icon(Icons.favorite_border),
+                                  iconSize: 38,
+                                  color: Theme.of(context).iconTheme.color,
+                                  onPressed: () => toggleFavoriteFilter(),
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       )
                     : Center(
-                        child: Text('ADD AN IDEA TO GET STARTED'),
+                        child: Text('ADD AN IDEA TO GET STARTED', style: Theme.of(context).textTheme.subtitle, textAlign: TextAlign.center,),
                       );
               }
             }),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:page_transition/page_transition.dart';
+import 'dart:io';
+import 'dart:async';
+
 
 import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'dart:io';
+import 'package:fude/pages/jars/jar_notes.dart';
 
 class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;
@@ -19,6 +23,7 @@ class AddNotePage extends StatefulWidget {
 class _AddNotePageState extends State<AddNotePage> {
   String selectedCategory;
   String selectedJar;
+  bool nullCategory = false;
   MainModel model = MainModel();
 
   final Map<String, dynamic> _formData = {
@@ -40,13 +45,20 @@ class _AddNotePageState extends State<AddNotePage> {
 
   void addToJar(MainModel model) {
     // First validate form.
-    if (this.formKey.currentState.validate()) {
-      formKey.currentState.save(); // Save our form now.
-      print('adding to jar ${_formData['image']}');
-      model.addToJar(_formData['category'], _formData['title'],
-          _formData['notes'], _formData['link'], _formData['image']);
-      Navigator.pop(context);
+    if(_formData['category'] == '') {
+      setState(() {
+        nullCategory = true;
+      });
+      return;
     }
+    if (!this.formKey.currentState.validate()) {
+      return;
+    }
+    formKey.currentState.save(); // Save our form now.
+    nullCategory = false;
+    model.addToJar(_formData['category'], _formData['title'],
+        _formData['notes'], _formData['link'], _formData['image']);
+    Navigator.pop(context);
   }
 
   void updateCategory(dynamic value) {
@@ -84,13 +96,13 @@ class _AddNotePageState extends State<AddNotePage> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-
+    final double width = MediaQuery.of(context).size.width;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Color.fromRGBO(33, 38, 43, 1),
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 0,
           actions: <Widget>[
             IconButton(
@@ -98,16 +110,23 @@ class _AddNotePageState extends State<AddNotePage> {
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               icon: Icon(Icons.close),
-              color: Color.fromRGBO(236, 240, 241, 1),
-              iconSize: 34,
-              onPressed: () => Navigator.pop(context),
+              color: Theme.of(context).iconTheme.color,
+              iconSize: 40,
+              onPressed: () => Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  curve: Curves.linear,
+                  type: PageTransitionType.upToDown,
+                  child: JarNotes(model: model),
+                ),
+              ),
             )
           ],
         ),
         body: Container(
             height: height,
             decoration: BoxDecoration(
-              color: Color.fromRGBO(33, 38, 43, 1),
+              color: Theme.of(context).primaryColor,
             ),
             child: ListView(
               shrinkWrap: true,
@@ -122,6 +141,7 @@ class _AddNotePageState extends State<AddNotePage> {
                       formKey: formKey,
                       categoryList: model.selectedJar.data['categories'],
                       selectedCategory: selectedCategory,
+                      nullCategory: nullCategory,
                       updateCategory: updateCategory,
                       updateName: updateName,
                       updateLink: updateLink,
@@ -136,9 +156,16 @@ class _AddNotePageState extends State<AddNotePage> {
                           width: 20,
                         ),
                         RaisedButton(
+                          padding: EdgeInsets.all(5),
+                          color: Theme.of(context).secondaryHeaderColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          child: Text('ADD TO JAR'),
+                          child: Text('ADD IDEA',
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).primaryColor,
+                                  fontSize: 20,
+                                  letterSpacing: 3)),
                           onPressed: () {
                             addToJar(model);
                           },
