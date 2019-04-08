@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -199,13 +199,18 @@ mixin JarModel on Model {
   }
 
   void launchURL(String url) async {
-    if (!url.startsWith('https://') || !url.startsWith('http://')) {
-      url = "https://$url";
-    }
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    if (isURL(url)) {
+      print('is URL');
+      if (!url.startsWith('https://') || !url.startsWith('http://')) {
+        url = "https://$url";
+      }
+      if (await canLaunch(url)) {
+        print('can launch this url!');
+        await launch(url);
+      } else {
+        print('can launch this url!');
+        throw 'Could not launch $url';
+      }
     }
   }
 

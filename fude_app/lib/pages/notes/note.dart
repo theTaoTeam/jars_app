@@ -14,22 +14,37 @@ class NotePage extends StatelessWidget {
 
   NotePage({this.note, @required this.isRandom});
 
-  Widget _buildTextSections(String val) {
+  Widget _buildTextSections(String val, BuildContext context, MainModel model, DocumentSnapshot note) {
     return Container(
       padding: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
             width: 0.5,
-            color: Color.fromRGBO(236, 240, 241, 1),
+            color: Theme.of(context).secondaryHeaderColor,
           ),
         ),
       ),
-      child: Text(
-        val,
-        maxLines: val == "Notes" ? 3 : 1,
-        style: TextStyle(color: Color.fromRGBO(236, 240, 241, 1), fontSize: 20),
-      ),
+      child: val == note['link']
+          ? GestureDetector(
+            onTap: () => model.launchURL(val),
+              child: Text(
+              val,
+              style: TextStyle(
+                  color: Theme.of(context).secondaryHeaderColor,
+                  fontSize: Theme.of(context).textTheme.caption.fontSize,
+                  letterSpacing:
+                      Theme.of(context).textTheme.caption.letterSpacing),
+            ))
+          : Text(
+              val,
+              maxLines: val == "Notes" ? 3 : 1,
+              style: TextStyle(
+                  color: Theme.of(context).secondaryHeaderColor,
+                  fontSize: Theme.of(context).textTheme.caption.fontSize,
+                  letterSpacing:
+                      Theme.of(context).textTheme.caption.letterSpacing),
+            ),
     );
   }
 
@@ -42,15 +57,7 @@ class NotePage extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color.fromRGBO(33, 38, 43, 1),
-          title: GestureDetector(
-            child: Image.network(
-              'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
-              height: height * 0.2,
-              width: width * 0.2,
-            ),
-            onTap: () => print('invert theme pressed'),
-          ),
+          backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             highlightColor: Colors.transparent,
@@ -61,13 +68,17 @@ class NotePage extends StatelessWidget {
                   PageTransition(
                     curve: Curves.linear,
                     type: PageTransitionType.leftToRightWithFade,
-                    child: !isRandom ? JarNotes(model: model) : JarPage(model: model),
+                    child: !isRandom
+                        ? JarNotes(model: model)
+                        : JarPage(model: model),
                   ),
                 ),
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.edit),
+              color: Theme.of(context).iconTheme.color,
+              iconSize: 36,
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               onPressed: () {
@@ -86,19 +97,11 @@ class NotePage extends StatelessWidget {
         body: Container(
             height: height,
             width: width,
-            padding: EdgeInsets.all(25),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: FractionalOffset.bottomCenter,
-                end: FractionalOffset.topCenter,
-                colors: [
-                  Color.fromRGBO(33, 38, 43, 0.7),
-                  Color.fromRGBO(33, 38, 43, 1),
-                ],
-              ),
-            ),
+            // padding: EdgeInsets.all(25),
+            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: ListView(
               // shrinkWrap: true,
+              padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
               children: <Widget>[
                 Container(
                   height: height / 3,
@@ -109,13 +112,14 @@ class NotePage extends StatelessWidget {
                         : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
                   )),
                 ),
-                _buildTextSections(note['category']),
-                SizedBox(height: 30),
-                _buildTextSections(note['title']),
-                SizedBox(height: 30),
-                _buildTextSections(note['link']),
-                SizedBox(height: 30),
-                _buildTextSections(note['notes']),
+                SizedBox(height: height * 0.07),
+                _buildTextSections(note['category'], context, model, note),
+                SizedBox(height: height * 0.08),
+                _buildTextSections(note['title'], context, model, note),
+                SizedBox(height: height * 0.08),
+                _buildTextSections(note['link'], context, model, note),
+                SizedBox(height: height * 0.08),
+                _buildTextSections(note['notes'], context, model, note),
               ],
             )),
       );

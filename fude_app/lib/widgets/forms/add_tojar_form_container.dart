@@ -68,7 +68,6 @@ class AddToJarForm extends StatelessWidget {
       color: Theme.of(context).primaryColor,
       child: Form(
         key: formKey,
-        autovalidate: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

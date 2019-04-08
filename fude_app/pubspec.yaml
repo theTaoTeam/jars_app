@@ -32,6 +32,7 @@ dependencies:
   page_transition: '^1.0.9'
   flutter_swiper: ^1.1.6
   url_launcher: ^3.0.3
+  validators: ^2.0.0
   
 
 dev_dependencies:

@@ -66,8 +66,8 @@ class _JarPageState extends State<JarPage> {
     }
     if (notes != null) {
       randomNote = notes[_random.nextInt(notes.length)];
-      showRandomNote(context, randomNote, model);
     }
+    showRandomNote(context, randomNote, model, category);
   }
 
   @override
