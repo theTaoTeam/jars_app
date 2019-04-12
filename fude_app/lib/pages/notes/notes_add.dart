@@ -139,9 +139,7 @@ class _AddNotePageState extends State<AddNotePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 35,
-                    ),
+                    SizedBox(height: height * 0.04),
                     AddToJarForm(
                       formKey: formKey,
                       categoryList: model.selectedJar.data['categories'],
@@ -153,27 +151,50 @@ class _AddNotePageState extends State<AddNotePage> {
                       updateNotes: updateNotes,
                       updateImage: updateImage,
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: height * 0.06),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
-                          width: 20,
+                          width: width * 0.06,
                         ),
-                        RaisedButton(
-                          padding: EdgeInsets.all(5),
-                          color: Theme.of(context).secondaryHeaderColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Text('ADD IDEA',
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
-                                  letterSpacing: 3)),
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             addToJar(model);
                           },
-                        )
+                          child: Container(
+                            height: height * 0.045,
+                            width: width * 0.4,
+                            padding: EdgeInsets.only(bottom: height * 0.1),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                left: BorderSide(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  width: 1,
+                                ),
+                                right: BorderSide(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  width: 1,
+                                ),
+                                bottom: BorderSide(
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text('ADD IDEA',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).textTheme.title.color,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    letterSpacing: 3,
+                                  )),
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],

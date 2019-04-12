@@ -66,7 +66,7 @@ class _JarPageState extends State<AddJarPage> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-
+    final double width = MediaQuery.of(context).size.width;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -97,9 +97,7 @@ class _JarPageState extends State<AddJarPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 35,
-                  ),
+                  SizedBox(height: height * 0.04),
                   AddJarForm(
                     formKey: formKey,
                     updateCategory: updateCategory,
@@ -108,27 +106,50 @@ class _JarPageState extends State<AddJarPage> {
                     updateCategoryCount: updateCategoryCount,
                     categoryCount: categoryCount,
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: height * 0.06),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        width: 20,
+                        width: width * 0.06,
                       ),
-                      RaisedButton(
-                        padding: EdgeInsets.all(5),
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        child: Text('ADD',
-                            style: TextStyle(
-                                color: Theme.of(context).textTheme.title.color,
-                                fontSize: 20,
-                                letterSpacing: 3)),
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           addJar(model);
                         },
-                      )
+                        child: Container(
+                          height: height * 0.045,
+                          width: width * 0.4,
+                          padding: EdgeInsets.only(bottom: height * 0.1),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                              right: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                              bottom: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text('ADD JAR',
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).textTheme.title.color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  letterSpacing: 3,
+                                )),
+                          ),
+                        ),
+                      ),
                     ],
                   )
                 ],
