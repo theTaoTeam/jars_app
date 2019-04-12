@@ -35,7 +35,7 @@ class _JarPageState extends State<JarPage> {
   void initState() {
     print('rendering jarpage');
     selectedCategory = widget.model.selectedJar.data['categories'][0];
-    Timer(Duration(milliseconds: 500), fadeInstructions);
+    Timer(Duration(seconds: 0), fadeInstructions);
     controller = PageController(
       keepPage: false,
       viewportFraction: .85,

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:fude/scoped-models/main.dart';
+
 class AddJarCategoryField extends StatelessWidget {
   final String hint;
   final Function updateCategory;
-  AddJarCategoryField({this.hint, this.updateCategory});
+  final MainModel model;
+
+  AddJarCategoryField({this.hint, this.updateCategory, this.model});
   @override
   Widget build(BuildContext context) {
     return Container(

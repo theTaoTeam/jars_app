@@ -6,6 +6,9 @@ import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/forms/edit_jar.dart';
 
 class EditJarPage extends StatefulWidget {
+  final MainModel model;
+
+  EditJarPage({this.model});
   @override
   State<StatefulWidget> createState() {
     return _JarPageState();
@@ -21,15 +24,25 @@ class _JarPageState extends State<EditJarPage> {
     'image': null,
   };
 
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
+  }
+
   void updateJar(MainModel model) {
     // First validate form.
-    if (this.formKey.currentState.validate()) {
-      formKey.currentState.save(); // Save our form now.
-      print('form saved.....sending to model');
+    if (!this.formKey.currentState.validate()) {
+      print('form incorrect ${_formData['categories']}');
+      print(model.selectedJar.data['categories']);
+      return;
+    } else {
+      formKey.currentState.save();
+      model.updateJar(_formData);
+      Navigator.pop(context);
     }
-    print(_formData);
-    model.updateJar(_formData);
-    Navigator.pop(context);
   }
 
   void updateTitle(String val) {
@@ -64,66 +77,100 @@ class _JarPageState extends State<EditJarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
         appBar: AppBar(
           leading: Container(),
-          backgroundColor: Color.fromRGBO(33, 38, 43, 1),
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 0,
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 25),
-              icon: Icon(Icons.close),
-              color: Color.fromRGBO(236, 240, 241, 1),
-              iconSize: 34,
+              icon: Icon(Icons.keyboard_arrow_down),
+              color: Theme.of(context).iconTheme.color,
+              iconSize: Theme.of(context).iconTheme.size,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               onPressed: () => Navigator.pop(context),
             )
           ],
         ),
         body: Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(33, 38, 43, 1),
-            ),
-            child: ListView(
-              // shrinkWrap: true,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 35,
-                    ),
-                    EditJarForm(
-                      formKey: formKey,
-                      jar: model.selectedJar,
-                      updateCategory: updateCategory,
-                      updateTitle: updateTitle,
-                      categoryCount: categoryCount,
-                      updateImage: updateImage,
-                      updateCategoryCount: updateCategoryCount,
-                    ),
-                    SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 20,
+          height: height,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: height * 0.04),
+                  EditJarForm(
+                    formKey: formKey,
+                    model: model,
+                    jar: model.selectedJar,
+                    updateCategory: updateCategory,
+                    updateTitle: updateTitle,
+                    updateImage: updateImage,
+                    updateCategoryCount: updateCategoryCount,
+                    categoryCount: categoryCount,
+                  ),
+                  SizedBox(height: height * 0.06),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: width * 0.06,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          updateJar(model);
+                        },
+                        child: Container(
+                          height: height * 0.045,
+                          width: width * 0.45,
+                          padding: EdgeInsets.only(bottom: height * 0.1),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                              right: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                              bottom: BorderSide(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text('UPDATE JAR',
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(context).textTheme.title.color,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  letterSpacing: 3,
+                                )),
+                          ),
                         ),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Text('UPDATE JAR'),
-                          onPressed: () {
-                            updateJar(model);
-                          },
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            )),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
       );
     });
   }

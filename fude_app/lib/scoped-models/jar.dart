@@ -142,6 +142,7 @@ mixin JarModel on Model {
         'image':
             imageLocation == null ? note['image'] : imageLocation.toString()
       });
+      notifyListeners();
     } catch (e) {
       print(e);
     }

@@ -9,6 +9,7 @@ class EditNoteForm extends StatelessWidget {
   final DocumentSnapshot note;
   final String selectedCategory;
   final List<dynamic> categoryList;
+  final bool nullCategory;
   final Function updateCategory;
   final Function updateName;
   final Function updateLink;
@@ -19,6 +20,7 @@ class EditNoteForm extends StatelessWidget {
       {this.formKey,
       this.note,
       this.categoryList,
+      this.nullCategory,
       this.selectedCategory,
       this.updateCategory,
       this.updateName,
@@ -42,48 +44,92 @@ class EditNoteForm extends StatelessWidget {
     );
   }
 
+  Widget _buildFormTitles(String title, BuildContext context) {
+    return Row(
+      mainAxisAlignment: title == "CATEGORIES"
+          ? MainAxisAlignment.spaceBetween
+          : MainAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          title,
+          style: TextStyle(
+            color: Theme.of(context).secondaryHeaderColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            letterSpacing: 3,
+          ),
+          textAlign: TextAlign.start,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     print(categoryList);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
+      color: Theme.of(context).primaryColor,
       child: Form(
-          key: formKey,
-          autovalidate: true,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  DropdownButton(
-                    hint:
-                        Text('category', style: TextStyle(color: Colors.white)),
-                    value: selectedCategory,
-                    style: TextStyle(color: Colors.white),
-                    items: categoryList.map((val) {
-                      return DropdownMenuItem(
-                        value: val.toString(),
-                        child: Text(val.toString()),
-                      );
-                    }).toList(),
-                    onChanged: (dynamic val) {
-                      print(val);
-                      updateCategory(val);
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 40),
-              _buildTextSections('Name', note['title']),
-              SizedBox(height: 30),
-              _buildTextSections('Link', note['link']),
-              SizedBox(height: 30),
-              _buildTextSections('Notes', note['notes']),
-              SizedBox(height: 40),
-              ImageInput(updateImage: updateImage),
-            ],
-          )),
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DropdownButton(
+                      hint: Text('CATEGORY',
+                          style: TextStyle(
+                              color: Theme.of(context).secondaryHeaderColor)),
+                      value: selectedCategory,
+                      items: categoryList.map((val) {
+                        return DropdownMenuItem(
+                          value: val.toString(),
+                          child: Text(
+                            val.toString(),
+                            style: TextStyle(
+                                color: Theme.of(context).secondaryHeaderColor),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (dynamic val) {
+                        print(val);
+                        print(selectedCategory);
+                        updateCategory(val);
+                      },
+                    ),
+                    nullCategory
+                        ? Text(
+                            'Please select a category',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontFamily: 'Muli',
+                              fontSize: 14,
+                              letterSpacing: 2,
+                            ),
+                          )
+                        : Container(),
+                  ],
+                )
+              ],
+            ),
+            SizedBox(height: 40),
+            _buildTextSections('Name', note['title']),
+            SizedBox(height: 30),
+            _buildTextSections('Link', note['link']),
+            SizedBox(height: 30),
+            _buildTextSections('Notes', note['notes']),
+            SizedBox(height: 40),
+            _buildFormTitles("IMAGE", context),
+            SizedBox(height: 20),
+            ImageInput(updateImage: updateImage),
+          ],
+        ),
+      ),
     );
   }
 }
