@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
-import 'dart:async';
-
 
 import 'package:fude/widgets/forms/add_tojar_form_container.dart';
 import 'package:fude/scoped-models/main.dart';
@@ -45,7 +43,7 @@ class _AddNotePageState extends State<AddNotePage> {
 
   void addToJar(MainModel model) {
     // First validate form.
-    if(_formData['category'] == '') {
+    if (_formData['category'] == '') {
       setState(() {
         nullCategory = true;
       });
@@ -58,7 +56,14 @@ class _AddNotePageState extends State<AddNotePage> {
     nullCategory = false;
     model.addToJar(_formData['category'], _formData['title'],
         _formData['notes'], _formData['link'], _formData['image']);
-    Navigator.pop(context);
+    Navigator.pushReplacement(
+      context,
+      PageTransition(
+        curve: Curves.linear,
+        type: PageTransitionType.leftToRight,
+        child: JarNotes(model: model),
+      ),
+    );
   }
 
   void updateCategory(dynamic value) {
@@ -113,13 +118,13 @@ class _AddNotePageState extends State<AddNotePage> {
               color: Theme.of(context).iconTheme.color,
               iconSize: 40,
               onPressed: () => Navigator.pushReplacement(
-                context,
-                PageTransition(
-                  curve: Curves.linear,
-                  type: PageTransitionType.upToDown,
-                  child: JarNotes(model: model),
-                ),
-              ),
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.upToDown,
+                      child: JarNotes(model: model),
+                    ),
+                  ),
             )
           ],
         ),
@@ -162,8 +167,7 @@ class _AddNotePageState extends State<AddNotePage> {
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Text('ADD IDEA',
                               style: TextStyle(
-                                  color:
-                                      Theme.of(context).primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 20,
                                   letterSpacing: 3)),
                           onPressed: () {

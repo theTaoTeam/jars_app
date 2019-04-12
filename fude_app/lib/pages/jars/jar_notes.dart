@@ -168,7 +168,7 @@ class _JarNotesState extends State<JarNotes> {
                         ],
                       )
                     : Center(
-                        child: Text('START ADDING IDEAS', style: Theme.of(context).textTheme.subtitle, textAlign: TextAlign.center,),
+                        child: Text('ADD AN IDEA TO GET STARTED', style: Theme.of(context).textTheme.subtitle, textAlign: TextAlign.center,),
                       );
               }
             }),

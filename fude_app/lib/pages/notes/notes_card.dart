@@ -16,18 +16,14 @@ class NotesCard extends StatelessWidget {
       BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-      leading: Hero(
-        tag: note['title'],
-        child: Container(
-          width: _targetWidth * 0.55,
-          height: height,
-          child: 
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: note['image'] != null
-                ? Image.network(note['image'], scale: 0.1)
-                : logoInStorage(),
-          ),
+      leading: Container(
+        width: _targetWidth * 0.55,
+        // height: height,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
+          child: note['image'] != null
+              ? Image.network(note['image'], scale: 0.1)
+              : logoInStorage(),
         ),
       ),
       title: Container(

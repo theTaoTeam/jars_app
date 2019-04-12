@@ -60,15 +60,15 @@ class NotePage extends StatelessWidget {
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: !isRandom ? Icon(Icons.arrow_back_ios) : Icon(Icons.keyboard_arrow_down),
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            iconSize: 30,
+            iconSize: 40,
             onPressed: () => Navigator.pushReplacement(
                   context,
                   PageTransition(
                     curve: Curves.linear,
-                    type: PageTransitionType.leftToRightWithFade,
+                    type: !isRandom ? PageTransitionType.leftToRightWithFade : PageTransitionType.upToDown,
                     child: !isRandom
                         ? JarNotes(model: model)
                         : JarPage(model: model),
@@ -104,16 +104,13 @@ class NotePage extends StatelessWidget {
               // shrinkWrap: true,
               padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
               children: <Widget>[
-                Hero(
-                  tag: note['title'],
-                  child: Container(
-                    height: height / 3,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(note['image'] != null
-                            ? note['image']
-                            : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
-                      ),
+                Container(
+                  height: height / 3,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(note['image'] != null
+                          ? note['image']
+                          : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
                     ),
                   ),
                 ),
