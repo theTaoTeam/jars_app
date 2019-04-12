@@ -78,7 +78,7 @@ class AddToJarForm extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     DropdownButton(
-                      hint: Text('Category',
+                      hint: Text('CATEGORY',
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor)),
                       value: selectedCategory,
