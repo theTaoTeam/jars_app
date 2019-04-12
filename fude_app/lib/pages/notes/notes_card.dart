@@ -16,11 +16,14 @@ class NotesCard extends StatelessWidget {
       DocumentSnapshot note, double _targetWidth, BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
-      leading: Container(
-        width: _targetWidth * 0.55,
-        child: note['image'] != null
-            ? Image.network(note['image'], scale: 0.1)
-            : logoInStorage(),
+      leading: Hero(
+        tag: note['title'],
+        child: Container(
+          width: _targetWidth * 0.55,
+          child: note['image'] != null
+              ? Image.network(note['image'], scale: 0.1)
+              : logoInStorage(),
+        ),
       ),
       title: Container(
         child: Text(
@@ -58,7 +61,7 @@ class NotesCard extends StatelessWidget {
           context,
           PageTransition(
             curve: Curves.linear,
-            type: PageTransitionType.downToUp,
+            type: PageTransitionType.rightToLeftWithFade,
             child: NotePage(
               note: note,
               isRandom: false,

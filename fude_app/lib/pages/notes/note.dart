@@ -14,7 +14,8 @@ class NotePage extends StatelessWidget {
 
   NotePage({this.note, @required this.isRandom});
 
-  Widget _buildTextSections(String val, BuildContext context, MainModel model, DocumentSnapshot note) {
+  Widget _buildTextSections(String val, BuildContext context, MainModel model,
+      DocumentSnapshot note) {
     return Container(
       padding: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
@@ -27,15 +28,15 @@ class NotePage extends StatelessWidget {
       ),
       child: val == note['link']
           ? GestureDetector(
-            onTap: () => model.launchURL(val),
+              onTap: () => model.launchURL(val),
               child: Text(
-              val,
-              style: TextStyle(
-                  color: Theme.of(context).secondaryHeaderColor,
-                  fontSize: Theme.of(context).textTheme.caption.fontSize,
-                  letterSpacing:
-                      Theme.of(context).textTheme.caption.letterSpacing),
-            ))
+                val,
+                style: TextStyle(
+                    color: Theme.of(context).secondaryHeaderColor,
+                    fontSize: Theme.of(context).textTheme.caption.fontSize,
+                    letterSpacing:
+                        Theme.of(context).textTheme.caption.letterSpacing),
+              ))
           : Text(
               val,
               maxLines: val == "Notes" ? 3 : 1,
@@ -103,14 +104,18 @@ class NotePage extends StatelessWidget {
               // shrinkWrap: true,
               padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
               children: <Widget>[
-                Container(
-                  height: height / 3,
-                  decoration: BoxDecoration(
+                Hero(
+                  tag: note['title'],
+                  child: Container(
+                    height: height / 3,
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: NetworkImage(note['image'] != null
-                        ? note['image']
-                        : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
-                  )),
+                        image: NetworkImage(note['image'] != null
+                            ? note['image']
+                            : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: height * 0.07),
                 _buildTextSections(note['category'], context, model, note),
