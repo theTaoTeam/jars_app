@@ -59,14 +59,18 @@ class _JarPageState extends State<JarPage> {
     final _random = Random();
     List<DocumentSnapshot> notes = [];
     DocumentSnapshot randomNote;
+    print('CATEGORY: $category');
     try {
       notes = await model.fetchJarNotesByCategory(category);
     } catch (e) {
       print(e);
     }
-    if (notes != null) {
+    if (notes != null && notes.length != 0) {
+      print("notes !== NULL: $notes");
       randomNote = notes[_random.nextInt(notes.length)];
     }
+      print("notes: $notes");
+
     showRandomNote(context, randomNote, model, category);
   }
 

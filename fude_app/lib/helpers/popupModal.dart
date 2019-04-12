@@ -12,110 +12,115 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32.0))),
-        content: Container(
-          width: width,
-          height: randomNote != null ? height * 0.4 : height * 0.09,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Color(0xFFFFFF),
-            borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // dialog centre
-              randomNote != null
-                  ? Expanded(
-                      child: Container(
-                        child: Image.network(
-                          randomNote['image'] != null
-                              ? randomNote['image']
-                              : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-                        ),
-                      ),
-                      flex: 2,
-                    )
-                  : Container(),
-              // dialog top
-              randomNote != null
-                  ? Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
+      return Theme(
+        data: Theme.of(context)
+            .copyWith(dialogBackgroundColor: Theme.of(context).primaryColor),
+        child: AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          contentPadding: EdgeInsets.all(0),
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Container(
+              height: height * 0.35,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  // dialog centre
+                  randomNote != null
+                      ? Expanded(
+                          flex: 3,
+                          child: Container(
+                            height: height,
+                            width: width,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                    randomNote['image'] != null
+                                        ? randomNote['image']
+                                        : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
+                                  ),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                      Theme.of(context)
+                                          .secondaryHeaderColor
+                                          .withOpacity(0.3),
+                                      BlendMode.dstATop)),
                             ),
-                            child: Text(
-                              randomNote['title'].toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.0,
+                            child: Center(
+                              child: Text(
+                                randomNote['title'].toUpperCase(),
+                                style: Theme.of(context).textTheme.subtitle,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Column(
-                      children: <Widget>[
-                        Container(
-                          height: 15,
-                        ),
-                        Text(
-                          "You don't have any $category ideas yet.",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
                           ),
                         )
-                      ],
-                    ),
-              // dialog bottom
-              randomNote != null
-                  ? Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                                // color: Color(0xFF33b17c),
-                                ),
-                            child: FlatButton(
-                                child: Text(
-                                  'OPEN',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                      curve: Curves.linear,
-                                      type: PageTransitionType.downToUp,
-                                      child: NotePage(
-                                        note: randomNote,
-                                        isRandom: false,
-                                      ),
-                                    ),
-                                  );
-                                }),
+                      : Container(),
+                  // dialog top
+                  randomNote == null
+                      ? Center(
+                          child: Text(
+                            "You don't have any $category ideas yet.",
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor == Color.fromRGBO(40, 40, 40, 1)
+                                  ? Color.fromRGBO(242, 242, 242, 1)
+                                  : Color.fromRGBO(40, 40, 40, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              letterSpacing: 5,
+                            ),
                           ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-            ],
+                        )
+                      : Container(),
+
+                  // dialog bottom
+                  randomNote != null
+                      ? Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              // flex: 4,
+                              child: Container(
+                                // width: width,
+                                padding: EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor),
+                                child: FlatButton(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    child: Text(
+                                      'OPEN',
+                                      style:
+                                          Theme.of(context).textTheme.headline,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                          curve: Curves.linear,
+                                          type: PageTransitionType.downToUp,
+                                          child: NotePage(
+                                            note: randomNote,
+                                            isRandom: true,
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            )
+                          ],
+                        )
+                      : Container(),
+                ],
+              ),
+            ),
           ),
         ),
       );
