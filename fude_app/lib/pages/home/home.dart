@@ -110,7 +110,6 @@ class _HomePageState extends State<HomePage> {
                                           context,
                                           PageTransition(
                                             curve: Curves.linear,
-                                            duration: Duration(seconds: 1),
                                             type: PageTransitionType.fade,
                                             child: JarPage(model: widget.model),
                                           ),
