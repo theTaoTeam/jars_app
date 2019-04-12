@@ -67,7 +67,7 @@ class _JarNotesState extends State<JarNotes> {
               icon: Icon(Icons.add),
               iconSize: Theme.of(context).iconTheme.size,
               color: Theme.of(context).iconTheme.color,
-              onPressed: () => Navigator.push(
+              onPressed: () => Navigator.pushReplacement(
                     context,
                     PageTransition(
                       curve: Curves.linear,

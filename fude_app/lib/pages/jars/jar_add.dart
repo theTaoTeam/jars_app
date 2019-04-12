@@ -77,7 +77,7 @@ class _JarPageState extends State<AddJarPage> {
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 25),
-              icon: Icon(Icons.close),
+              icon: Icon(Icons.keyboard_arrow_down),
               color: Theme.of(context).iconTheme.color,
               iconSize: Theme.of(context).iconTheme.size,
               highlightColor: Colors.transparent,

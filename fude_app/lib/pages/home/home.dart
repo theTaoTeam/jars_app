@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
+        leading: Container(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                       onTap: () {
                                         widget.model.getJarBySelectedId(snapshot
                                             .data.documents[index].documentID);
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           PageTransition(
                                             curve: Curves.linear,

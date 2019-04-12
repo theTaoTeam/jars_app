@@ -30,6 +30,7 @@ class NotesCard extends StatelessWidget {
         child: Text(
           note['title'].toUpperCase(),
           style: Theme.of(context).textTheme.headline,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
       subtitle: Container(

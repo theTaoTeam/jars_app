@@ -114,7 +114,7 @@ class _AddNotePageState extends State<AddNotePage> {
               padding: EdgeInsets.only(right: 25),
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              icon: Icon(Icons.close),
+              icon: Icon(Icons.keyboard_arrow_down),
               color: Theme.of(context).iconTheme.color,
               iconSize: 40,
               onPressed: () => Navigator.pushReplacement(

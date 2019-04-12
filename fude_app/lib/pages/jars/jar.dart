@@ -9,8 +9,8 @@ import 'dart:ui';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar_notes.dart';
 import 'package:fude/pages/jars/category_card.dart';
+import 'package:fude/pages/home/home.dart';
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
-
 import 'package:fude/helpers/popupModal.dart';
 
 class JarPage extends StatefulWidget {
@@ -69,7 +69,7 @@ class _JarPageState extends State<JarPage> {
       print("notes !== NULL: $notes");
       randomNote = notes[_random.nextInt(notes.length)];
     }
-      print("notes: $notes");
+    print("notes: $notes");
 
     showRandomNote(context, randomNote, model, category);
   }
@@ -181,7 +181,15 @@ class _JarPageState extends State<JarPage> {
                                             iconSize: 40,
                                             onPressed: () {
                                               _swiperVisible = false;
-                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  curve: Curves.linear,
+                                                  type: PageTransitionType
+                                                      .upToDown,
+                                                  child: HomePage(model: model),
+                                                ),
+                                              );
                                             }),
                                       ),
                                     ),
