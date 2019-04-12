@@ -86,7 +86,7 @@ class HomePageJar extends StatelessWidget {
                             PageTransition(
                               curve: Curves.linear,
                               type: PageTransitionType.downToUp,
-                              child: EditJarPage(),
+                              child: EditJarPage(model: model),
                             ),
                           );
                         },

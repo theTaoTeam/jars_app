@@ -63,7 +63,7 @@ class NotePage extends StatelessWidget {
             icon: !isRandom ? Icon(Icons.arrow_back_ios) : Icon(Icons.keyboard_arrow_down),
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            iconSize: 40,
+            iconSize: 25,
             onPressed: () => Navigator.pushReplacement(
                   context,
                   PageTransition(
@@ -79,7 +79,7 @@ class NotePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               color: Theme.of(context).iconTheme.color,
-              iconSize: 36,
+              iconSize: 25,
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
               onPressed: () {
