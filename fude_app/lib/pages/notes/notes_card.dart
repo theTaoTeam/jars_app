@@ -12,17 +12,22 @@ class NotesCard extends StatelessWidget {
 
   NotesCard({this.note, this.model});
 
-  Widget makeListTile(
-      DocumentSnapshot note, double _targetWidth, BuildContext context) {
+  Widget makeListTile(DocumentSnapshot note, double _targetWidth, double height,
+      BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
       leading: Hero(
         tag: note['title'],
         child: Container(
           width: _targetWidth * 0.55,
-          child: note['image'] != null
-              ? Image.network(note['image'], scale: 0.1)
-              : logoInStorage(),
+          height: height,
+          child: 
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: note['image'] != null
+                ? Image.network(note['image'], scale: 0.1)
+                : logoInStorage(),
+          ),
         ),
       ),
       title: Container(
@@ -77,19 +82,19 @@ class NotesCard extends StatelessWidget {
               blurRadius: 20.0,
             )
           ],
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Card(
           color: Theme.of(context).cardColor,
           elevation: 6.0,
-          margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             children: <Widget>[
               Container(
-                child: makeListTile(note, _targetWidth, context),
+                child: makeListTile(note, _targetWidth, height, context),
               ),
             ],
           ),
