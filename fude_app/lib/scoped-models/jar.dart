@@ -107,13 +107,45 @@ mixin JarModel on Model {
     }
   }
 
+  final List<String> modifyedList = [];
+  void removeCategoryFromJar(int index) async {
+    try {
+      print('trying to remove from firestore...');
+      final jarCategories = await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .get();
+
+      jarCategories.data['categories'].forEach((val) {
+        if (val != jarCategories.data['categories'][index] &&
+            !modifyedList.contains(val)) {
+          modifyedList.add(val);
+        }
+      });
+      print(modifyedList);
+      await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .updateData({'categories': modifyedList});
+
+      print(modifyedList);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<Uri> uploadNoteImageToStorage(File image) async {
     final StorageReference ref =
         FirebaseStorage.instance.ref().child('images/');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url
-    Uri location = (await uploadTask.future).downloadUrl;
+    Uri location = await uploadTask.onComplete.then((val) {
+      val.ref.getDownloadURL().then((val) {
+        print(val);
+        return val; //Val here is Already String
+      });
+    });
     //returns the download url
     print(location);
     return location;
@@ -218,5 +250,27 @@ mixin JarModel on Model {
   void invertTheme() {
     darkTheme = !darkTheme;
     notifyListeners();
+  }
+
+  numberOfIdeasInCategory(String category) async {
+    int total = 0;
+    QuerySnapshot ideas;
+    try {
+      ideas = await _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .getDocuments();
+
+      ideas.documents.forEach((idea) {
+        if (idea.data['category'] == category) {
+          total += 1;
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+
+    return total;
   }
 }

@@ -52,25 +52,6 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-  Column _buildExistingCategoryInputs(BuildContext context) {
-    var children = <Widget>[];
-    for (var i = 0; i <= jar['categories'].length - 1; i++) {
-      children.add(
-        Column(
-          children: <Widget>[
-            AddJarCategoryField(
-              hint: jar['categories'][i],
-              updateCategory: updateCategory,
-            ),
-            SizedBox(height: 20),
-          ],
-        ),
-      );
-    }
-    return Column(
-      children: children,
-    );
-  }
 
   Column _addCategoryInputs(BuildContext context) {
     var children = <Widget>[];
@@ -81,8 +62,8 @@ class AddJarForm extends StatelessWidget {
             AddJarCategoryField(
               hint: 'Category',
               updateCategory: updateCategory,
+              enabled: true,
             ),
-            SizedBox(height: 20),
           ],
         ),
       );
@@ -112,17 +93,15 @@ class AddJarForm extends StatelessWidget {
               SizedBox(height: 40),
               _buildFormTitles("CATEGORIES", context),
               SizedBox(height: 40),
-              jar != null
-                  ? _buildExistingCategoryInputs(context)
-                  : Column(
-                      children: <Widget>[
-                        AddJarCategoryField(
-                          hint: 'Category',
-                          updateCategory: updateCategory,
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
+              Column(
+                children: <Widget>[
+                  AddJarCategoryField(
+                    hint: 'Category',
+                    updateCategory: updateCategory,
+                    enabled: true,
+                  ),
+                ],
+              ),
               categoryCount > 0 ? _addCategoryInputs(context) : Container(),
               SizedBox(height: 40),
               _buildFormTitles("JAR IMAGE", context),

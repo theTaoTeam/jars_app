@@ -18,6 +18,7 @@ class EditJarPage extends StatefulWidget {
 class _JarPageState extends State<EditJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int categoryCount = 0;
+  bool needsAtLeastOneCategory = false;
   final Map<String, dynamic> _formData = {
     'title': '',
     'categories': [],
@@ -27,19 +28,24 @@ class _JarPageState extends State<EditJarPage> {
   @override
   void initState() {
     setState(() {
-
+      widget.model.selectedJar['categories'].forEach((val) {
+        _formData['categories'].add(val);
+      });
     });
     super.initState();
   }
 
   void updateJar(MainModel model) {
-    // First validate form.
-    if (!this.formKey.currentState.validate()) {
-      print('form incorrect ${_formData['categories']}');
-      print(model.selectedJar.data['categories']);
+    //validate form.
+    if (categoryCount > 0) {
+
+        needsAtLeastOneCategory = false;
+    }
+    if (!this.formKey.currentState.validate() || needsAtLeastOneCategory) {
       return;
     } else {
       formKey.currentState.save();
+
       model.updateJar(_formData);
       Navigator.pop(context);
     }
@@ -48,17 +54,15 @@ class _JarPageState extends State<EditJarPage> {
   void updateTitle(String val) {
     print('update title called: $_formData');
     if (val != null) {
-      setState(() {
         _formData['title'] = val;
-      });
     }
   }
 
   void updateCategory(String val) {
-    print('update category called: $val');
-    setState(() {
+    print('category onSaved called: $val');
+    if (val != '' && !_formData['categories'].contains(val)) {
       _formData['categories'].add(val);
-    });
+    }
   }
 
   void updateImage(File image) {
@@ -68,11 +72,29 @@ class _JarPageState extends State<EditJarPage> {
     });
   }
 
-  void updateCategoryCount() {
+  void updateCategoryCount(bool addCategory) {
     print(categoryCount);
-    setState(() {
-      categoryCount += 1;
-    });
+    addCategory
+        ? setState(() {
+            categoryCount += 1;
+          })
+        : setState(() {
+            categoryCount -= 1;
+          });
+  }
+
+  void removeCategory(String category) {
+    print(_formData['categories']);
+    if (_formData['categories'].length > 1) {
+      setState(() {
+        _formData['categories'].remove(category);
+      });
+    } else {
+      setState(() {
+        _formData['categories'].remove(category);
+        needsAtLeastOneCategory = true;
+      });
+    }
   }
 
   @override
@@ -113,7 +135,10 @@ class _JarPageState extends State<EditJarPage> {
                   EditJarForm(
                     formKey: formKey,
                     model: model,
+                    removeCategory: removeCategory,
                     jar: model.selectedJar,
+                    categories: _formData['categories'],
+                    needsAtLeastOneCategory: needsAtLeastOneCategory,
                     updateCategory: updateCategory,
                     updateTitle: updateTitle,
                     updateImage: updateImage,
@@ -126,7 +151,7 @@ class _JarPageState extends State<EditJarPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        width: width * 0.06,
+                        width: width * 0.055,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -135,7 +160,6 @@ class _JarPageState extends State<EditJarPage> {
                         child: Container(
                           height: height * 0.045,
                           width: width * 0.45,
-                          padding: EdgeInsets.only(bottom: height * 0.1),
                           decoration: BoxDecoration(
                             border: Border(
                               left: BorderSide(
@@ -153,14 +177,15 @@ class _JarPageState extends State<EditJarPage> {
                             ),
                           ),
                           child: Center(
-                            child: Text('UPDATE JAR',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).textTheme.title.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  letterSpacing: 3,
-                                )),
+                            child: Text(
+                              'UPDATE JAR',
+                              style: TextStyle(
+                                color: Theme.of(context).secondaryHeaderColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                letterSpacing: 3,
+                              ),
+                            ),
                           ),
                         ),
                       ),
