@@ -86,8 +86,7 @@ class _ImageInputState extends State<ImageInput> {
               )
             : Container(
                 width: width * 0.2,
-                height: height * 0.1,
-                margin: EdgeInsets.only(top: 10),
+                height: height * 0.02,
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor),
                 child: Center(

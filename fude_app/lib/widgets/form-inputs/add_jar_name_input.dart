@@ -6,7 +6,11 @@ class AddJarNameField extends StatelessWidget {
   AddJarNameField({this.hint, this.updateTitle});
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Container(
+      height: height * 0.05,
+      width: width * 0.85,
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
@@ -22,13 +26,17 @@ class AddJarNameField extends StatelessWidget {
             fontSize: Theme.of(context).textTheme.caption.fontSize,
             letterSpacing: Theme.of(context).textTheme.caption.letterSpacing),
         decoration: InputDecoration(
+          suffix: null,
           border: InputBorder.none,
-          fillColor: Theme.of(context).secondaryHeaderColor,
           hintText: hint,
           hintStyle: TextStyle(
-              color: Color.fromRGBO(131, 129, 129, 1), fontSize: 15.0),
-          contentPadding:
-              EdgeInsets.only(top: 5.0, right: 20.0, bottom: 20.0, left: 15.0),
+              color: Color.fromRGBO(131, 129, 129, 1),
+              fontSize: Theme.of(context).textTheme.caption.fontSize),
+          contentPadding: EdgeInsets.fromLTRB(height * 0.02, height * 0.01, 0, 0),
+          errorStyle: TextStyle(
+              color: Colors.red,
+              fontSize: Theme.of(context).textTheme.caption.fontSize,
+              letterSpacing: Theme.of(context).textTheme.caption.letterSpacing),
         ),
         validator: (String val) {
           String finalVal = val.trim();

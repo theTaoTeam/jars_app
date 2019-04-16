@@ -112,7 +112,7 @@ class _JarPageState extends State<AddJarPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        width: width * 0.06,
+                        width: width * 0.055,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -120,8 +120,7 @@ class _JarPageState extends State<AddJarPage> {
                         },
                         child: Container(
                           height: height * 0.045,
-                          width: width * 0.4,
-                          padding: EdgeInsets.only(bottom: height * 0.1),
+                          width: width * 0.45,
                           decoration: BoxDecoration(
                             border: Border(
                               left: BorderSide(
@@ -139,14 +138,15 @@ class _JarPageState extends State<AddJarPage> {
                             ),
                           ),
                           child: Center(
-                            child: Text('ADD JAR',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).textTheme.title.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  letterSpacing: 3,
-                                )),
+                            child: Text(
+                              'ADD JAR',
+                              style: TextStyle(
+                                color: Theme.of(context).textTheme.title.color,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                letterSpacing: 3,
+                              ),
+                            ),
                           ),
                         ),
                       ),

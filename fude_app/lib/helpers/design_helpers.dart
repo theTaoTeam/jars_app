@@ -15,7 +15,7 @@ ThemeData buildAppThemeData(bool darkTheme) {
             ? Color.fromRGBO(40, 40, 40, 1)
             : Color.fromRGBO(242, 242, 242, 1),
         // fontWeight: FontWeight.bold,
-        fontSize: 42,
+        fontSize: 40,
         letterSpacing: 20,
       ),
       subhead: TextStyle(
@@ -49,7 +49,9 @@ ThemeData buildAppThemeData(bool darkTheme) {
         fontSize: 14,
         letterSpacing: 2,
       ),
+      
     ),
+    
     iconTheme: IconThemeData(
         color: !darkTheme
             ? Color.fromRGBO(40, 40, 40, 1)

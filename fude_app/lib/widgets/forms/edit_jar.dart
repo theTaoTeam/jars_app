@@ -9,20 +9,26 @@ import 'package:fude/widgets/form-inputs/image.dart';
 class EditJarForm extends StatelessWidget {
   final GlobalKey formKey;
   final MainModel model;
+  final List<dynamic> categories;
   final int categoryCount;
+  final bool needsAtLeastOneCategory;
   final Function updateTitle;
   final Function updateCategory;
   final Function updateImage;
   final Function updateCategoryCount;
+  final Function removeCategory;
   final DocumentSnapshot jar;
 
   EditJarForm(
       {this.formKey,
       this.model,
+      this.categories,
       this.jar,
       this.categoryCount,
+      this.needsAtLeastOneCategory,
       this.updateTitle,
       this.updateCategory,
+      this.removeCategory,
       this.updateImage,
       this.updateCategoryCount});
 
@@ -48,7 +54,7 @@ class EditJarForm extends StatelessWidget {
                 iconSize: 36,
                 color: Theme.of(context).iconTheme.color,
                 onPressed: () {
-                  updateCategoryCount();
+                  updateCategoryCount(true);
                 })
             : Container()
       ],
@@ -56,22 +62,26 @@ class EditJarForm extends StatelessWidget {
   }
 
   Column _buildExistingCategoryInputs() {
-    print(jar['categories']);
+    // print(jar['categories']);
     var children = <Widget>[];
-    for (var i = 0; i <= jar['categories'].length - 1; i++) {
+    for (var i = 0; i <= categories.length - 1; i++) {
       children.add(
         Column(
           children: <Widget>[
             AddJarCategoryField(
-              hint: jar['categories'][i],
+              hint: categories[i],
               updateCategory: updateCategory,
+              enabled: false,
+              removeCategory: removeCategory,
+              needsAtLeastOneCategory: needsAtLeastOneCategory,
             ),
-            SizedBox(height: 20),
           ],
         ),
       );
     }
-    return Column(children: children,);
+    return Column(
+      children: children,
+    );
   }
 
   Column _addCategoryInputs() {
@@ -84,14 +94,18 @@ class EditJarForm extends StatelessWidget {
               hint: 'Category',
               updateCategory: updateCategory,
               model: model,
+              enabled: true,
             ),
-            SizedBox(height: 20),
           ],
         ),
       );
     }
-    return Column(children: children,);
+    return Column(
+      children: children,
+    );
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +115,7 @@ class EditJarForm extends StatelessWidget {
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildFormTitles("YOUR JAR NAME", context),
               SizedBox(height: 40),
@@ -110,9 +125,10 @@ class EditJarForm extends StatelessWidget {
               ),
               SizedBox(height: 40),
               _buildFormTitles("CATEGORIES", context),
+              needsAtLeastOneCategory ? Text('Please add at least one category', style: TextStyle(color: Colors.red), textAlign: TextAlign.start,) : Container(),
               SizedBox(height: 40),
               _buildExistingCategoryInputs(),
-              categoryCount > 0 ? _addCategoryInputs() :Container(),
+              categoryCount > 0 ? _addCategoryInputs() : Container(),
               SizedBox(height: 40),
               _buildFormTitles("HOW ABOUT AN IMAGE?", context),
               SizedBox(height: 30),
