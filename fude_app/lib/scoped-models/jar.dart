@@ -65,6 +65,34 @@ mixin JarModel on Model {
     }
   }
 
+  void deleteJar() async {
+    try {
+      _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .delete()
+          .catchError((err) => print(err));
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void deleteJarIdea(String id) {
+    try {
+      _firestore
+          .collection('jars')
+          .document(_selJar.documentID)
+          .collection('jarNotes')
+          .document(id)
+          .delete()
+          .catchError((err) => print(err));
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void getJarBySelectedId(String jarId) async {
     try {
       await _firestore.collection('jars').getDocuments().then((val) {

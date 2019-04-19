@@ -118,7 +118,8 @@ class _JarNotesState extends State<JarNotes> {
                                               ? 'ALL IDEAS'
                                               : 'FAVORITE IDEAS',
                                           style: TextStyle(
-                                            color: Color.fromRGBO(131,129,129, 1),
+                                            color: Color.fromRGBO(
+                                                131, 129, 129, 1),
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
                                             letterSpacing: 5,
@@ -168,7 +169,11 @@ class _JarNotesState extends State<JarNotes> {
                         ],
                       )
                     : Center(
-                        child: Text('ADD AN IDEA TO GET STARTED', style: Theme.of(context).textTheme.subtitle, textAlign: TextAlign.center,),
+                        child: Text(
+                          'ADD AN IDEA TO GET STARTED',
+                          style: Theme.of(context).textTheme.subtitle,
+                          textAlign: TextAlign.center,
+                        ),
                       );
               }
             }),
