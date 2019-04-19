@@ -61,12 +61,12 @@ class EditJarForm extends StatelessWidget {
     );
   }
 
-  Column _buildExistingCategoryInputs() {
-    // print(jar['categories']);
+  Column _buildExistingCategoryInputs(BuildContext context) {
     var children = <Widget>[];
     for (var i = 0; i <= categories.length - 1; i++) {
       children.add(
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AddJarCategoryField(
               hint: categories[i],
@@ -75,6 +75,10 @@ class EditJarForm extends StatelessWidget {
               removeCategory: removeCategory,
               needsAtLeastOneCategory: needsAtLeastOneCategory,
             ),
+            Text(
+              'hold to delete ${categories[i]}',
+              style: TextStyle(color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
+            )
           ],
         ),
       );
@@ -91,7 +95,7 @@ class EditJarForm extends StatelessWidget {
         Column(
           children: <Widget>[
             AddJarCategoryField(
-              hint: 'Category',
+              hint: 'Add Category',
               updateCategory: updateCategory,
               model: model,
               enabled: true,
@@ -105,10 +109,10 @@ class EditJarForm extends StatelessWidget {
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -118,19 +122,25 @@ class EditJarForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildFormTitles("YOUR JAR NAME", context),
-              SizedBox(height: 40),
+              SizedBox(height: height * 0.035),
               AddJarNameField(
                 hint: jar['title'],
                 updateTitle: updateTitle,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: height * 0.03),
               _buildFormTitles("CATEGORIES", context),
-              needsAtLeastOneCategory ? Text('Please add at least one category', style: TextStyle(color: Colors.red), textAlign: TextAlign.start,) : Container(),
-              SizedBox(height: 40),
-              _buildExistingCategoryInputs(),
+              needsAtLeastOneCategory
+                  ? Text(
+                      'Please add at least one category',
+                      style: TextStyle(color: Colors.red),
+                      textAlign: TextAlign.start,
+                    )
+                  : Container(),
+              SizedBox(height: height * 0.01),
+              _buildExistingCategoryInputs(context),
               categoryCount > 0 ? _addCategoryInputs() : Container(),
-              SizedBox(height: 40),
-              _buildFormTitles("HOW ABOUT AN IMAGE?", context),
+              SizedBox(height: height * 0.035),
+              _buildFormTitles("JAR IMAGE", context),
               SizedBox(height: 30),
               ImageInput(
                 updateImage: updateImage,

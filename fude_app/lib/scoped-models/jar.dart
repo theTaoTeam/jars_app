@@ -270,7 +270,6 @@ mixin JarModel on Model {
     } catch (e) {
       print(e);
     }
-
     return total;
   }
 }

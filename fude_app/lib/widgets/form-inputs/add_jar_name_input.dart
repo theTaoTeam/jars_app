@@ -31,7 +31,7 @@ class AddJarNameField extends StatelessWidget {
           hintText: hint,
           hintStyle: TextStyle(
               color: Color.fromRGBO(131, 129, 129, 1),
-              fontSize: Theme.of(context).textTheme.caption.fontSize),
+              fontSize: 12),
           contentPadding: EdgeInsets.fromLTRB(height * 0.02, height * 0.01, 0, 0),
           errorStyle: TextStyle(
               color: Colors.red,

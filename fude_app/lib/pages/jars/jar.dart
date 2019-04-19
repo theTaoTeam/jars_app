@@ -11,7 +11,7 @@ import 'package:fude/pages/jars/jar_notes.dart';
 import 'package:fude/pages/jars/category_card.dart';
 import 'package:fude/pages/home/home.dart';
 import 'package:fude/widgets/page_transformer/page_transformer.dart';
-import 'package:fude/helpers/popupModal.dart';
+import 'package:fude/helpers/randomNoteModal.dart';
 
 class JarPage extends StatefulWidget {
   final MainModel model;

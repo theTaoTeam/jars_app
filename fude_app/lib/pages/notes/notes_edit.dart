@@ -110,11 +110,11 @@ class _AddNotePageState extends State<NoteEditPage> {
           actions: <Widget>[
             IconButton(
               padding: EdgeInsets.only(right: 25),
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
               icon: Icon(Icons.keyboard_arrow_down),
               color: Theme.of(context).iconTheme.color,
               iconSize: Theme.of(context).iconTheme.size,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
               onPressed: () => Navigator.pushReplacement(
                     context,
                     PageTransition(
@@ -153,49 +153,33 @@ class _AddNotePageState extends State<NoteEditPage> {
                       updateNotes: updateNotes,
                       updateImage: updateImage,
                     ),
-                    SizedBox(height: height * 0.06),
+                    SizedBox(height: height * 0.04),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
-                          width: width * 0.057,
+                          width: width * 0.053,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            updateNote(model);
-                          },
-                          child: Container(
-                            height: height * 0.05,
-                            width: width * 0.45,
-                            // padding: EdgeInsets.only(bottom: height * 0.1),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                left: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                                right: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                                bottom: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text('UPDATE IDEA',
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).textTheme.title.color,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    letterSpacing: 3,
-                                  )),
+                        RaisedButton(
+                          child: Text(
+                            'UPDATE JAR',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              letterSpacing: 5,
                             ),
                           ),
+                          elevation: 7,
+                          highlightElevation: 1,
+                          padding: EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          color: Theme.of(context).secondaryHeaderColor,
+                          splashColor: Colors.transparent,
+                          highlightColor: Theme.of(context).primaryColor,
+                          onPressed: () => updateNote(model),
                         ),
                       ],
                     )
