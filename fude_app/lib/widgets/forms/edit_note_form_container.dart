@@ -66,6 +66,8 @@ class EditNoteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     print(categoryList);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
@@ -117,15 +119,15 @@ class EditNoteForm extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 40),
+            SizedBox(height: height * 0.045),
             _buildTextSections('Name', note['title']),
-            SizedBox(height: 30),
+            SizedBox(height: height * 0.03),
             _buildTextSections('Link', note['link']),
-            SizedBox(height: 30),
+            SizedBox(height: height * 0.03),
             _buildTextSections('Notes', note['notes']),
-            SizedBox(height: 40),
+            SizedBox(height: height * 0.045),
             _buildFormTitles("IMAGE", context),
-            SizedBox(height: 20),
+            SizedBox(height: height * 0.025),
             ImageInput(updateImage: updateImage),
           ],
         ),

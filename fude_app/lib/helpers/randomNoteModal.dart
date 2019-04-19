@@ -72,7 +72,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                   : Color.fromRGBO(40, 40, 40, 1),
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              letterSpacing: 5,
+                              letterSpacing: 3,
                             ),
                           ),
                         )

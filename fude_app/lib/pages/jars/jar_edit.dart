@@ -36,30 +36,29 @@ class _JarPageState extends State<EditJarPage> {
   }
 
   void updateJar(MainModel model) {
+    print('updating jar ${_formData['categories']}');
     //validate form.
     if (categoryCount > 0) {
-
-        needsAtLeastOneCategory = false;
+      needsAtLeastOneCategory = false;
     }
     if (!this.formKey.currentState.validate() || needsAtLeastOneCategory) {
       return;
     } else {
       formKey.currentState.save();
-
       model.updateJar(_formData);
       Navigator.pop(context);
     }
   }
 
   void updateTitle(String val) {
-    print('update title called: $_formData');
+    // print('update title called: $_formData');
     if (val != null) {
-        _formData['title'] = val;
+      _formData['title'] = val;
     }
   }
 
   void updateCategory(String val) {
-    print('category onSaved called: $val');
+    // print('category onSaved called: $val');
     if (val != '' && !_formData['categories'].contains(val)) {
       _formData['categories'].add(val);
     }
@@ -73,7 +72,7 @@ class _JarPageState extends State<EditJarPage> {
   }
 
   void updateCategoryCount(bool addCategory) {
-    print(categoryCount);
+    // print(categoryCount);
     addCategory
         ? setState(() {
             categoryCount += 1;
@@ -87,11 +86,12 @@ class _JarPageState extends State<EditJarPage> {
     print(_formData['categories']);
     if (_formData['categories'].length > 1) {
       setState(() {
-        _formData['categories'].remove(category);
+        _formData['categories'].removeWhere((val) => val == category);
       });
+      print(_formData['categories']);
     } else {
       setState(() {
-        _formData['categories'].remove(category);
+        _formData['categories'].removeWhere((val) => val == category);
         needsAtLeastOneCategory = true;
       });
     }
@@ -145,7 +145,7 @@ class _JarPageState extends State<EditJarPage> {
                     updateCategoryCount: updateCategoryCount,
                     categoryCount: categoryCount,
                   ),
-                  SizedBox(height: height * 0.06),
+                  SizedBox(height: height * 0.04),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -153,42 +153,27 @@ class _JarPageState extends State<EditJarPage> {
                       SizedBox(
                         width: width * 0.055,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          updateJar(model);
-                        },
-                        child: Container(
-                          height: height * 0.045,
-                          width: width * 0.45,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                width: 1,
-                              ),
-                              right: BorderSide(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                width: 1,
-                              ),
-                              bottom: BorderSide(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                width: 1,
-                              ),
+                      
+                      RaisedButton(
+                          child: Text(
+                            'UPDATE JAR',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              letterSpacing: 5,
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              'UPDATE JAR',
-                              style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                letterSpacing: 3,
-                              ),
-                            ),
-                          ),
+                          elevation: 7,
+                          highlightElevation: 1,
+                          padding: EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          color: Theme.of(context).secondaryHeaderColor,
+                          splashColor: Colors.transparent,
+                          highlightColor: Theme.of(context).primaryColor,
+                          onPressed: () => updateJar(model),
                         ),
-                      ),
+                      
                     ],
                   )
                 ],

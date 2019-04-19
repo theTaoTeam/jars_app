@@ -60,7 +60,7 @@ class AddJarForm extends StatelessWidget {
         Column(
           children: <Widget>[
             AddJarCategoryField(
-              hint: 'Category',
+              hint: 'Add Category',
               updateCategory: updateCategory,
               enabled: true,
             ),
@@ -92,11 +92,11 @@ class AddJarForm extends StatelessWidget {
               ),
               SizedBox(height: 40),
               _buildFormTitles("CATEGORIES", context),
-              SizedBox(height: 40),
+              SizedBox(height: 15),
               Column(
                 children: <Widget>[
                   AddJarCategoryField(
-                    hint: 'Category',
+                    hint: 'Add Category',
                     updateCategory: updateCategory,
                     enabled: true,
                   ),
