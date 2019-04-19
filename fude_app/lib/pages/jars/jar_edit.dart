@@ -146,15 +146,14 @@ class _JarPageState extends State<EditJarPage> {
                     categoryCount: categoryCount,
                   ),
                   SizedBox(height: height * 0.04),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: width * 0.055,
-                      ),
-                      
-                      RaisedButton(
+                  Container(
+                    padding:
+                        EdgeInsets.fromLTRB(width * 0.045, 0, width * 0.045, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        RaisedButton(
                           child: Text(
                             'UPDATE JAR',
                             style: TextStyle(
@@ -167,14 +166,23 @@ class _JarPageState extends State<EditJarPage> {
                           elevation: 7,
                           highlightElevation: 1,
                           padding: EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
                           color: Theme.of(context).secondaryHeaderColor,
                           splashColor: Colors.transparent,
                           highlightColor: Theme.of(context).primaryColor,
                           onPressed: () => updateJar(model),
                         ),
-                      
-                    ],
+                        IconButton(
+                            icon: Icon(Icons.delete),
+                            iconSize: 36,
+                            color: Colors.red,
+                            onPressed: () {
+                              model.deleteJar();
+                              Navigator.pop(context);
+                            })
+                      ],
+                    ),
                   )
                 ],
               ),
