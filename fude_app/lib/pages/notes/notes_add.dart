@@ -151,52 +151,37 @@ class _AddNotePageState extends State<AddNotePage> {
                       updateNotes: updateNotes,
                       updateImage: updateImage,
                     ),
-                    SizedBox(height: height * 0.06),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: width * 0.06,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            addToJar(model);
-                          },
-                          child: Container(
-                            height: height * 0.045,
-                            width: width * 0.4,
-                            padding: EdgeInsets.only(bottom: height * 0.1),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                left: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                                right: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                                bottom: BorderSide(
-                                  color: Theme.of(context).secondaryHeaderColor,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text('ADD IDEA',
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).textTheme.title.color,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    letterSpacing: 3,
-                                  )),
+                    SizedBox(height: height * 0.04),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: width * 0.055,
+                      ),
+                      
+                      RaisedButton(
+                          child: Text(
+                            'ADD JAR',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              letterSpacing: 5,
                             ),
                           ),
+                          elevation: 7,
+                          highlightElevation: 1,
+                          padding: EdgeInsets.all(15),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          color: Theme.of(context).secondaryHeaderColor,
+                          splashColor: Colors.transparent,
+                          highlightColor: Theme.of(context).primaryColor,
+                          onPressed: () => addToJar(model),
                         ),
-                      ],
-                    )
+                      
+                    ],
+                  )
                   ],
                 ),
               ],

@@ -52,7 +52,6 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-
   Column _addCategoryInputs(BuildContext context) {
     var children = <Widget>[];
     for (var i = 0; i < categoryCount; i++) {
@@ -75,6 +74,8 @@ class AddJarForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(color: Theme.of(context).primaryColor),
@@ -83,29 +84,26 @@ class AddJarForm extends StatelessWidget {
           autovalidate: false,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildFormTitles("JAR NAME", context),
-              SizedBox(height: 40),
+              SizedBox(height: height * 0.035),
               AddJarNameField(
                 hint: jar == null ? 'Name' : jar['title'],
                 updateTitle: updateTitle,
               ),
-              SizedBox(height: 40),
+              SizedBox(height: height * 0.035),
               _buildFormTitles("CATEGORIES", context),
-              SizedBox(height: 15),
-              Column(
-                children: <Widget>[
-                  AddJarCategoryField(
-                    hint: 'Add Category',
-                    updateCategory: updateCategory,
-                    enabled: true,
-                  ),
-                ],
+              SizedBox(height: height * 0.01),
+              AddJarCategoryField(
+                hint: 'Add Category',
+                updateCategory: updateCategory,
+                enabled: true,
               ),
               categoryCount > 0 ? _addCategoryInputs(context) : Container(),
-              SizedBox(height: 40),
+              SizedBox(height: height * 0.035),
               _buildFormTitles("JAR IMAGE", context),
-              SizedBox(height: 30),
+              SizedBox(height: height * 0.03),
               ImageInput(
                 updateImage: updateImage,
               )

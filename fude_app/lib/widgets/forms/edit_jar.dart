@@ -76,7 +76,7 @@ class EditJarForm extends StatelessWidget {
               needsAtLeastOneCategory: needsAtLeastOneCategory,
             ),
             Text(
-              'hold to delete ${categories[i]}',
+              'Tap and hold to delete ${categories[i]}',
               style: TextStyle(color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
             )
           ],
@@ -141,7 +141,7 @@ class EditJarForm extends StatelessWidget {
               categoryCount > 0 ? _addCategoryInputs() : Container(),
               SizedBox(height: height * 0.035),
               _buildFormTitles("JAR IMAGE", context),
-              SizedBox(height: 30),
+              SizedBox(height: height * 0.03),
               ImageInput(
                 updateImage: updateImage,
               )
