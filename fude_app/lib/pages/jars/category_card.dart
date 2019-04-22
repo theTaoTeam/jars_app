@@ -103,7 +103,7 @@ class CategoryCard extends StatelessWidget {
                     Color.fromRGBO(40, 40, 40, 1),
                   ]
                 : [
-                    Color.fromRGBO(40, 40, 40, 0),
+                    Color.fromRGBO(242, 242, 242, 0.1),
                     Color.fromRGBO(242, 242, 242, 1),
                   ]),
       ),
