@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:fude/scoped-models/main.dart';
 
@@ -8,24 +7,25 @@ class AddJarCategoryField extends StatelessWidget {
   final bool enabled;
   final bool needsAtLeastOneCategory;
   final Function updateCategory;
-  final Function removeCategory;
+  final Function addCategoryToRemoveList;
   final MainModel model;
+  final List<dynamic> categories;
 
   AddJarCategoryField({
     this.hint,
     this.enabled,
     this.needsAtLeastOneCategory,
     this.updateCategory,
-    this.removeCategory,
+    this.addCategoryToRemoveList,
     this.model,
+    this.categories
   });
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    print('Input Hint: $hint');
     return GestureDetector(
-      onLongPress: () => removeCategory(hint),
+      onLongPress: () => addCategoryToRemoveList(hint),
       child: Card(
         color: Theme.of(context).cardColor,
         elevation: 6.0,
@@ -34,12 +34,12 @@ class AddJarCategoryField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
-          height: height * 0.085,
+          height: height * 0.08,
           width: width * 0.55,
           child: TextFormField(
+            controller: TextEditingController(text: hint != "Add Category" ? hint : null),
             textAlign: TextAlign.start,
             enabled: enabled,
-            initialValue: hint != "Add Category" ? hint : null,
             style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: Theme.of(context).textTheme.caption.fontSize,
@@ -62,12 +62,12 @@ class AddJarCategoryField extends StatelessWidget {
             ),
             validator: (String val) {
               String finalVal = val.trim();
-              if (finalVal.isEmpty || needsAtLeastOneCategory == true) {
-                return 'Please finish adding a category ';
+              if (needsAtLeastOneCategory == true || finalVal.isEmpty && categories.length < 1) {
+                return 'cannot be blank';
               }
             },
             onSaved: (String val) {
-              if (hint != null) {
+              if (hint == 'Add Category') {
                 String finalVal = val.trim();
                 updateCategory(finalVal);
               }

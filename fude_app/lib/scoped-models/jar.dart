@@ -43,18 +43,27 @@ mixin JarModel on Model {
   }
 
   void updateJar(Map<String, dynamic> data) async {
-    print('$data');
+    print('updateJar Data: $data');
     Uri imageLocation;
     try {
       if (data['image'] != null) {
         imageLocation = await uploadNoteImageToStorage(data['image']);
       }
-      print(imageLocation);
+      if (data['categoriesToRemove'].length > 0) {
+        await _firestore
+            .collection('jars')
+            .document(_selJar.documentID)
+            .updateData({
+          'categories': FieldValue.arrayRemove(data['categoriesToRemove']),
+        });
+      }
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
           .updateData({
-        'categories': data['categories'],
+        'categories': data['categoriesToAdd'].length > 0
+            ? FieldValue.arrayUnion(data['categoriesToAdd'])
+            : FieldValue.arrayUnion([]),
         'title': data['title'],
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
@@ -135,32 +144,20 @@ mixin JarModel on Model {
     }
   }
 
-  final List<String> modifyedList = [];
-  void removeCategoryFromJar(int index) async {
-    try {
-      print('trying to remove from firestore...');
-      final jarCategories = await _firestore
-          .collection('jars')
-          .document(_selJar.documentID)
-          .get();
+  // final List<String> modifyedList = [];
+  // void removeCategoryFromJar(int index) async {
+  //   try {
 
-      jarCategories.data['categories'].forEach((val) {
-        if (val != jarCategories.data['categories'][index] &&
-            !modifyedList.contains(val)) {
-          modifyedList.add(val);
-        }
-      });
-      print(modifyedList);
-      await _firestore
-          .collection('jars')
-          .document(_selJar.documentID)
-          .updateData({'categories': modifyedList});
+  //     await _firestore
+  //         .collection('jars')
+  //         .document(_selJar.documentID)
+  //         .updateData({'categories': FieldValue.arrayRemove(category)});
 
-      print(modifyedList);
-    } catch (e) {
-      print(e);
-    }
-  }
+  //     print(modifyedList);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<Uri> uploadNoteImageToStorage(File image) async {
     final StorageReference ref =
