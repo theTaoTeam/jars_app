@@ -16,7 +16,7 @@ class EditJarForm extends StatelessWidget {
   final Function updateCategory;
   final Function updateImage;
   final Function updateCategoryCount;
-  final Function removeCategory;
+  final Function addCategoryToRemoveList;
   final DocumentSnapshot jar;
 
   EditJarForm(
@@ -28,7 +28,7 @@ class EditJarForm extends StatelessWidget {
       this.needsAtLeastOneCategory,
       this.updateTitle,
       this.updateCategory,
-      this.removeCategory,
+      this.addCategoryToRemoveList,
       this.updateImage,
       this.updateCategoryCount});
 
@@ -54,7 +54,7 @@ class EditJarForm extends StatelessWidget {
                 iconSize: 36,
                 color: Theme.of(context).iconTheme.color,
                 onPressed: () {
-                  updateCategoryCount(true);
+                  updateCategoryCount();
                 })
             : Container()
       ],
@@ -72,12 +72,13 @@ class EditJarForm extends StatelessWidget {
               hint: categories[i],
               updateCategory: updateCategory,
               enabled: false,
-              removeCategory: removeCategory,
+              addCategoryToRemoveList: addCategoryToRemoveList,
               needsAtLeastOneCategory: needsAtLeastOneCategory,
             ),
             Text(
-              'Tap and hold to delete ${categories[i]}',
-              style: TextStyle(color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
+              'Tap and hold to delete',
+              style: TextStyle(
+                  color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
             )
           ],
         ),
@@ -99,6 +100,7 @@ class EditJarForm extends StatelessWidget {
               updateCategory: updateCategory,
               model: model,
               enabled: true,
+              categories: categories,
             ),
           ],
         ),
@@ -116,37 +118,38 @@ class EditJarForm extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildFormTitles("YOUR JAR NAME", context),
-              SizedBox(height: height * 0.035),
-              AddJarNameField(
-                hint: jar['title'],
-                updateTitle: updateTitle,
-              ),
-              SizedBox(height: height * 0.03),
-              _buildFormTitles("CATEGORIES", context),
-              needsAtLeastOneCategory
-                  ? Text(
-                      'Please add at least one category',
-                      style: TextStyle(color: Colors.red),
-                      textAlign: TextAlign.start,
-                    )
-                  : Container(),
-              SizedBox(height: height * 0.01),
-              _buildExistingCategoryInputs(context),
-              categoryCount > 0 ? _addCategoryInputs() : Container(),
-              SizedBox(height: height * 0.035),
-              _buildFormTitles("JAR IMAGE", context),
-              SizedBox(height: height * 0.03),
-              ImageInput(
-                updateImage: updateImage,
-              )
-            ],
-          )),
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildFormTitles("YOUR JAR NAME", context),
+            SizedBox(height: height * 0.035),
+            AddJarNameField(
+              hint: jar['title'],
+              updateTitle: updateTitle,
+            ),
+            SizedBox(height: height * 0.03),
+            _buildFormTitles("CATEGORIES", context),
+            needsAtLeastOneCategory
+                ? Text(
+                    'You need at least one category',
+                    style: TextStyle(color: Colors.red),
+                    textAlign: TextAlign.start,
+                  )
+                : Container(),
+            SizedBox(height: height * 0.01),
+            _buildExistingCategoryInputs(context),
+            categoryCount > 0 ? _addCategoryInputs() : Container(),
+            SizedBox(height: height * 0.035),
+            _buildFormTitles("JAR IMAGE", context),
+            SizedBox(height: height * 0.03),
+            ImageInput(
+              updateImage: updateImage,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

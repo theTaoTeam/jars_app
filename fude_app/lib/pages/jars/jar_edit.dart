@@ -19,28 +19,23 @@ class _JarPageState extends State<EditJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int categoryCount = 0;
   bool needsAtLeastOneCategory = false;
+  List<dynamic> currentCategories = [];
   final Map<String, dynamic> _formData = {
     'title': '',
-    'categories': [],
+    'categoriesToAdd': [],
+    'categoriesToRemove': [],
     'image': null,
   };
 
   @override
   void initState() {
-    setState(() {
-      widget.model.selectedJar['categories'].forEach((val) {
-        _formData['categories'].add(val);
-      });
-    });
+    currentCategories = widget.model.selectedJar.data['categories'].toList();
     super.initState();
   }
 
   void updateJar(MainModel model) {
-    print('updating jar ${_formData['categories']}');
     //validate form.
-    if (categoryCount > 0) {
-      needsAtLeastOneCategory = false;
-    }
+    
     if (!this.formKey.currentState.validate() || needsAtLeastOneCategory) {
       return;
     } else {
@@ -51,16 +46,15 @@ class _JarPageState extends State<EditJarPage> {
   }
 
   void updateTitle(String val) {
-    // print('update title called: $_formData');
     if (val != null) {
       _formData['title'] = val;
     }
   }
 
   void updateCategory(String val) {
-    // print('category onSaved called: $val');
-    if (val != '' && !_formData['categories'].contains(val)) {
-      _formData['categories'].add(val);
+    print(val);
+    if (val != '' && !_formData['categoriesToAdd'].contains(val)) {
+      _formData['categoriesToAdd'].add(val);
     }
   }
 
@@ -71,30 +65,21 @@ class _JarPageState extends State<EditJarPage> {
     });
   }
 
-  void updateCategoryCount(bool addCategory) {
-    // print(categoryCount);
-    addCategory
-        ? setState(() {
-            categoryCount += 1;
-          })
-        : setState(() {
-            categoryCount -= 1;
-          });
+  void updateCategoryCount() {
+    setState(() {
+      categoryCount += 1;
+      needsAtLeastOneCategory = false;
+    });
   }
 
-  void removeCategory(String category) {
-    print(_formData['categories']);
-    if (_formData['categories'].length > 1) {
-      setState(() {
-        _formData['categories'].removeWhere((val) => val == category);
-      });
-      print(_formData['categories']);
-    } else {
-      setState(() {
-        _formData['categories'].removeWhere((val) => val == category);
+  void addCategoryToRemoveList(String category) {
+    _formData['categoriesToRemove'].add(category);
+    setState(() {
+      if (currentCategories.length == 1 && categoryCount == 0) {
         needsAtLeastOneCategory = true;
-      });
-    }
+      }
+      currentCategories.removeWhere((val) => val == category);
+    });
   }
 
   @override
@@ -135,9 +120,9 @@ class _JarPageState extends State<EditJarPage> {
                   EditJarForm(
                     formKey: formKey,
                     model: model,
-                    removeCategory: removeCategory,
                     jar: model.selectedJar,
-                    categories: _formData['categories'],
+                    addCategoryToRemoveList: addCategoryToRemoveList,
+                    categories: currentCategories,
                     needsAtLeastOneCategory: needsAtLeastOneCategory,
                     updateCategory: updateCategory,
                     updateTitle: updateTitle,
