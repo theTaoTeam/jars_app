@@ -20,6 +20,12 @@ class JarNotes extends StatefulWidget {
 
 class _JarNotesState extends State<JarNotes> {
   bool isFavorite = false;
+  var stream; // state variable
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void toggleFavoriteFilter() {
     setState(() {
@@ -27,8 +33,15 @@ class _JarNotesState extends State<JarNotes> {
     });
   }
 
+  void toggleFavoriteStatus(DocumentSnapshot note) {
+    setState(() {
+      widget.model.toggleFavoriteStatus(note);
+    });
+  }
+
   _buildNoteListItem(BuildContext context, DocumentSnapshot document) {
-    return NotesCard(note: document, model: widget.model);
+    return NotesCard(
+        note: document, toggleFavoriteStatus: toggleFavoriteStatus);
   }
 
   @override
@@ -36,7 +49,6 @@ class _JarNotesState extends State<JarNotes> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     DocumentSnapshot jar = widget.model.selectedJar;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -87,11 +99,18 @@ class _JarNotesState extends State<JarNotes> {
         ),
         padding: EdgeInsets.fromLTRB(0, height * 0.03, 0, 0),
         child: StreamBuilder(
-            stream: Firestore.instance
-                .collection('jars')
-                .document(jar.documentID)
-                .collection('jarNotes')
-                .snapshots(),
+            stream: !isFavorite
+                ? Firestore.instance
+                    .collection('jars')
+                    .document(jar.documentID)
+                    .collection('jarNotes')
+                    .snapshots()
+                : Firestore.instance
+                    .collection('jars')
+                    .document(jar.documentID)
+                    .collection('jarNotes')
+                    .where('isFav', isEqualTo: true)
+                    .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 print('snapshot hasData: ${snapshot.hasData}');
@@ -105,8 +124,6 @@ class _JarNotesState extends State<JarNotes> {
                               child: Row(
                                 children: <Widget>[
                                   Container(
-                                    // height: height * 0.01,
-                                    // width: width,
                                     padding: EdgeInsets.fromLTRB(
                                         width * 0.05, 0, 0, height * 0.02),
                                     child: Row(
@@ -131,22 +148,14 @@ class _JarNotesState extends State<JarNotes> {
                                 ],
                               )),
                           ListView.builder(
-                            shrinkWrap: true,
-                            reverse: false,
-                            scrollDirection: Axis.vertical,
-                            itemCount: snapshot.data.documents.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (isFavorite) {
-                                if (snapshot.data.documents[index]['isFav']) {
-                                  return _buildNoteListItem(
-                                      context, snapshot.data.documents[index]);
-                                }
-                              } else {
+                              shrinkWrap: true,
+                              reverse: false,
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot.data.documents.length,
+                              itemBuilder: (BuildContext context, int index) {
                                 return _buildNoteListItem(
                                     context, snapshot.data.documents[index]);
-                              }
-                            },
-                          ),
+                              }),
                           Expanded(
                             child: Align(
                               alignment: Alignment.bottomRight,

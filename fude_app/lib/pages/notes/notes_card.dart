@@ -3,14 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/pages/notes/note.dart';
-import 'package:fude/scoped-models/main.dart';
 import 'package:fude/helpers/design_helpers.dart';
 
 class NotesCard extends StatelessWidget {
   final DocumentSnapshot note;
-  final MainModel model;
+  final Function toggleFavoriteStatus;
 
-  NotesCard({this.note, this.model});
+  NotesCard({this.note, this.toggleFavoriteStatus});
 
   Widget makeListTile(DocumentSnapshot note, double _targetWidth, double height,
       BuildContext context) {
@@ -47,7 +46,7 @@ class NotesCard extends StatelessWidget {
         highlightColor: Colors.transparent,
         color: Theme.of(context).primaryColor,
         iconSize: 24,
-        onPressed: () => model.toggleFavoriteStatus(note),
+        onPressed: () => toggleFavoriteStatus(note),
       ),
     );
   }

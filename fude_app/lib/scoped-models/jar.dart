@@ -10,13 +10,17 @@ mixin JarModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
-  List<String> favoriteNotes;
+  List<QuerySnapshot> _allJarIdeas;
   // List<DocumentSnapshot> _jarNotesByCategory = [];
 
   bool darkTheme = false;
 
   DocumentSnapshot get selectedJar {
     return _selJar;
+  }
+
+  List<QuerySnapshot> get allJarIdeas {
+    return _allJarIdeas;
   }
 
   void addJar(Map<String, dynamic> data) async {
@@ -144,21 +148,6 @@ mixin JarModel on Model {
     }
   }
 
-  // final List<String> modifyedList = [];
-  // void removeCategoryFromJar(int index) async {
-  //   try {
-
-  //     await _firestore
-  //         .collection('jars')
-  //         .document(_selJar.documentID)
-  //         .updateData({'categories': FieldValue.arrayRemove(category)});
-
-  //     print(modifyedList);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
   Future<Uri> uploadNoteImageToStorage(File image) async {
     final StorageReference ref =
         FirebaseStorage.instance.ref().child('images/');
@@ -214,21 +203,26 @@ mixin JarModel on Model {
           .collection('jarNotes')
           .document(note.documentID)
           .updateData({'isFav': !note.data['isFav']});
-      if (favoriteNotes != null) {
-        favoriteNotes.forEach((id) {
-          if (id == note.documentID) {
-            favoriteNotes.remove(id);
-          } else {
-            favoriteNotes.add(note.documentID);
-          }
-        });
-      }
-
       notifyListeners();
     } catch (e) {
       print(e);
     }
   }
+
+  // Stream<QuerySnapshot> fetchJarAllNotes() {
+  //   Stream<QuerySnapshot> notes;
+  //   try {
+  //     notes = _firestore
+  //         .collection('jars')
+  //         .document(_selJar.documentID)
+  //         .collection('jarNotes')
+  //         .snapshots();
+  //   } catch (e) {
+  //     print(e);
+  //   }
+
+  //   return notes;
+  // }
 
   Future<List<DocumentSnapshot>> fetchJarNotesByCategory(
       String category) async {
