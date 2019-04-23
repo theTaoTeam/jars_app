@@ -106,7 +106,7 @@ class _JarPageState extends State<AddJarPage> {
                     updateCategoryCount: updateCategoryCount,
                     categoryCount: categoryCount,
                   ),
-                  SizedBox(height: height * 0.04),
+                  SizedBox(height: height * 0.035),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,27 +114,26 @@ class _JarPageState extends State<AddJarPage> {
                       SizedBox(
                         width: width * 0.055,
                       ),
-                      
                       RaisedButton(
-                          child: Text(
-                            'ADD JAR',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              letterSpacing: 5,
-                            ),
+                        child: Text(
+                          'ADD JAR',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            letterSpacing: 5,
                           ),
-                          elevation: 7,
-                          highlightElevation: 1,
-                          padding: EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                          color: Theme.of(context).secondaryHeaderColor,
-                          splashColor: Colors.transparent,
-                          highlightColor: Theme.of(context).primaryColor,
-                          onPressed: () => addJar(model),
                         ),
-                      
+                        elevation: 7,
+                        highlightElevation: 1,
+                        padding: EdgeInsets.all(15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        color: Theme.of(context).secondaryHeaderColor,
+                        splashColor: Colors.transparent,
+                        highlightColor: Theme.of(context).primaryColor,
+                        onPressed: () => addJar(model),
+                      ),
                     ],
                   )
                 ],

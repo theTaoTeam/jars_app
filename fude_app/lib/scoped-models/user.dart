@@ -99,8 +99,4 @@ mixin UserModel on Model {
               "We're having issues sending you a reset link, sorry about that.");
     }
   }
-
-  Future<void> createRecipe(Map<String, String> recipe) {
-      
-  }
 }

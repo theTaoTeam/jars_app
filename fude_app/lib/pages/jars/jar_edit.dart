@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/forms/edit_jar.dart';
+import 'package:fude/widgets/forms/add_user_to_jar.dart';
 
 class EditJarPage extends StatefulWidget {
   final MainModel model;
@@ -17,15 +20,19 @@ class EditJarPage extends StatefulWidget {
 
 class _JarPageState extends State<EditJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> addUserFormKey = GlobalKey<FormState>();
   int categoryCount = 0;
   bool needsAtLeastOneCategory = false;
   List<dynamic> currentCategories = [];
+  bool userHasBeenAdded = false;
+  bool needToInviteThisUser = false;
   final Map<String, dynamic> _formData = {
     'title': '',
     'categoriesToAdd': [],
     'categoriesToRemove': [],
     'image': null,
   };
+  String userToAdd;
 
   @override
   void initState() {
@@ -35,7 +42,6 @@ class _JarPageState extends State<EditJarPage> {
 
   void updateJar(MainModel model) {
     //validate form.
-    
     if (!this.formKey.currentState.validate() || needsAtLeastOneCategory) {
       return;
     } else {
@@ -80,6 +86,49 @@ class _JarPageState extends State<EditJarPage> {
       }
       currentCategories.removeWhere((val) => val == category);
     });
+  }
+
+  void addUserToJar(String email) {
+    setState(() {
+      userToAdd = email;
+    });
+  }
+
+  void userHasBeenAddedStateUpdate() {
+    setState(() {
+      userHasBeenAdded = true;
+    });
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        userHasBeenAdded = false;
+      });
+    });
+  }
+
+  void needToInviteThisUserStateUpdate() {
+    setState(() {
+      needToInviteThisUser = true;
+    });
+    Timer(Duration(seconds: 6), () {
+      setState(() {
+        needToInviteThisUser = false;
+      });
+    });
+  }
+
+  void submitAddUser() {
+    if (!this.addUserFormKey.currentState.validate()) {
+      return;
+    } else {
+      addUserFormKey.currentState.save();
+      widget.model.addUserToJar(userToAdd).then((val) {
+        if (val == 'user exists and has been added to jar!') {
+          userHasBeenAddedStateUpdate();
+        } else {
+          needToInviteThisUserStateUpdate();
+        }
+      });
+    }
   }
 
   @override
@@ -130,6 +179,13 @@ class _JarPageState extends State<EditJarPage> {
                     updateCategoryCount: updateCategoryCount,
                     categoryCount: categoryCount,
                   ),
+                  AddUserToJarForm(
+                      addUserFormKey: addUserFormKey,
+                      addUserToJar: addUserToJar,
+                      submitAddUser: submitAddUser,
+                      userHasBeenAdded: userHasBeenAdded,
+                      needToInviteThisUser: needToInviteThisUser,
+                      model: model),
                   SizedBox(height: height * 0.04),
                   Container(
                     padding:
