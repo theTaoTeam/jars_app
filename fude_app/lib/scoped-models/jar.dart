@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,8 @@ mixin JarModel on Model {
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
   List<QuerySnapshot> _allJarIdeas;
-  // List<DocumentSnapshot> _jarNotesByCategory = [];
+  bool _isLoading = false;
+  String _currUserEmail;
 
   bool darkTheme = false;
 
@@ -21,6 +23,19 @@ mixin JarModel on Model {
 
   List<QuerySnapshot> get allJarIdeas {
     return _allJarIdeas;
+  }
+
+  bool get isLoading {
+    return _isLoading;
+  }
+
+  String get currUserEmail {
+    return _currUserEmail;
+  }
+
+  Future<Null> fetchCurrentUserEmail() async {
+    FirebaseUser user = await _auth.currentUser();
+    _currUserEmail = user.email;
   }
 
   void addJar(Map<String, dynamic> data) async {
@@ -34,7 +49,7 @@ mixin JarModel on Model {
       final user = await _auth.currentUser();
       await jarCollection.document().setData(<String, dynamic>{
         'title': data['title'],
-        'owner': user.uid,
+        'owners': FieldValue.arrayUnion([user.email]),
         'categories': data['categories'],
         'image': imageLocation == null
             ? 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'
@@ -209,20 +224,47 @@ mixin JarModel on Model {
     }
   }
 
-  // Stream<QuerySnapshot> fetchJarAllNotes() {
-  //   Stream<QuerySnapshot> notes;
-  //   try {
-  //     notes = _firestore
-  //         .collection('jars')
-  //         .document(_selJar.documentID)
-  //         .collection('jarNotes')
-  //         .snapshots();
-  //   } catch (e) {
-  //     print(e);
-  //   }
+  addUserToJar(String email) async {
+    FirebaseUser currUser = await FirebaseAuth.instance.currentUser();
+    FirebaseUser user;
+    String returnMsg = 'user does not exist';
+    _isLoading = true;
+    notifyListeners();
+    //run createUser function to see if email already exists. If it doesn't, delete the user and notify front end.
+    try {
+      user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email, password: 'testuserpass');
+      if (user.email == email) {
+        print('created user because they did not exist yet');
+        user.delete();
 
-  //   return notes;
-  // }
+        _isLoading = false;
+        notifyListeners();
+        return returnMsg;
+      }
+    } catch (e) {
+      if (e is PlatformException) {
+        if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
+          try {
+            await _firestore
+                .collection('jars')
+                .document(_selJar.documentID)
+                .updateData({
+              !_selJar.data['owners'].contains(email)
+                  ? 'owners'
+                  : FieldValue.arrayUnion([email]): FieldValue.arrayUnion([])
+            });
+          } catch (e) {
+            print(e);
+          }
+          _isLoading = false;
+          notifyListeners();
+          returnMsg = 'user exists and has been added to jar!';
+          return returnMsg;
+        }
+      }
+    }
+  }
 
   Future<List<DocumentSnapshot>> fetchJarNotesByCategory(
       String category) async {

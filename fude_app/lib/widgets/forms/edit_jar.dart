@@ -146,7 +146,7 @@ class EditJarForm extends StatelessWidget {
             SizedBox(height: height * 0.03),
             ImageInput(
               updateImage: updateImage,
-            )
+            ),
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   PageController controller;
   @override
   initState() {
+    // widget.model.fetchCurrentUserEmail();
     super.initState();
     controller = PageController(
       keepPage: false,
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             StreamBuilder(
-                stream: Firestore.instance.collection('jars').snapshots(),
+                stream: Firestore.instance.collection('jars').where('owners', arrayContains: widget.model.currUserEmail).snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     print('no jars');

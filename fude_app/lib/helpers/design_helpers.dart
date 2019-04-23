@@ -9,6 +9,9 @@ ThemeData buildAppThemeData(bool darkTheme) {
     secondaryHeaderColor: darkTheme
         ? Color.fromRGBO(242, 242, 242, 1)
         : Color.fromRGBO(40, 40, 40, 1),
+    accentColor: darkTheme
+        ? Color.fromRGBO(242, 242, 242, 1)
+        : Color.fromRGBO(40, 40, 40, 1),
     textTheme: TextTheme(
       title: TextStyle(
         color: !darkTheme
@@ -49,9 +52,7 @@ ThemeData buildAppThemeData(bool darkTheme) {
         fontSize: 14,
         letterSpacing: 2,
       ),
-      
     ),
-    
     iconTheme: IconThemeData(
         color: !darkTheme
             ? Color.fromRGBO(40, 40, 40, 1)
