@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   PageController controller;
   @override
   initState() {
-    // widget.model.fetchCurrentUserEmail();
     super.initState();
     controller = PageController(
       keepPage: false,
@@ -44,9 +43,27 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Container(
+          margin: EdgeInsets.only(left: width * 0.7),
+          child: GestureDetector(
+            child: Text(
+              'logout',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor ==
+                        Color.fromRGBO(242, 242, 242, 1)
+                    ? Color.fromRGBO(40, 40, 40, 1)
+                    : Color.fromRGBO(242, 242, 242, 1),
+                // fontWeight: FontWeight.bold,
+                fontSize: 16,
+                letterSpacing: 0,
+              ),
+            ),
+            onTap: () => widget.model.logout(),
+          ),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
-        leading: Container(),
+        automaticallyImplyLeading: false,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -77,11 +94,14 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             StreamBuilder(
-                stream: Firestore.instance.collection('jars').where('owners', arrayContains: widget.model.currUserEmail).snapshots(),
+                stream: Firestore.instance
+                    .collection('jars')
+                    .where('owners', arrayContains: widget.model.currUserEmail)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     print('no jars');
-                    return Container(
+                    return Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
