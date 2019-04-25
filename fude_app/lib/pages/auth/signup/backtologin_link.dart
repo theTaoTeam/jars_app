@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SignUp extends StatelessWidget {
+class BackToLogin extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    
     return FlatButton(
-      padding: const EdgeInsets.only(
-        top: 160.0,
+      padding: EdgeInsets.only(
+        top: 100.0,
       ),
-      onPressed: () => Navigator.pushNamed(context, '/signup'),
+      onPressed: () => Navigator.pop(context),
       child: Text(
-        "Don't have an account? Sign Up",
+        "Back to login",
         textAlign: TextAlign.center,
         overflow: TextOverflow.ellipsis,
         softWrap: true,

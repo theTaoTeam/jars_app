@@ -5,8 +5,9 @@ class FormContainer extends StatelessWidget {
   final GlobalKey formKey;
   final Function updateEmail;
   final Function updatePassword;
-
-  FormContainer({this.formKey, this.updateEmail, this.updatePassword});
+  final bool isLogin;
+  FormContainer(
+      {this.formKey, this.updateEmail, this.updatePassword, this.isLogin});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +26,14 @@ class FormContainer extends StatelessWidget {
                     obscure: false,
                     icon: Icons.person_outline,
                     updateEmail: updateEmail,
+                    isLogin: isLogin,
                   ),
                   InputFieldArea(
                     hint: "Password",
                     obscure: true,
                     icon: Icons.lock_outline,
                     updatePassword: updatePassword,
+                    isLogin: isLogin,
                   ),
                 ],
               )),

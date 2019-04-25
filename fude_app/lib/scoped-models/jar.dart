@@ -13,7 +13,6 @@ mixin JarModel on Model {
   DocumentSnapshot _selJar;
   List<QuerySnapshot> _allJarIdeas;
   bool _isLoading = false;
-  String _currUserEmail;
 
   bool darkTheme = false;
 
@@ -29,14 +28,7 @@ mixin JarModel on Model {
     return _isLoading;
   }
 
-  String get currUserEmail {
-    return _currUserEmail;
-  }
 
-  Future<Null> fetchCurrentUserEmail() async {
-    FirebaseUser user = await _auth.currentUser();
-    _currUserEmail = user.email;
-  }
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');

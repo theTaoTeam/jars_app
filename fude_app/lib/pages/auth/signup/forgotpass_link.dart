@@ -13,18 +13,19 @@ class ForgotPassword extends StatelessWidget {
             print('reset password pressed');
             Navigator.pushReplacementNamed(context, '/forgotpass');
           },
-          child: new Text(
+          child: Text(
             "Forgot your password? Reset it!",
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             softWrap: true,
-            style: new TextStyle(
+            style: TextStyle(
                 fontWeight: FontWeight.w300,
                 letterSpacing: 0.5,
                 color: Colors.white,
                 fontSize: 12.0),
           ),
         ),
+        
       ],
     );
   }

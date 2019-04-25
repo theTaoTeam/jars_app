@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 class LoginInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
     return Container(
-      width: 320.0,
-      height: 60.0,
+      width: width * 0.8,
+      height: height * 0.07,
       alignment: FractionalOffset.center,
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(247, 64, 106, 1.0),
-        borderRadius: BorderRadius.all(const Radius.circular(30.0)),
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Text(
         "login",
         style: TextStyle(
-          color: Colors.white,
+          color: Theme.of(context).secondaryHeaderColor,
           fontSize: 20.0,
-          fontWeight: FontWeight.w300,
-          letterSpacing: 0.3,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 5,
         ),
       ),
     );
