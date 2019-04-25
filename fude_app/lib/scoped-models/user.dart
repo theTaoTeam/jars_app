@@ -10,8 +10,18 @@ mixin UserModel on Model {
   FirebaseUser _currentUser;
   var isLoading = false;
   var resetLinkSent = false;
+  String _currUserEmail;
   FirebaseUser get currentUser {
     return _currentUser;
+  }
+
+  String get currUserEmail {
+    return _currUserEmail;
+  }
+
+  void fetchCurrentUserEmail() async {
+    FirebaseUser user = await _auth.currentUser();
+    _currUserEmail = user.email;
   }
 
   Future<void> register({String email, String password}) async {
@@ -69,6 +79,7 @@ mixin UserModel on Model {
     try {
       await _auth.signOut();
       _currentUser = null;
+      _currUserEmail = null;
       notifyListeners();
     } catch (e) {
       throw new CausedException(
