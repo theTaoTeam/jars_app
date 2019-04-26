@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -12,6 +14,13 @@ mixin JarModel on Model {
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
   List<QuerySnapshot> _allJarIdeas;
+  final Map<String, dynamic> _addJar = {
+    'owners': [],
+    'title': 'ADD JAR',
+    'categories': []
+  };
+  List<dynamic> _usersJars = [];
+
   bool _isLoading = false;
 
   bool darkTheme = false;
@@ -28,7 +37,9 @@ mixin JarModel on Model {
     return _isLoading;
   }
 
-
+  List<dynamic> get usersJars {
+    return _usersJars;
+  }
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
@@ -48,6 +59,7 @@ mixin JarModel on Model {
             : imageLocation.toString(),
         'isFav': false
       });
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -119,10 +131,11 @@ mixin JarModel on Model {
         val.documents.forEach((jar) {
           if (jar.documentID == jarId) {
             _selJar = jar;
-            notifyListeners();
           }
         });
       });
+
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -150,6 +163,7 @@ mixin JarModel on Model {
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
       });
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -258,6 +272,25 @@ mixin JarModel on Model {
     }
   }
 
+  Future<List<dynamic>> fetchAllUserJars(String email) async {
+    _usersJars = [_addJar];
+    QuerySnapshot jars;
+    try {
+      jars = await _firestore
+          .collection('jars')
+          .where('owners', arrayContains: email)
+          .getDocuments();
+      jars.documents.forEach((jar) {
+        _usersJars.insert(1, jar);
+      });
+      print('NEW LIST: $_usersJars');
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+    return _usersJars;
+  }
+
   Future<List<DocumentSnapshot>> fetchJarNotesByCategory(
       String category) async {
     List<DocumentSnapshot> _jarNotesByCategory = [];
@@ -274,7 +307,6 @@ mixin JarModel on Model {
     if (notes.documents.length > 0) {
       notes.documents.forEach((doc) {
         if (doc.data['category'] == category) {
-          // print(doc.documentID);
           _jarNotesByCategory.add(doc);
         }
       });

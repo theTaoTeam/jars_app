@@ -20,26 +20,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController controller;
   @override
   initState() {
+    print('home init state. CurrUserEmail: ${widget.model.currUserEmail}');
+    widget.model.fetchAllUserJars(widget.model.currUserEmail);
     super.initState();
-    controller = PageController(
-      keepPage: false,
-      viewportFraction: .85,
-    );
-  }
-
-  @override
-  dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
+    // print('LIST in BUILD ${widget.model.usersJars[0].runtimeType}');
 
     return Scaffold(
       appBar: AppBar(
@@ -93,69 +85,46 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            StreamBuilder(
-                stream: Firestore.instance
-                    .collection('jars')
-                    .where('owners', arrayContains: widget.model.currUserEmail)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    print('no jars');
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return Container(
-                      margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
-                      width: width,
-                      height: height * 0.55,
-                      child: PageTransformer(
-                        pageViewBuilder: (context, visibilityResolver) {
-                          return PageView.builder(
-                            reverse: true,
-                            pageSnapping: true,
-                            controller: PageController(
-                                viewportFraction: 0.88,
-                                initialPage: snapshot.data.documents.length),
-                            itemCount: snapshot.data.documents.length,
-                            itemBuilder: (context, index) {
-                              final PageVisibility pageVisibility =
-                                  visibilityResolver
-                                      .resolvePageVisibility(index);
-
-                              return snapshot.data.documents[index]['title'] !=
-                                      'Add Jar'
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        widget.model.getJarBySelectedId(snapshot
-                                            .data.documents[index].documentID);
-                                        Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                            curve: Curves.linear,
-                                            type: PageTransitionType.fade,
-                                            child: JarPage(model: widget.model),
-                                          ),
-                                        );
-                                      },
-                                      child: HomePageJar(
-                                        model: widget.model,
-                                        jar: snapshot.data.documents[index],
-                                        pageVisibility: pageVisibility,
+            widget.model.usersJars.length == 0
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Container(
+                    margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
+                    width: width,
+                    height: height * 0.55,
+                    child: PageView.builder(
+                        reverse: false,
+                        pageSnapping: true,
+                        controller: PageController(
+                          keepPage: false,
+                            viewportFraction: 0.88,
+                            initialPage: 0),
+                        itemCount: widget.model.usersJars.length,
+                        itemBuilder: (context, index) {
+                          return index == 0
+                              ? HomePageJar(
+                                  model: widget.model, title: 'Add Jar')
+                              : GestureDetector(
+                                  onTap: () {
+                                    widget.model.getJarBySelectedId(widget
+                                        .model.usersJars[index].documentID);
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        curve: Curves.linear,
+                                        type: PageTransitionType.downToUp,
+                                        child: JarPage(model: widget.model),
                                       ),
-                                    )
-                                  : HomePageJar(
-                                      model: widget.model,
-                                      jar: snapshot.data.documents[index],
-                                      pageVisibility: pageVisibility,
                                     );
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  }
-                }),
+                                  },
+                                  child: HomePageJar(
+                                      model: widget.model,
+                                      jar: widget.model.usersJars[index],
+                                      title: null),
+                                );
+                        }),
+                  )
           ],
         ),
       ),

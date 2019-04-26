@@ -10,26 +10,23 @@ class CategoryCard extends StatelessWidget {
     @required this.model,
     @required this.category,
     @required this.index,
-    @required this.pageVisibility,
   });
 
   final String category;
   final int index;
   final MainModel model;
-  final PageVisibility pageVisibility;
 
   Widget _applyTextEffects({
     @required double translationFactor,
     @required Widget child,
   }) {
-    final double xTranslation = pageVisibility.pagePosition * translationFactor;
 
     return Opacity(
-      opacity: pageVisibility.visibleFraction,
+      opacity: 1,
       child: Transform(
         alignment: FractionalOffset.topLeft,
         transform: Matrix4.translationValues(
-          xTranslation,
+          0.0,
           0.0,
           0.0,
         ),

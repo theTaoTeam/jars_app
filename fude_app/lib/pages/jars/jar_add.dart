@@ -29,6 +29,7 @@ class _JarPageState extends State<AddJarPage> {
       formKey.currentState.save(); // Save our form now.
       print(_formData);
       model.addJar(_formData);
+      model.fetchAllUserJars(model.currUserEmail);
       Navigator.pop(context);
     }
   }
