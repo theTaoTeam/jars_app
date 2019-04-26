@@ -9,28 +9,24 @@ import 'package:fude/pages/jars/jar_edit.dart';
 import 'package:fude/pages/jars/jar_add.dart';
 
 class HomePageJar extends StatelessWidget {
-  HomePageJar({
-    @required this.model,
-    @required this.jar,
-    @required this.pageVisibility,
-  });
-
   final DocumentSnapshot jar;
   final MainModel model;
   final PageVisibility pageVisibility;
+  final String title;
+
+  HomePageJar(
+      {@required this.model, this.jar, this.pageVisibility, this.title});
 
   Widget _applyTextEffects({
     @required double translationFactor,
     @required Widget child,
   }) {
-    final double xTranslation = pageVisibility.pagePosition * translationFactor;
-
     return Opacity(
-      opacity: pageVisibility.visibleFraction,
+      opacity: 1,
       child: Transform(
         alignment: FractionalOffset.topLeft,
         transform: Matrix4.translationValues(
-          xTranslation,
+          0.0,
           0.0,
           0.0,
         ),
@@ -45,7 +41,7 @@ class HomePageJar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 16.0),
         child: Text(
-          jar['title'].toUpperCase(),
+          title == null ? jar['title'].toUpperCase() : 'ADD JAR',
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.subhead,
           textAlign: TextAlign.left,
@@ -58,7 +54,7 @@ class HomePageJar extends StatelessWidget {
         bottom: 56.0,
         left: 28.0,
         right: 28.0,
-        child: jar['title'] != 'Add Jar'
+        child: title == null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -79,8 +75,8 @@ class HomePageJar extends StatelessWidget {
                         iconSize: 26,
                         color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
-                          print('jar pressed, ${jar.documentID}');
-                          model.getJarBySelectedId(jar.documentID);
+                          print('jar pressed, ${jar['id']}');
+                          model.getJarBySelectedId(jar['id']);
                           Navigator.push(
                             context,
                             PageTransition(
@@ -114,7 +110,7 @@ class HomePageJar extends StatelessWidget {
                         ),
                   ),
                   Text(
-                    jar['title'].toUpperCase(),
+                    title == null ? jar['title'].toUpperCase() : 'ADD JAR',
                     style: TextStyle(
                       color: model.darkTheme
                           ? Color.fromRGBO(40, 40, 40, 1)
@@ -130,7 +126,7 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var image = jar['title'] != 'Add Jar'
+    var image = title == null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(30.0),
             child: Image.network(
@@ -139,7 +135,7 @@ class HomePageJar extends StatelessWidget {
                   : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
               fit: BoxFit.cover,
               alignment: FractionalOffset(
-                0.5 + (pageVisibility.pagePosition / 3),
+                0.5,
                 0.5,
               ),
             ),
@@ -148,14 +144,12 @@ class HomePageJar extends StatelessWidget {
 
     var imageOverlayGradient = DecoratedBox(
       decoration: BoxDecoration(
-        color: jar['title'] == 'Add Jar'
-            ? Theme.of(context).secondaryHeaderColor
-            : null,
-        gradient: jar['title'] != 'Add Jar'
+        color: title != null ? Theme.of(context).secondaryHeaderColor : null,
+        gradient: title == null
             ? LinearGradient(
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomCenter,
-                colors: jar['title'] != 'Add Jar'
+                colors: title == null
                     ? !model.darkTheme
                         ? [
                             Color.fromRGBO(242, 242, 242, 0),
@@ -176,20 +170,17 @@ class HomePageJar extends StatelessWidget {
         vertical: 26.0,
         horizontal: 10.0,
       ),
-      child: Hero(
-        tag: jar['title'],
-        child: Material(
-          elevation: model.darkTheme ? 4.0 : 8,
-          shadowColor: Theme.of(context).secondaryHeaderColor,
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              image,
-              imageOverlayGradient,
-              _buildTextContainer(context),
-            ],
-          ),
+      child: Material(
+        elevation: model.darkTheme ? 4.0 : 8,
+        shadowColor: Theme.of(context).secondaryHeaderColor,
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            image,
+            imageOverlayGradient,
+            _buildTextContainer(context),
+          ],
         ),
       ),
     );

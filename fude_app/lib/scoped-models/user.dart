@@ -59,6 +59,7 @@ mixin UserModel on Model {
       FirebaseUser user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       _currentUser = user;
+      _currUserEmail = _currentUser.email;
       print("successful login. User...");
       print(_currentUser);
       isLoading = false;
