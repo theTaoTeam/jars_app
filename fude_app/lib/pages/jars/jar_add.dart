@@ -106,6 +106,7 @@ class _JarPageState extends State<AddJarPage> {
                     updateImage: updateImage,
                     updateCategoryCount: updateCategoryCount,
                     categoryCount: categoryCount,
+                    categories: _formData['categories'],
                   ),
                   SizedBox(height: height * 0.035),
                   Row(
