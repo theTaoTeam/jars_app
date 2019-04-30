@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   initState() {
-    print('home init state. CurrUserEmail: ${widget.model.currUserEmail}');
     widget.model.fetchAllUserJars(widget.model.currUserEmail);
     super.initState();
   }
