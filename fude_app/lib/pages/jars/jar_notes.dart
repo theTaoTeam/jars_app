@@ -20,7 +20,6 @@ class JarNotes extends StatefulWidget {
 
 class _JarNotesState extends State<JarNotes> {
   bool isFavorite = false;
-  var stream; // state variable
 
   @override
   void initState() {
@@ -177,12 +176,40 @@ class _JarNotesState extends State<JarNotes> {
                           ),
                         ],
                       )
-                    : Center(
-                        child: Text(
-                          'ADD AN IDEA TO GET STARTED',
-                          style: Theme.of(context).textTheme.subtitle,
-                          textAlign: TextAlign.center,
-                        ),
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: height * .3,),
+                          Center(
+                            child: Text(
+                              isFavorite
+                                  ? 'NO FAVORITES'
+                                  : 'ADD AN IDEA TO GET STARTED',
+                              style: Theme.of(context).textTheme.subtitle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                padding: EdgeInsets.fromLTRB(
+                                    0, 0, width * 0.04, width * 0.05),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: isFavorite
+                                      ? Icon(Icons.favorite)
+                                      : Icon(Icons.favorite_border),
+                                  iconSize: 38,
+                                  color: Theme.of(context).iconTheme.color,
+                                  onPressed: () => toggleFavoriteFilter(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
               }
             }),

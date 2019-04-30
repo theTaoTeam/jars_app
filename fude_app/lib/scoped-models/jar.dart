@@ -97,6 +97,9 @@ mixin JarModel on Model {
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
         'isFav': _selJar['isFav']
       });
+      final user = await _auth.currentUser();
+      fetchAllUserJars(user.email);
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -109,6 +112,8 @@ mixin JarModel on Model {
           .document(_selJar.documentID)
           .delete()
           .catchError((err) => print(err));
+      final user = await _auth.currentUser();
+      fetchAllUserJars(user.email);
       notifyListeners();
     } catch (e) {
       print(e);
@@ -194,7 +199,6 @@ mixin JarModel on Model {
     } catch (e) {
       print(e);
     }
-    // print('location: $location -------');
     //returns the download url
     return location;
   }

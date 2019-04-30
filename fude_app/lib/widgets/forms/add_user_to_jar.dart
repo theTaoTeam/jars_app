@@ -92,7 +92,7 @@ class AddUserToJarForm extends StatelessWidget {
                   ? Container(
                       padding: EdgeInsets.only(left: width * 0.04),
                       child: Text(
-                        "This user doesn't have an account yet. Please have them create one before adding!",
+                        "This user doesn't have an account yet. Please have them create one before sharing!",
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                             color: Colors.red,
