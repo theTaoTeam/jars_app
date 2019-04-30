@@ -49,7 +49,6 @@ class _JarPageState extends State<EditJarPage> {
     } else {
       formKey.currentState.save();
       model.updateJar(_formData);
-      model.fetchAllUserJars(model.currUserEmail);
       Navigator.pop(context);
     }
   }
@@ -234,7 +233,6 @@ class _JarPageState extends State<EditJarPage> {
                                   color: Colors.red,
                                   onPressed: () {
                                     model.deleteJar();
-                                    model.fetchAllUserJars(model.currUserEmail);
                                     Navigator.pop(context);
                                   })
                             ],
