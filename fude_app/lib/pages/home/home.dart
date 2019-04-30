@@ -1,12 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:async';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar.dart';
 import 'package:fude/pages/home/home_page_jar.dart';
-import 'package:fude/widgets/page_transformer/page_transformer.dart';
 
 class HomePage extends StatefulWidget {
   final MainModel model;
@@ -97,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         reverse: false,
                         pageSnapping: true,
                         controller: PageController(
-                          keepPage: false,
+                            keepPage: false,
                             viewportFraction: 0.88,
                             initialPage: 0),
                         itemCount: widget.model.usersJars.length,
@@ -109,14 +107,16 @@ class _HomePageState extends State<HomePage> {
                                   onTap: () {
                                     widget.model.getJarBySelectedId(widget
                                         .model.usersJars[index].documentID);
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        curve: Curves.linear,
-                                        type: PageTransitionType.downToUp,
-                                        child: JarPage(model: widget.model),
-                                      ),
-                                    );
+                                    Timer(Duration(milliseconds: 500), () {
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          curve: Curves.linear,
+                                          type: PageTransitionType.downToUp,
+                                          child: JarPage(model: widget.model),
+                                        ),
+                                      );
+                                    });
                                   },
                                   child: HomePageJar(
                                       model: widget.model,

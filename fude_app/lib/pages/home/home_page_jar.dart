@@ -76,7 +76,7 @@ class HomePageJar extends StatelessWidget {
                         color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
                           print('jar pressed, ${jar['id']}');
-                          model.getJarBySelectedId(jar['id']);
+                          model.getJarBySelectedId(jar.documentID);
                           Navigator.push(
                             context,
                             PageTransition(

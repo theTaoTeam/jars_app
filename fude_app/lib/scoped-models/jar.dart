@@ -126,6 +126,8 @@ mixin JarModel on Model {
   }
 
   void getJarBySelectedId(String jarId) async {
+    _isLoading = true;
+    notifyListeners();
     try {
       await _firestore.collection('jars').getDocuments().then((val) {
         val.documents.forEach((jar) {
@@ -134,7 +136,7 @@ mixin JarModel on Model {
           }
         });
       });
-
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
@@ -231,7 +233,6 @@ mixin JarModel on Model {
   }
 
   addUserToJar(String email) async {
-    FirebaseUser currUser = await FirebaseAuth.instance.currentUser();
     FirebaseUser user;
     String returnMsg = 'user does not exist';
     _isLoading = true;
