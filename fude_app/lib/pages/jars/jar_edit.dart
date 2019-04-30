@@ -26,6 +26,7 @@ class _JarPageState extends State<EditJarPage> {
   List<dynamic> currentCategories = [];
   bool userHasBeenAdded = false;
   bool needToInviteThisUser = false;
+  bool loadingJarData = true;
   final Map<String, dynamic> _formData = {
     'title': '',
     'categoriesToAdd': [],
@@ -36,7 +37,8 @@ class _JarPageState extends State<EditJarPage> {
 
   @override
   void initState() {
-    currentCategories = widget.model.selectedJar.data['categories'].toList();
+    _waitinForJarData();
+
     super.initState();
   }
 
@@ -131,6 +133,16 @@ class _JarPageState extends State<EditJarPage> {
     }
   }
 
+  void _waitinForJarData() {
+    Timer(Duration(seconds: 1), () {
+      setState(() {
+        currentCategories =
+            widget.model.selectedJar.data['categories'].toList();
+        loadingJarData = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -159,7 +171,7 @@ class _JarPageState extends State<EditJarPage> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
-          child: ListView(
+          child: !loadingJarData ? ListView(
             shrinkWrap: true,
             children: <Widget>[
               Column(
@@ -228,7 +240,7 @@ class _JarPageState extends State<EditJarPage> {
                 ],
               ),
             ],
-          ),
+          ) : Center(child: CircularProgressIndicator(),),
         ),
       );
     });
