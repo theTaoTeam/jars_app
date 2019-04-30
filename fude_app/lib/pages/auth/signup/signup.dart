@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
@@ -79,16 +78,12 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Oops!'),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            'Oops!',
+            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          ),
           content: Text(userMessage),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
         );
       },
     );
@@ -98,7 +93,6 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
