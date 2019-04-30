@@ -75,7 +75,7 @@ class HomePageJar extends StatelessWidget {
                         iconSize: 26,
                         color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
-                          print('jar pressed, ${jar['id']}');
+                          // print('jar pressed, ${jar['id']}');
                           model.getJarBySelectedId(jar.documentID);
                           Navigator.push(
                             context,
@@ -126,19 +126,20 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Image jarImage = Image(
+      image: NetworkImage(jar != null
+          ? jar.data['image']
+          : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
+      fit: BoxFit.cover,
+      alignment: FractionalOffset(
+        0.5,
+        0.5,
+      ),
+    );
     var image = title == null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(30.0),
-            child: Image.network(
-              jar['image'] != null
-                  ? jar['image']
-                  : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-              fit: BoxFit.cover,
-              alignment: FractionalOffset(
-                0.5,
-                0.5,
-              ),
-            ),
+            child: jarImage,
           )
         : Container();
 

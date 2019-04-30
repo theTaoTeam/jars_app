@@ -43,8 +43,11 @@ mixin JarModel on Model {
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
+    _isLoading = true;
+    notifyListeners();
+
     CollectionReference jarCollection = _firestore.collection('jars');
-    Uri imageLocation;
+    String imageLocation;
     try {
       if (data['image'] != null) {
         imageLocation = await uploadNoteImageToStorage(data['image']);
@@ -59,6 +62,8 @@ mixin JarModel on Model {
             : imageLocation.toString(),
         'isFav': false
       });
+      fetchAllUserJars(user.email);
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
@@ -67,7 +72,7 @@ mixin JarModel on Model {
 
   void updateJar(Map<String, dynamic> data) async {
     print('updateJar Data: $data');
-    Uri imageLocation;
+    String imageLocation;
     try {
       if (data['image'] != null) {
         imageLocation = await uploadNoteImageToStorage(data['image']);
@@ -146,7 +151,7 @@ mixin JarModel on Model {
   void addToJar(String category, String title, String notes, String link,
       File image) async {
     print('image: ----------- $image');
-    Uri imageLocation;
+    String imageLocation;
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
@@ -165,33 +170,39 @@ mixin JarModel on Model {
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
       });
+
       notifyListeners();
     } catch (e) {
       print(e);
     }
   }
 
-  Future<Uri> uploadNoteImageToStorage(File image) async {
+  Future<String> uploadNoteImageToStorage(File image) async {
     final StorageReference ref =
         FirebaseStorage.instance.ref().child('images/');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url
-    Uri location = await uploadTask.onComplete.then((val) {
-      val.ref.getDownloadURL().then((val) {
-        print(val);
-        return val; //Val here is Already String
+    String location;
+    try {
+      await uploadTask.onComplete.then((val) async {
+        await val.ref.getDownloadURL().then((val) {
+          // print('VAL $val, type: ${val.runtimeType}');
+          location = val;
+        });
       });
-    });
+    } catch (e) {
+      print(e);
+    }
+    // print('location: $location -------');
     //returns the download url
-    print(location);
     return location;
   }
 
   void updateNote(DocumentSnapshot note, String category, String title,
       String notes, String link, File image) async {
     print('$category, $title, $notes, $link, $image');
-    Uri imageLocation;
+    String imageLocation;
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
@@ -256,8 +267,10 @@ mixin JarModel on Model {
             await _firestore
                 .collection('jars')
                 .document(_selJar.documentID)
-                .updateData({'owners' :
-              !_selJar.data['owners'].contains(email) ? FieldValue.arrayUnion([email]): FieldValue.arrayUnion([])
+                .updateData({
+              'owners': !_selJar.data['owners'].contains(email)
+                  ? FieldValue.arrayUnion([email])
+                  : FieldValue.arrayUnion([])
             });
           } catch (e) {
             print(e);
@@ -272,6 +285,8 @@ mixin JarModel on Model {
   }
 
   Future<List<dynamic>> fetchAllUserJars(String email) async {
+    _isLoading = true;
+    notifyListeners();
     _usersJars = [_addJar];
     QuerySnapshot jars;
     try {
@@ -282,11 +297,12 @@ mixin JarModel on Model {
       jars.documents.forEach((jar) {
         _usersJars.insert(1, jar);
       });
-      print('NEW LIST: $_usersJars');
-      notifyListeners();
+      // print('NEW LIST: $_usersJars');
     } catch (e) {
       print(e);
     }
+    _isLoading = false;
+    notifyListeners();
     return _usersJars;
   }
 

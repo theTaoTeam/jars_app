@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
@@ -29,7 +31,7 @@ class _JarPageState extends State<AddJarPage> {
       formKey.currentState.save(); // Save our form now.
       print(_formData);
       model.addJar(_formData);
-      model.fetchAllUserJars(model.currUserEmail);
+      
       Navigator.pop(context);
     }
   }
@@ -116,26 +118,28 @@ class _JarPageState extends State<AddJarPage> {
                       SizedBox(
                         width: width * 0.055,
                       ),
-                      RaisedButton(
-                        child: Text(
-                          'ADD JAR',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            letterSpacing: 5,
-                          ),
-                        ),
-                        elevation: 7,
-                        highlightElevation: 1,
-                        padding: EdgeInsets.all(15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        color: Theme.of(context).secondaryHeaderColor,
-                        splashColor: Colors.transparent,
-                        highlightColor: Theme.of(context).primaryColor,
-                        onPressed: () => addJar(model),
-                      ),
+                      !model.isLoading
+                          ? RaisedButton(
+                              child: Text(
+                                'ADD JAR',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  letterSpacing: 5,
+                                ),
+                              ),
+                              elevation: 7,
+                              highlightElevation: 1,
+                              padding: EdgeInsets.all(15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              color: Theme.of(context).secondaryHeaderColor,
+                              splashColor: Colors.transparent,
+                              highlightColor: Theme.of(context).primaryColor,
+                              onPressed: () => addJar(model),
+                            )
+                          : CircularProgressIndicator(),
                     ],
                   )
                 ],

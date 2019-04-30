@@ -235,7 +235,6 @@ class _JarPageState extends State<EditJarPage> {
                                   onPressed: () {
                                     model.deleteJar();
                                     model.fetchAllUserJars(model.currUserEmail);
-
                                     Navigator.pop(context);
                                   })
                             ],
