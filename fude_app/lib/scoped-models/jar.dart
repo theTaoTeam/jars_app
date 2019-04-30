@@ -256,10 +256,8 @@ mixin JarModel on Model {
             await _firestore
                 .collection('jars')
                 .document(_selJar.documentID)
-                .updateData({
-              !_selJar.data['owners'].contains(email)
-                  ? 'owners'
-                  : FieldValue.arrayUnion([email]): FieldValue.arrayUnion([])
+                .updateData({'owners' :
+              !_selJar.data['owners'].contains(email) ? FieldValue.arrayUnion([email]): FieldValue.arrayUnion([])
             });
           } catch (e) {
             print(e);

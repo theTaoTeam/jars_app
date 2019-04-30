@@ -49,6 +49,7 @@ class _JarPageState extends State<EditJarPage> {
     } else {
       formKey.currentState.save();
       model.updateJar(_formData);
+      model.fetchAllUserJars(model.currUserEmail);
       Navigator.pop(context);
     }
   }
@@ -171,76 +172,82 @@ class _JarPageState extends State<EditJarPage> {
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
-          child: !loadingJarData ? ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * 0.04),
-                  EditJarForm(
-                    formKey: formKey,
-                    model: model,
-                    jar: model.selectedJar,
-                    addCategoryToRemoveList: addCategoryToRemoveList,
-                    categories: currentCategories,
-                    needsAtLeastOneCategory: needsAtLeastOneCategory,
-                    updateCategory: updateCategory,
-                    updateTitle: updateTitle,
-                    updateImage: updateImage,
-                    updateCategoryCount: updateCategoryCount,
-                    categoryCount: categoryCount,
-                  ),
-                  AddUserToJarForm(
-                      addUserFormKey: addUserFormKey,
-                      addUserToJar: addUserToJar,
-                      submitAddUser: submitAddUser,
-                      userHasBeenAdded: userHasBeenAdded,
-                      needToInviteThisUser: needToInviteThisUser,
-                      model: model),
-                  SizedBox(height: height * 0.04),
-                  Container(
-                    padding:
-                        EdgeInsets.fromLTRB(width * 0.045, 0, width * 0.045, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: !loadingJarData
+              ? ListView(
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        RaisedButton(
-                          child: Text(
-                            'UPDATE JAR',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              letterSpacing: 5,
-                            ),
-                          ),
-                          elevation: 7,
-                          highlightElevation: 1,
-                          padding: EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          color: Theme.of(context).secondaryHeaderColor,
-                          splashColor: Colors.transparent,
-                          highlightColor: Theme.of(context).primaryColor,
-                          onPressed: () => updateJar(model),
+                        SizedBox(height: height * 0.04),
+                        EditJarForm(
+                          formKey: formKey,
+                          model: model,
+                          jar: model.selectedJar,
+                          addCategoryToRemoveList: addCategoryToRemoveList,
+                          categories: currentCategories,
+                          needsAtLeastOneCategory: needsAtLeastOneCategory,
+                          updateCategory: updateCategory,
+                          updateTitle: updateTitle,
+                          updateImage: updateImage,
+                          updateCategoryCount: updateCategoryCount,
+                          categoryCount: categoryCount,
                         ),
-                        IconButton(
-                            icon: Icon(Icons.delete),
-                            iconSize: 36,
-                            color: Colors.red,
-                            onPressed: () {
-                              model.deleteJar();
-                              Navigator.pop(context);
-                            })
+                        AddUserToJarForm(
+                            addUserFormKey: addUserFormKey,
+                            addUserToJar: addUserToJar,
+                            submitAddUser: submitAddUser,
+                            userHasBeenAdded: userHasBeenAdded,
+                            needToInviteThisUser: needToInviteThisUser,
+                            model: model),
+                        SizedBox(height: height * 0.04),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(
+                              width * 0.045, 0, width * 0.045, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              RaisedButton(
+                                child: Text(
+                                  'UPDATE JAR',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    letterSpacing: 5,
+                                  ),
+                                ),
+                                elevation: 7,
+                                highlightElevation: 1,
+                                padding: EdgeInsets.all(15),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                color: Theme.of(context).secondaryHeaderColor,
+                                splashColor: Colors.transparent,
+                                highlightColor: Theme.of(context).primaryColor,
+                                onPressed: () => updateJar(model),
+                              ),
+                              IconButton(
+                                  icon: Icon(Icons.delete),
+                                  iconSize: 36,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    model.deleteJar();
+                                    model.fetchAllUserJars(model.currUserEmail);
+
+                                    Navigator.pop(context);
+                                  })
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ],
-          ) : Center(child: CircularProgressIndicator(),),
+                  ],
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
         ),
       );
     });

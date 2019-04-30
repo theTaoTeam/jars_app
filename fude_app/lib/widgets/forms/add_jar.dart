@@ -13,6 +13,7 @@ class AddJarForm extends StatelessWidget {
   final Function updateImage;
   final Function updateCategoryCount;
   final DocumentSnapshot jar;
+  final List<dynamic> categories;
 
   AddJarForm(
       {this.formKey,
@@ -21,7 +22,8 @@ class AddJarForm extends StatelessWidget {
       this.updateTitle,
       this.updateCategory,
       this.updateImage,
-      this.updateCategoryCount});
+      this.updateCategoryCount,
+      this.categories});
 
   Widget _buildFormTitles(String title, BuildContext context) {
     return Row(
@@ -62,6 +64,8 @@ class AddJarForm extends StatelessWidget {
               hint: 'Add Category',
               updateCategory: updateCategory,
               enabled: true,
+                categories: categories,
+
             ),
           ],
         ),
@@ -99,6 +103,7 @@ class AddJarForm extends StatelessWidget {
                 hint: 'Add Category',
                 updateCategory: updateCategory,
                 enabled: true,
+                categories: categories,
               ),
               categoryCount > 0 ? _addCategoryInputs(context) : Container(),
               SizedBox(height: height * 0.035),
