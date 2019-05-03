@@ -62,11 +62,18 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Theme.of(context).primaryColor,
         highlightElevation: 0,
         onPressed: () => widget.model.invertTheme(),
-        child: Image.network(
-          'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Icon%20Dark.png?alt=media&token=717822bd-3e49-46e7-b7d8-1b432afd3e50',
-          height: height * 0.2,
-          width: width * 0.2,
-        ),
+        child:
+            Theme.of(context).primaryColor == Color.fromRGBO(242, 242, 242, 1)
+                ? Image.asset(
+                    'assets/IconDark.png',
+                    height: height * 0.2,
+                    width: width * 0.2,
+                  )
+                : Image.asset(
+                    'assets/IconLight.png',
+                    height: height * 0.2,
+                    width: width * 0.2,
+                  ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColor,
