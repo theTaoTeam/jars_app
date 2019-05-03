@@ -62,7 +62,7 @@ class AddToJarForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
+    // final double height = MediaQuery.of(context).size.height;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       color: Theme.of(context).primaryColor,

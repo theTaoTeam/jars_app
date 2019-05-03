@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:fude/scoped-models/main.dart';
-import 'dart:async';
 
 import 'package:fude/pages/auth/forgot-password/forgotpass_button.dart';
 import 'package:fude/widgets/logo.dart';
