@@ -90,24 +90,22 @@ class EditJarForm extends StatelessWidget {
   }
 
   Column _addCategoryInputs() {
-    var children = <Widget>[];
-    for (var i = 0; i < categoryCount; i++) {
-      children.add(
-        Column(
-          children: <Widget>[
-            AddJarCategoryField(
-              hint: 'Add Category',
-              updateCategory: updateCategory,
-              model: model,
-              enabled: true,
-              categories: categories,
-            ),
-          ],
-        ),
-      );
-    }
+    model.categoryChildren.add(
+      Column(
+        children: <Widget>[
+          AddJarCategoryField(
+            hint: 'Add Category',
+            updateCategory: updateCategory,
+            model: model,
+            enabled: true,
+            categories: categories,
+          ),
+        ],
+      ),
+    );
+
     return Column(
-      children: children,
+      children: model.categoryChildren,
     );
   }
 

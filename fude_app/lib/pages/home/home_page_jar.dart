@@ -75,7 +75,7 @@ class HomePageJar extends StatelessWidget {
                         iconSize: 26,
                         color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
-                          // print('jar pressed, ${jar['id']}');
+                          model.categoryChildren = [];
                           model.getJarBySelectedId(jar.documentID);
                           Navigator.push(
                             context,
@@ -95,20 +95,22 @@ class HomePageJar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.add),
-                    iconSize: 70,
-                    color: model.darkTheme
-                        ? Color.fromRGBO(40, 40, 40, 1)
-                        : Color.fromRGBO(242, 242, 242, 1),
-                    onPressed: () => Navigator.push(
+                      icon: Icon(Icons.add),
+                      iconSize: 70,
+                      color: model.darkTheme
+                          ? Color.fromRGBO(40, 40, 40, 1)
+                          : Color.fromRGBO(242, 242, 242, 1),
+                      onPressed: () {
+                        model.categoryChildren = [];
+                        Navigator.push(
                           context,
                           PageTransition(
                             curve: Curves.linear,
                             type: PageTransitionType.downToUp,
                             child: AddJarPage(),
                           ),
-                        ),
-                  ),
+                        );
+                      }),
                   Text(
                     title == null ? jar['title'].toUpperCase() : 'ADD JAR',
                     style: TextStyle(
