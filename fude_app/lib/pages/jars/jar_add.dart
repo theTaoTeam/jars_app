@@ -17,6 +17,7 @@ class AddJarPage extends StatefulWidget {
 class _JarPageState extends State<AddJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int categoryCount = 0;
+  bool imageSelected = false;
   final Map<String, dynamic> _formData = {
     'title': '',
     'categories': [],
@@ -31,7 +32,7 @@ class _JarPageState extends State<AddJarPage> {
       formKey.currentState.save(); // Save our form now.
       print(_formData);
       model.addJar(_formData);
-      
+
       Navigator.pop(context);
     }
   }
@@ -55,13 +56,17 @@ class _JarPageState extends State<AddJarPage> {
   void updateImage(File image) {
     print('image: $image');
     setState(() {
+      imageSelected = true;
       _formData['image'] = image;
     });
   }
 
   void updateCategoryCount() {
-    print(categoryCount);
+    print('categoryCount: $categoryCount');
     setState(() {
+      if (imageSelected) {
+        imageSelected = false;
+      }
       categoryCount += 1;
     });
   }
@@ -70,6 +75,7 @@ class _JarPageState extends State<AddJarPage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    print('Building Jar_Add...');
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -102,14 +108,15 @@ class _JarPageState extends State<AddJarPage> {
                 children: <Widget>[
                   SizedBox(height: height * 0.04),
                   AddJarForm(
-                    formKey: formKey,
-                    updateCategory: updateCategory,
-                    updateTitle: updateTitle,
-                    updateImage: updateImage,
-                    updateCategoryCount: updateCategoryCount,
-                    categoryCount: categoryCount,
-                    categories: _formData['categories'],
-                  ),
+                      formKey: formKey,
+                      imageSelected: imageSelected,
+                      updateCategory: updateCategory,
+                      updateTitle: updateTitle,
+                      updateImage: updateImage,
+                      updateCategoryCount: updateCategoryCount,
+                      categoryCount: categoryCount,
+                      categories: _formData['categories'],
+                      model: model),
                   SizedBox(height: height * 0.035),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,

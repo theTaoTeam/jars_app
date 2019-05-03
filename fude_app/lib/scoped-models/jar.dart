@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:validators/validators.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -20,6 +20,7 @@ mixin JarModel on Model {
     'categories': []
   };
   List<dynamic> _usersJars = [];
+  List<Widget> categoryChildren = [];
 
   bool _isLoading = false;
 

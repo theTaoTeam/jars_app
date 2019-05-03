@@ -37,7 +37,7 @@ class _JarPageState extends State<EditJarPage> {
 
   @override
   void initState() {
-    _waitinForJarData();
+    _waitingForJarData();
 
     super.initState();
   }
@@ -133,7 +133,7 @@ class _JarPageState extends State<EditJarPage> {
     }
   }
 
-  void _waitinForJarData() {
+  void _waitingForJarData() {
     Timer(Duration(seconds: 1), () {
       setState(() {
         currentCategories =

@@ -219,8 +219,18 @@ class _JarPageState extends State<JarPage> {
                               child: AnimatedOpacity(
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
-                                child: Text(
+                                child: model.selectedJar.data['categories'].length > 0 ?Text(
                                   'SELECT CATEGORY',
+                                  style: TextStyle(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    letterSpacing: 3,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ) : Text(
+                                  "YOU DON'T HAVE ANY CATEGORIES YET",
                                   style: TextStyle(
                                     color:
                                         Theme.of(context).secondaryHeaderColor,
@@ -242,7 +252,7 @@ class _JarPageState extends State<JarPage> {
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 500),
                                 child: PageView.builder(
-                                  reverse: true,
+                                  reverse: false,
                                   pageSnapping: true,
                                   scrollDirection: Axis.horizontal,
                                   controller: PageController(

@@ -11,15 +11,14 @@ class AddJarCategoryField extends StatelessWidget {
   final MainModel model;
   final List<dynamic> categories;
 
-  AddJarCategoryField({
-    this.hint,
-    this.enabled,
-    this.needsAtLeastOneCategory,
-    this.updateCategory,
-    this.addCategoryToRemoveList,
-    this.model,
-    this.categories
-  });
+  AddJarCategoryField(
+      {this.hint,
+      this.enabled,
+      this.needsAtLeastOneCategory,
+      this.updateCategory,
+      this.addCategoryToRemoveList,
+      this.model,
+      this.categories});
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -37,7 +36,8 @@ class AddJarCategoryField extends StatelessWidget {
           height: height * 0.08,
           width: width * 0.55,
           child: TextFormField(
-            controller: TextEditingController(text: hint != "Add Category" ? hint : null),
+            controller: TextEditingController(
+                text: hint != "Add Category" ? hint : null),
             textAlign: TextAlign.start,
             enabled: enabled,
             style: TextStyle(
@@ -62,7 +62,8 @@ class AddJarCategoryField extends StatelessWidget {
             ),
             validator: (String val) {
               String finalVal = val.trim();
-              if (needsAtLeastOneCategory == true || finalVal.isEmpty && categories.length < 1) {
+              if (needsAtLeastOneCategory == true ||
+                  finalVal.isEmpty && categories.length < 1) {
                 return 'cannot be blank';
               }
             },

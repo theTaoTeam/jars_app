@@ -4,26 +4,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fude/widgets/form-inputs/add_jar_name_input.dart';
 import 'package:fude/widgets/form-inputs/add_jar_category_input.dart';
 import 'package:fude/widgets/form-inputs/image.dart';
+import 'package:fude/scoped-models/main.dart';
 
 class AddJarForm extends StatelessWidget {
   final GlobalKey formKey;
   final int categoryCount;
+  final bool imageSelected;
   final Function updateTitle;
   final Function updateCategory;
   final Function updateImage;
   final Function updateCategoryCount;
   final DocumentSnapshot jar;
   final List<dynamic> categories;
+  final MainModel model;
 
   AddJarForm(
       {this.formKey,
       this.jar,
+      this.imageSelected,
       this.categoryCount,
       this.updateTitle,
       this.updateCategory,
       this.updateImage,
       this.updateCategoryCount,
-      this.categories});
+      this.categories,
+      this.model});
 
   Widget _buildFormTitles(String title, BuildContext context) {
     return Row(
@@ -54,25 +59,45 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-  Column _addCategoryInputs(BuildContext context) {
-    var children = <Widget>[];
-    for (var i = 0; i < categoryCount; i++) {
-      children.add(
-        Column(
-          children: <Widget>[
-            AddJarCategoryField(
-              hint: 'Add Category',
-              updateCategory: updateCategory,
-              enabled: true,
-                categories: categories,
-
+  Column _initialCategoryInput() {
+    model.categoryChildren.length == 0
+        ? model.categoryChildren.add(
+            Column(
+              children: <Widget>[
+                AddJarCategoryField(
+                  hint: 'Add Category',
+                  updateCategory: updateCategory,
+                  model: model,
+                  enabled: true,
+                  categories: categories,
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    }
+          )
+        : Container();
+
     return Column(
-      children: children,
+      children: model.categoryChildren,
+    );
+  }
+
+  Column _addCategoryInputs() {
+    model.categoryChildren.add(
+      Column(
+        children: <Widget>[
+          AddJarCategoryField(
+            hint: 'Add Category',
+            updateCategory: updateCategory,
+            model: model,
+            enabled: true,
+            categories: categories,
+          ),
+        ],
+      ),
+    );
+
+    return Column(
+      children: model.categoryChildren,
     );
   }
 
@@ -99,13 +124,11 @@ class AddJarForm extends StatelessWidget {
               SizedBox(height: height * 0.035),
               _buildFormTitles("CATEGORIES", context),
               SizedBox(height: height * 0.01),
-              AddJarCategoryField(
-                hint: 'Add Category',
-                updateCategory: updateCategory,
-                enabled: true,
-                categories: categories,
-              ),
-              categoryCount > 0 ? _addCategoryInputs(context) : Container(),
+              categoryCount >= 0 && !imageSelected
+                  ? _addCategoryInputs()
+                  : Column(
+                      children: model.categoryChildren,
+                    ),
               SizedBox(height: height * 0.035),
               _buildFormTitles("JAR IMAGE", context),
               SizedBox(height: height * 0.03),
