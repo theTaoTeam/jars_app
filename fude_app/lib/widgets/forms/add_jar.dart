@@ -59,28 +59,6 @@ class AddJarForm extends StatelessWidget {
     );
   }
 
-  Column _initialCategoryInput() {
-    model.categoryChildren.length == 0
-        ? model.categoryChildren.add(
-            Column(
-              children: <Widget>[
-                AddJarCategoryField(
-                  hint: 'Add Category',
-                  updateCategory: updateCategory,
-                  model: model,
-                  enabled: true,
-                  categories: categories,
-                ),
-              ],
-            ),
-          )
-        : Container();
-
-    return Column(
-      children: model.categoryChildren,
-    );
-  }
-
   Column _addCategoryInputs() {
     model.categoryChildren.add(
       Column(
@@ -104,7 +82,7 @@ class AddJarForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+    // final double width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       decoration: BoxDecoration(color: Theme.of(context).primaryColor),

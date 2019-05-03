@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'dart:ui';
 
-import 'package:fude/widgets/page_transformer/page_transformer.dart';
 import 'package:fude/scoped-models/main.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -15,25 +14,6 @@ class CategoryCard extends StatelessWidget {
   final String category;
   final int index;
   final MainModel model;
-
-  Widget _applyTextEffects({
-    @required double translationFactor,
-    @required Widget child,
-  }) {
-
-    return Opacity(
-      opacity: 1,
-      child: Transform(
-        alignment: FractionalOffset.topLeft,
-        transform: Matrix4.translationValues(
-          0.0,
-          0.0,
-          0.0,
-        ),
-        child: child,
-      ),
-    );
-  }
 
   _buildTextContainer(BuildContext context) {
     var titleText = Expanded(

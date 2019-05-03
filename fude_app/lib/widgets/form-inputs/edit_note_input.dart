@@ -8,10 +8,9 @@ class EditNoteInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+    // final double width = MediaQuery.of(context).size.width;
     return Container(
       height: height * 0.05,
-      // width: width * 0.85,
       decoration: BoxDecoration(
         border: Border(
           left: BorderSide(
