@@ -129,9 +129,8 @@ class HomePageJar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Image jarImage = Image(
-      image: NetworkImage(jar != null
-          ? jar.data['image']
-          : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
+      image: jar != null ? NetworkImage(
+          jar.data['image']) : AssetImage('assets/logo.png'),
       fit: BoxFit.cover,
       alignment: FractionalOffset(
         0.5,

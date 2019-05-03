@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             Logo(),
                             model.resetLinkSent
                                 ? Text(
-                                    'Make sure this is a valid email!',
+                                    'check your email!',
                                     style: TextStyle(
                                         color: Theme.of(context).primaryColor),
                                   )
