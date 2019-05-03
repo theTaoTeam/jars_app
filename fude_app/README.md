@@ -1,5 +1,5 @@
-# fude
-## Pull a random recipe from your personal collection! An app to encourage cooking new things and spending time with those you care about.
+# JARS
+Create a jar, add ideas to that jar, and then pull randomly from it to discover a new world of stuff to do and things to try!
 
 ### Setting Up
 #### Assuming Flutter is Installed
