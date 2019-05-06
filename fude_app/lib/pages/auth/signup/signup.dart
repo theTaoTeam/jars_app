@@ -125,6 +125,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                             setState(() {
                               animationStatus = 1;
                             });
+                            model.resetUsersJars();
                             _submitForm(register: model.register);
                           },
                           child: SignUpButton()),

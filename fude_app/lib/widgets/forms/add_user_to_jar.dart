@@ -63,7 +63,7 @@ class AddUserToJarForm extends StatelessWidget {
                   ),
                   model.isLoading
                       ? CircularProgressIndicator(
-                          backgroundColor: Colors.transparent, strokeWidth: 4)
+                          backgroundColor: Colors.transparent, strokeWidth: 5, )
                       : IconButton(
                           icon: Icon(Icons.send),
                           onPressed: () => submitAddUser(),
@@ -75,7 +75,7 @@ class AddUserToJarForm extends StatelessWidget {
                   ? Container(
                       padding: EdgeInsets.only(left: width * 0.04),
                       child: Text(
-                        'Added!',
+                        'Shared!',
                         style: TextStyle(
                             color: Theme.of(context).secondaryHeaderColor,
                             fontSize:

@@ -9,6 +9,7 @@ import 'dart:ui';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar_notes.dart';
 import 'package:fude/pages/jars/category_card.dart';
+import 'package:fude/pages/home/home.dart';
 import 'package:fude/helpers/randomNoteModal.dart';
 
 class JarPage extends StatefulWidget {
@@ -71,12 +72,9 @@ class _JarPageState extends State<JarPage> {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-              widget.model.selectedJar.data['image'] != null
-                  ? widget.model.selectedJar.data['image']
-                  : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-              scale: 0.5,
-            ),
+            image: widget.model.selectedJar.data['image'] != null
+                ? NetworkImage(widget.model.selectedJar.data['image'])
+                : AssetImage('assets/logo.png'),
             fit: BoxFit.fitWidth,
           ),
         ),
@@ -94,7 +92,7 @@ class _JarPageState extends State<JarPage> {
               colors: !widget.model.darkTheme
                   ? [
                       Color.fromRGBO(242, 242, 242, 0.5),
-                      Color.fromRGBO(40, 40, 40, 0.5),
+                      Color.fromRGBO(40, 40, 40, 0.8),
                     ]
                   : [
                       Color.fromRGBO(40, 40, 40, 0.5),
@@ -164,7 +162,16 @@ class _JarPageState extends State<JarPage> {
                                           iconSize: 40,
                                           onPressed: () {
                                             _swiperVisible = false;
-                                            Navigator.pop(context);
+                                            Navigator.pop(
+                                              context,
+                                              PageTransition(
+                                                curve: Curves.linear,
+                                                type:
+                                                    PageTransitionType.upToDown,
+                                                child: HomePage(
+                                                    model: widget.model),
+                                              ),
+                                            );
                                           }),
                                     ),
                                   ),
@@ -198,7 +205,7 @@ class _JarPageState extends State<JarPage> {
                               ),
                             ),
                             Positioned(
-                              top: height * 0.24,
+                              top: height * 0.21,
                               left: width * 0.07,
                               right: width * 0.07,
                               child: AnimatedOpacity(
@@ -213,33 +220,53 @@ class _JarPageState extends State<JarPage> {
                               ),
                             ),
                             Positioned(
-                              top: height * 0.46,
+                              top: height * 0.43,
                               left: width * 0.07,
                               right: width * 0.07,
                               child: AnimatedOpacity(
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
-                                child: model.selectedJar.data['categories'].length > 0 ?Text(
-                                  'SELECT CATEGORY',
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    letterSpacing: 3,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ) : Text(
-                                  "YOU DON'T HAVE ANY CATEGORIES YET",
-                                  style: TextStyle(
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    letterSpacing: 3,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
+                                child: model.selectedJar.data['categories']
+                                            .length >
+                                        0
+                                    ? Column(
+                                        children: <Widget>[
+                                          Text(
+                                            'SELECT A CATEGORY',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              letterSpacing: 3,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(height: height * 0.01,),
+                                          Text(
+                                            'TO PULL A RANDOM IDEA',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              letterSpacing: 3,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      )
+                                    : Text(
+                                        "YOU DON'T HAVE ANY CATEGORIES YET",
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .secondaryHeaderColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          letterSpacing: 3,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
                               ),
                             ),
                             //SWIPER

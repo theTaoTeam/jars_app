@@ -4,11 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:fude/helpers/exceptions.dart';
 
-
 mixin UserModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _currentUser;
-  var isLoading = false;
+  var _isLoading = false;
   var resetLinkSent = false;
   String _currUserEmail;
   FirebaseUser get currentUser {
@@ -25,17 +24,17 @@ mixin UserModel on Model {
   }
 
   Future<void> register({String email, String password}) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
     FirebaseUser newUser;
     try {
       newUser = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       _currentUser = newUser;
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     } catch (err) {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
       throw new CausedException(
           cause: 'Firebase Auth',
@@ -48,31 +47,33 @@ mixin UserModel on Model {
 
   Future<void> fetchUser() async {
     print('FETCHING USER');
+    _isLoading = true;
+    notifyListeners();
     _currentUser = await _auth.currentUser();
+    _isLoading = false;
     notifyListeners();
   }
 
   Future<void> login({String email, String password}) async {
-    isLoading = true;
+    _isLoading = true;
     notifyListeners();
     try {
       FirebaseUser user = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       _currentUser = user;
       _currUserEmail = _currentUser.email;
-      print("successful login. User...");
-      print(_currentUser);
-      isLoading = false;
+      print("successful login. User = $_currentUser");
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
       throw new CausedException(
           cause: 'Firebase Auth',
           code: "1",
           message: 'login error',
           userMessage:
-              "It looks like your email and password might not match. Give it another shot.");
+              "Check your email and password and try again.");
     }
   }
 

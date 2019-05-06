@@ -76,16 +76,28 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Oops!'),
-          content: Text(userMessage),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            'Aw Geeze!',
+            style: TextStyle(
+              color: Theme.of(context).secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              letterSpacing: 8,
+            ),
+          ),
+          content: Text(
+            userMessage,
+            style: TextStyle(
+              color: Theme.of(context).secondaryHeaderColor,
+              // fontWeight: FontWeight.bold,
+              fontSize: 20,
+              letterSpacing: 3,
+            ),
+          ),
+          actions: <Widget>[],
         );
       },
     );
@@ -99,49 +111,52 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
         body: Container(
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).secondaryHeaderColor),
-                child: ListView(
-                  padding: EdgeInsets.all(0.0),
+            decoration:
+                BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+            child: ListView(
+              padding: EdgeInsets.all(0.0),
+              children: <Widget>[
+                Stack(
+                  alignment: AlignmentDirectional.bottomCenter,
                   children: <Widget>[
-                    Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Logo(),
-                            model.resetLinkSent
-                                ? Text(
-                                    'check your email!',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  )
-                                : Container(),
-                            FormContainer(
-                                formKey: formKey,
-                                updateEmail: updateEmail,
-                                updatePassword: updatePassword,
-                                isLogin: isLogin),
-                            SignUp()
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 50.0),
-                          child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  animationStatus = 1;
-                                });
-                                _submitForm(login: model.login);
-                              },
-                              child: LoginInButton()),
-                        )
+                        Logo(),
+                        model.resetLinkSent
+                            ? Text(
+                                'check your email!',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              )
+                            : Container(),
+                        FormContainer(
+                            formKey: formKey,
+                            updateEmail: updateEmail,
+                            updatePassword: updatePassword,
+                            isLogin: isLogin),
+                        SignUp()
                       ],
                     ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 50.0),
+                      child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              animationStatus = 1;
+                            });
+                            _submitForm(login: model.login);
+                          },
+                          child: !model.isLoading
+                              ? LoginInButton()
+                              : CircularProgressIndicator(
+                                  strokeWidth: 6,
+                                )),
+                    )
                   ],
-                ))),
+                ),
+              ],
+            )),
       );
     });
   }

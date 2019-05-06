@@ -8,8 +8,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
 mixin JarModel on Model {
+  bool _isLoading = false;
+  bool _darkTheme = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
@@ -22,10 +25,6 @@ mixin JarModel on Model {
   List<dynamic> _usersJars = [];
   List<Widget> categoryChildren = [];
 
-  bool _isLoading = false;
-
-  bool darkTheme = false;
-
   DocumentSnapshot get selectedJar {
     return _selJar;
   }
@@ -36,6 +35,10 @@ mixin JarModel on Model {
 
   bool get isLoading {
     return _isLoading;
+  }
+
+  bool get darkTheme {
+    return _darkTheme;
   }
 
   List<dynamic> get usersJars {
@@ -147,11 +150,14 @@ mixin JarModel on Model {
           }
         });
       });
-      _isLoading = false;
-      notifyListeners();
     } catch (e) {
       print(e);
     }
+  }
+
+  void resetIsLoading() {
+    _isLoading = false;
+    notifyListeners();
   }
 
   void addToJar(String category, String title, String notes, String link,
@@ -292,17 +298,18 @@ mixin JarModel on Model {
   Future<List<dynamic>> fetchAllUserJars(String email) async {
     _isLoading = true;
     notifyListeners();
+    FirebaseUser user = await _auth.currentUser();
     _usersJars = [_addJar];
     QuerySnapshot jars;
     try {
       jars = await _firestore
           .collection('jars')
-          .where('owners', arrayContains: email)
+          .where('owners', arrayContains: email != null ? email : user.email)
           .getDocuments();
       jars.documents.forEach((jar) {
         _usersJars.insert(1, jar);
       });
-      // print('NEW LIST: $_usersJars');
+      print('NEW LIST: $_usersJars');
     } catch (e) {
       print(e);
     }
@@ -352,9 +359,27 @@ mixin JarModel on Model {
     }
   }
 
-  void invertTheme() {
-    darkTheme = !darkTheme;
+  Future<bool> getThemeFromPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _darkTheme = prefs.getBool('darkTheme') != null ? prefs.getBool('darkTheme') : false;
+    print(_darkTheme);
     notifyListeners();
+    return _darkTheme;
+  }
+
+  void invertTheme() {
+    _darkTheme = !_darkTheme;
+    storeThemePref(_darkTheme);
+    notifyListeners();
+  }
+
+  Future storeThemePref(bool val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      await prefs.setBool('darkTheme', val);
+    } catch (e) {
+      print(e);
+    }
   }
 
   numberOfIdeasInCategory(String category) async {
@@ -376,5 +401,10 @@ mixin JarModel on Model {
       print(e);
     }
     return total;
+  }
+
+  void resetUsersJars() {
+    _usersJars = [];
+    notifyListeners();
   }
 }
