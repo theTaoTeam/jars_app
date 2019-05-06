@@ -25,9 +25,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MainModel _model = MainModel();
-
     _model.fetchUser();
-    return ScopedModel<MainModel>(model: _model, child: _buildApp(context));
+    _model.getThemeFromPrefs();
+    return ScopedModel<MainModel>(
+      model: _model,
+      child: _buildApp(context),
+    );
   }
 }
 

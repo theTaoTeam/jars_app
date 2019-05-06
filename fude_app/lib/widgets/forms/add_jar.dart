@@ -10,6 +10,7 @@ class AddJarForm extends StatelessWidget {
   final GlobalKey formKey;
   final int categoryCount;
   final bool imageSelected;
+  final bool needsAtLeastOneCategory;
   final Function updateTitle;
   final Function updateCategory;
   final Function updateImage;
@@ -22,6 +23,7 @@ class AddJarForm extends StatelessWidget {
       {this.formKey,
       this.jar,
       this.imageSelected,
+      this.needsAtLeastOneCategory,
       this.categoryCount,
       this.updateTitle,
       this.updateCategory,
@@ -53,6 +55,7 @@ class AddJarForm extends StatelessWidget {
                 color: Theme.of(context).iconTheme.color,
                 onPressed: () {
                   updateCategoryCount();
+                  _addCategoryInputs();
                 })
             : Container()
       ],
@@ -69,6 +72,7 @@ class AddJarForm extends StatelessWidget {
             model: model,
             enabled: true,
             categories: categories,
+            needsAtLeastOneCategory: needsAtLeastOneCategory
           ),
         ],
       ),
@@ -102,11 +106,9 @@ class AddJarForm extends StatelessWidget {
               SizedBox(height: height * 0.035),
               _buildFormTitles("CATEGORIES", context),
               SizedBox(height: height * 0.01),
-              categoryCount >= 0 && !imageSelected
-                  ? _addCategoryInputs()
-                  : Column(
-                      children: model.categoryChildren,
-                    ),
+              Column(
+                children: model.categoryChildren,
+              ),
               SizedBox(height: height * 0.035),
               _buildFormTitles("JAR IMAGE", context),
               SizedBox(height: height * 0.03),

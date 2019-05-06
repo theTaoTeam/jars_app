@@ -14,7 +14,7 @@ class ForgotPassButton extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Text(
-        "reset",
+        "reset password",
         style: TextStyle(
           color: Theme.of(context).secondaryHeaderColor,
           fontSize: 20.0,

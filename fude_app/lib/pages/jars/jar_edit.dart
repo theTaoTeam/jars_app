@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
@@ -10,8 +11,9 @@ import 'package:fude/widgets/forms/add_user_to_jar.dart';
 
 class EditJarPage extends StatefulWidget {
   final MainModel model;
+  final DocumentSnapshot jar;
 
-  EditJarPage({this.model});
+  EditJarPage({this.model, this.jar});
   @override
   State<StatefulWidget> createState() {
     return _JarPageState();
@@ -38,7 +40,8 @@ class _JarPageState extends State<EditJarPage> {
   @override
   void initState() {
     _waitingForJarData();
-
+    widget.model.getJarBySelectedId(widget.jar.documentID);
+    widget.model.resetIsLoading();
     super.initState();
   }
 
@@ -156,14 +159,16 @@ class _JarPageState extends State<EditJarPage> {
           elevation: 0,
           actions: <Widget>[
             IconButton(
-              padding: EdgeInsets.only(right: 25),
-              icon: Icon(Icons.keyboard_arrow_down),
-              color: Theme.of(context).iconTheme.color,
-              iconSize: Theme.of(context).iconTheme.size,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onPressed: () => Navigator.pop(context),
-            )
+                padding: EdgeInsets.only(right: 25),
+                icon: Icon(Icons.keyboard_arrow_down),
+                color: Theme.of(context).iconTheme.color,
+                iconSize: Theme.of(context).iconTheme.size,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  Navigator.pop(context);
+                }),
           ],
         ),
         body: Container(
@@ -208,30 +213,36 @@ class _JarPageState extends State<EditJarPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               RaisedButton(
-                                child: Text(
-                                  'UPDATE JAR',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    letterSpacing: 5,
+                                  child: Text(
+                                    'UPDATE JAR',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      letterSpacing: 5,
+                                    ),
                                   ),
-                                ),
-                                elevation: 7,
-                                highlightElevation: 1,
-                                padding: EdgeInsets.all(15),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                color: Theme.of(context).secondaryHeaderColor,
-                                splashColor: Colors.transparent,
-                                highlightColor: Theme.of(context).primaryColor,
-                                onPressed: () => updateJar(model),
-                              ),
+                                  elevation: 7,
+                                  highlightElevation: 1,
+                                  padding: EdgeInsets.all(15),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  splashColor: Colors.transparent,
+                                  highlightColor:
+                                      Theme.of(context).primaryColor,
+                                  onPressed: () {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    updateJar(model);
+                                  }),
                               IconButton(
                                   icon: Icon(Icons.delete),
                                   iconSize: 36,
                                   color: Colors.red,
                                   onPressed: () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     model.deleteJar();
                                     Navigator.pop(context);
                                   })
@@ -243,7 +254,9 @@ class _JarPageState extends State<EditJarPage> {
                   ],
                 )
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 6,
+                  ),
                 ),
         ),
       );

@@ -55,6 +55,7 @@ class EditJarForm extends StatelessWidget {
                 color: Theme.of(context).iconTheme.color,
                 onPressed: () {
                   updateCategoryCount();
+                  _addCategoryInputs();
                 })
             : Container()
       ],
@@ -138,7 +139,9 @@ class EditJarForm extends StatelessWidget {
                 : Container(),
             SizedBox(height: height * 0.01),
             _buildExistingCategoryInputs(context),
-            categoryCount > 0 ? _addCategoryInputs() : Container(),
+            Column(
+              children: model.categoryChildren,
+            ),
             SizedBox(height: height * 0.035),
             _buildFormTitles("JAR IMAGE", context),
             SizedBox(height: height * 0.03),

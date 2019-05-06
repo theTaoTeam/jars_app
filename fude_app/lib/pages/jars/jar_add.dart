@@ -16,6 +16,8 @@ class _JarPageState extends State<AddJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int categoryCount = 0;
   bool imageSelected = false;
+  bool needsAtLeastOneCategory = false;
+
   final Map<String, dynamic> _formData = {
     'title': '',
     'categories': [],
@@ -30,7 +32,6 @@ class _JarPageState extends State<AddJarPage> {
       formKey.currentState.save(); // Save our form now.
       print(_formData);
       model.addJar(_formData);
-
       Navigator.pop(context);
     }
   }
@@ -66,6 +67,7 @@ class _JarPageState extends State<AddJarPage> {
         imageSelected = false;
       }
       categoryCount += 1;
+      needsAtLeastOneCategory = false;
     });
   }
 
@@ -83,14 +85,16 @@ class _JarPageState extends State<AddJarPage> {
           elevation: 0,
           actions: <Widget>[
             IconButton(
-              padding: EdgeInsets.only(right: 25),
-              icon: Icon(Icons.keyboard_arrow_down),
-              color: Theme.of(context).iconTheme.color,
-              iconSize: Theme.of(context).iconTheme.size,
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onPressed: () => Navigator.pop(context),
-            )
+                padding: EdgeInsets.only(right: 25),
+                icon: Icon(Icons.keyboard_arrow_down),
+                color: Theme.of(context).iconTheme.color,
+                iconSize: Theme.of(context).iconTheme.size,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  Navigator.pop(context);
+                })
           ],
         ),
         body: Container(
@@ -99,7 +103,7 @@ class _JarPageState extends State<AddJarPage> {
             color: Theme.of(context).primaryColor,
           ),
           child: ListView(
-            shrinkWrap: true,
+            // shrinkWrap: true,
             children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,6 +112,7 @@ class _JarPageState extends State<AddJarPage> {
                   AddJarForm(
                       formKey: formKey,
                       imageSelected: imageSelected,
+                      needsAtLeastOneCategory: needsAtLeastOneCategory,
                       updateCategory: updateCategory,
                       updateTitle: updateTitle,
                       updateImage: updateImage,
@@ -142,8 +147,10 @@ class _JarPageState extends State<AddJarPage> {
                               color: Theme.of(context).secondaryHeaderColor,
                               splashColor: Colors.transparent,
                               highlightColor: Theme.of(context).primaryColor,
-                              onPressed: () => addJar(model),
-                            )
+                              onPressed: () {
+                                FocusScope.of(context).requestFocus(FocusNode());
+                                addJar(model);
+                              })
                           : CircularProgressIndicator(),
                     ],
                   )

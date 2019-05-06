@@ -76,13 +76,12 @@ class HomePageJar extends StatelessWidget {
                         color: Theme.of(context).textTheme.subhead.color,
                         onPressed: () {
                           model.categoryChildren = [];
-                          model.getJarBySelectedId(jar.documentID);
                           Navigator.push(
                             context,
                             PageTransition(
                               curve: Curves.linear,
                               type: PageTransitionType.downToUp,
-                              child: EditJarPage(model: model),
+                              child: EditJarPage(model: model, jar: jar),
                             ),
                           );
                         },
@@ -129,8 +128,9 @@ class HomePageJar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Image jarImage = Image(
-      image: jar != null ? NetworkImage(
-          jar.data['image']) : AssetImage('assets/logo.png'),
+      image: jar != null
+          ? NetworkImage(jar.data['image'])
+          : AssetImage('assets/logo.png'),
       fit: BoxFit.cover,
       alignment: FractionalOffset(
         0.5,
@@ -175,7 +175,8 @@ class HomePageJar extends StatelessWidget {
       child: Material(
         elevation: model.darkTheme ? 4.0 : 8,
         shadowColor: Theme.of(context).secondaryHeaderColor,
-        borderRadius: BorderRadius.all(Radius.circular(30)),
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(35)),
         child: Stack(
           fit: StackFit.expand,
           children: [

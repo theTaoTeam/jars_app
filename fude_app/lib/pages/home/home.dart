@@ -24,12 +24,25 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  void _openJar(int index) {
+    widget.model.getJarBySelectedId(widget.model.usersJars[index].documentID);
+    Timer(Duration(milliseconds: 500), () {
+      Navigator.push(
+        context,
+        PageTransition(
+          curve: Curves.linear,
+          type: PageTransitionType.downToUp,
+          child: JarPage(model: widget.model),
+        ),
+      );
+      Timer(Duration(seconds: 2), () => widget.model.resetIsLoading());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    // print('LIST in BUILD ${widget.model.usersJars[0].runtimeType}');
-
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -55,85 +68,90 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        shape: CircleBorder(),
-        elevation: 0,
-        backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Theme.of(context).primaryColor,
-        highlightElevation: 0,
-        onPressed: () => widget.model.invertTheme(),
-        child:
-            Theme.of(context).primaryColor == Color.fromRGBO(242, 242, 242, 1)
-                ? Image.asset(
-                    'assets/IconDark.png',
-                    height: height * 0.2,
-                    width: width * 0.2,
-                  )
-                : Image.asset(
-                    'assets/IconLight.png',
-                    height: height * 0.2,
-                    width: width * 0.2,
-                  ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: height * 0.08),
+        child: FloatingActionButton(
+          shape: CircleBorder(),
+          elevation: 0,
+          backgroundColor: Theme.of(context).primaryColor,
+          foregroundColor: Theme.of(context).primaryColor,
+          highlightElevation: 0,
+          onPressed: () => widget.model.invertTheme(),
+          child: !widget.model.isLoading
+              ? Theme.of(context).primaryColor ==
+                      Color.fromRGBO(242, 242, 242, 1)
+                  ? Image.asset(
+                      'assets/IconDark.png',
+                      height: height * 0.2,
+                      width: width * 0.2,
+                    )
+                  : Image.asset(
+                      'assets/IconLight.png',
+                      height: height * 0.2,
+                      width: width * 0.2,
+                    )
+              : Container(),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColor,
         elevation: 0,
         child: Container(height: 20),
       ),
-      body: Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            widget.model.usersJars.length == 0
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
-                    margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
-                    width: width,
-                    height: height * 0.55,
-                    child: PageView.builder(
-                        reverse: false,
-                        pageSnapping: true,
-                        controller: PageController(
-                            keepPage: false,
-                            viewportFraction: 0.88,
-                            initialPage: 0),
-                        itemCount: widget.model.usersJars.length,
-                        itemBuilder: (context, index) {
-                          return index == 0
-                              ? HomePageJar(
-                                  model: widget.model, title: 'Add Jar')
-                              : GestureDetector(
-                                  onTap: () {
-                                    widget.model.getJarBySelectedId(widget
-                                        .model.usersJars[index].documentID);
-                                    Timer(Duration(milliseconds: 500), () {
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          curve: Curves.linear,
-                                          type: PageTransitionType.downToUp,
-                                          child: JarPage(model: widget.model),
-                                        ),
+      body: !widget.model.isLoading
+          ? Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  widget.model.usersJars.length == 0
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Container(
+                          margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
+                          width: width,
+                          height: height * 0.55,
+                          child: PageView.builder(
+                              reverse: false,
+                              pageSnapping: true,
+                              controller: PageController(
+                                  keepPage: false,
+                                  viewportFraction: 0.8,
+                                  initialPage: 0),
+                              itemCount: widget.model.usersJars.length,
+                              itemBuilder: (context, index) {
+                                return index == 0
+                                    ? HomePageJar(
+                                        model: widget.model, title: 'Add Jar')
+                                    : GestureDetector(
+                                        onTap: () => _openJar(index),
+                                        child: HomePageJar(
+                                            model: widget.model,
+                                            jar: widget.model.usersJars[index],
+                                            title: null),
                                       );
-                                    });
-                                  },
-                                  child: HomePageJar(
-                                      model: widget.model,
-                                      jar: widget.model.usersJars[index],
-                                      title: null),
-                                );
-                        }),
-                  )
-          ],
-        ),
-      ),
+                              }),
+                        )
+                ],
+              ),
+            )
+          : Container(
+              height: height,
+              width: width,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 6,
+                ),
+              ),
+            ),
     );
   }
 }

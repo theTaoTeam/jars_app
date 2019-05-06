@@ -26,6 +26,7 @@ class InputFieldArea extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        textCapitalization: TextCapitalization.none,
         obscureText: obscure,
         style: TextStyle(
           color: Theme.of(context).primaryColor,
