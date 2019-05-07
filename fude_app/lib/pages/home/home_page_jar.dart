@@ -3,7 +3,6 @@ import 'package:meta/meta.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/widgets/page_transformer/page_transformer.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar_edit.dart';
 import 'package:fude/pages/jars/jar_add.dart';
@@ -11,11 +10,10 @@ import 'package:fude/pages/jars/jar_add.dart';
 class HomePageJar extends StatelessWidget {
   final DocumentSnapshot jar;
   final MainModel model;
-  final PageVisibility pageVisibility;
   final String title;
 
   HomePageJar(
-      {@required this.model, this.jar, this.pageVisibility, this.title});
+      {@required this.model, this.jar, this.title});
 
   Widget _applyTextEffects({
     @required double translationFactor,

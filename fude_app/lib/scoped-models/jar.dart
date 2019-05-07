@@ -54,7 +54,7 @@ mixin JarModel on Model {
     String imageLocation;
     try {
       if (data['image'] != null) {
-        imageLocation = await uploadNoteImageToStorage(data['image']);
+        imageLocation = await uploadJarImageToStorage(data['image']);
       }
       final user = await _auth.currentUser();
       await jarCollection.document().setData(<String, dynamic>{
@@ -79,7 +79,7 @@ mixin JarModel on Model {
     String imageLocation;
     try {
       if (data['image'] != null) {
-        imageLocation = await uploadNoteImageToStorage(data['image']);
+        imageLocation = await uploadJarImageToStorage(data['image']);
       }
       if (data['categoriesToRemove'].length > 0) {
         await _firestore
@@ -193,6 +193,27 @@ mixin JarModel on Model {
   }
 
   Future<String> uploadNoteImageToStorage(File image) async {
+    final StorageReference ref =
+        FirebaseStorage.instance.ref().child('images').child('$image.jpg');
+    //Upload the file to firebase
+    StorageUploadTask uploadTask = ref.putFile(image);
+    // Waits till the file is uploaded then stores the download url
+    String location;
+    try {
+      await uploadTask.onComplete.then((val) async {
+        await val.ref.getDownloadURL().then((val) {
+          location = val;
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+    //returns the download url
+    print('LOCATION $location');
+    return location;
+  }
+
+  Future<String> uploadJarImageToStorage(File image) async {
     final StorageReference ref =
         FirebaseStorage.instance.ref().child('images').child('${_selJar.documentID}.jpg');
     //Upload the file to firebase
