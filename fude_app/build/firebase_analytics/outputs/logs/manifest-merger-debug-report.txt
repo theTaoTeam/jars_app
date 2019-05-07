@@ -1,0 +1,31 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:1:1-7:12
+	package
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:2:3-49
+		INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:4:3-77
+	android:name
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:4:20-74
+uses-permission#android.permission.INTERNET
+ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:5:3-65
+	android:name
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:5:20-62
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:6:3-66
+	android:name
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml:6:20-63
+uses-sdk
+INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+		ADDED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
+		INJECTED from /Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/android/src/main/AndroidManifest.xml
