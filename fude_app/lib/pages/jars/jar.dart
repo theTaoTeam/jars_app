@@ -175,32 +175,37 @@ class _JarPageState extends State<JarPage> {
                                           }),
                                     ),
                                   ),
-                                  AnimatedOpacity(
-                                    opacity: _swiperVisible ? 1.0 : 0.0,
-                                    duration: Duration(milliseconds: 1000),
-                                    child: Container(
-                                      child: IconButton(
-                                          icon: Icon(
-                                            Icons.filter_list,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color,
+                                  model.selectedJar.data['categories'].length >
+                                          0
+                                      ? AnimatedOpacity(
+                                          opacity: _swiperVisible ? 1.0 : 0.0,
+                                          duration:
+                                              Duration(milliseconds: 1000),
+                                          child: Container(
+                                            child: IconButton(
+                                                icon: Icon(
+                                                  Icons.filter_list,
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color,
+                                                ),
+                                                iconSize: 39,
+                                                onPressed: () {
+                                                  _swiperVisible = false;
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    PageTransition(
+                                                      curve: Curves.linear,
+                                                      type: PageTransitionType
+                                                          .rightToLeftWithFade,
+                                                      child: JarNotes(
+                                                          model: model),
+                                                    ),
+                                                  );
+                                                }),
                                           ),
-                                          iconSize: 39,
-                                          onPressed: () {
-                                            _swiperVisible = false;
-                                            Navigator.pushReplacement(
-                                              context,
-                                              PageTransition(
-                                                curve: Curves.linear,
-                                                type: PageTransitionType
-                                                    .rightToLeftWithFade,
-                                                child: JarNotes(model: model),
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                  ),
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -219,44 +224,52 @@ class _JarPageState extends State<JarPage> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: height * 0.43,
-                              left: width * 0.07,
-                              right: width * 0.07,
-                              child: AnimatedOpacity(
-                                opacity: _swiperVisible ? 1.0 : 0.0,
-                                duration: Duration(milliseconds: 1000),
-                                child: model.selectedJar.data['categories']
-                                            .length >
-                                        0
-                                    ? Column(
-                                        children: <Widget>[
-                                          Text(
-                                            'SELECT A CATEGORY',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .secondaryHeaderColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              letterSpacing: 3,
+                            model.selectedJar.data['categories'].length > 0
+                                ? Positioned(
+                                    top: height * 0.43,
+                                    left: width * 0.07,
+                                    right: width * 0.07,
+                                    child: AnimatedOpacity(
+                                        opacity: _swiperVisible ? 1.0 : 0.0,
+                                        duration: Duration(milliseconds: 1000),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(
+                                              'SELECT A CATEGORY',
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                letterSpacing: 3,
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          SizedBox(height: height * 0.01,),
-                                          Text(
-                                            'TO PULL A RANDOM IDEA',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .secondaryHeaderColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              letterSpacing: 3,
+                                            SizedBox(
+                                              height: height * 0.01,
                                             ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      )
-                                    : Text(
+                                            Text(
+                                              'TO PULL A RANDOM IDEA',
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .secondaryHeaderColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                letterSpacing: 3,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        )),
+                                  )
+                                : Positioned(
+                                    top: height * 0.60,
+                                    left: width * 0.07,
+                                    right: width * 0.07,
+                                    child: AnimatedOpacity(
+                                      opacity: _swiperVisible ? 1.0 : 0.0,
+                                      duration: Duration(milliseconds: 1000),
+                                      child: Text(
                                         "YOU DON'T HAVE ANY CATEGORIES YET",
                                         style: TextStyle(
                                           color: Theme.of(context)
@@ -267,8 +280,8 @@ class _JarPageState extends State<JarPage> {
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                              ),
-                            ),
+                                    ),
+                                  ),
                             //SWIPER
                             Positioned(
                               top: height * 0.53,
