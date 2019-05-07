@@ -95,6 +95,8 @@ mixin UserModel on Model {
 
   void resetPassword(String email) async {
     print("sending reset password email...");
+    _isLoading = true;
+    notifyListeners();
     try {
       _auth.sendPasswordResetEmail(email: email);
       resetLinkSent = true;
@@ -111,5 +113,7 @@ mixin UserModel on Model {
           userMessage:
               "We're having issues sending you a reset link, sorry about that.");
     }
+    _isLoading = false;
+    notifyListeners();
   }
 }

@@ -103,17 +103,26 @@ class _ForgotPassState extends State<ForgotPassPage>
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 25.0),
-                      child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              animationStatus = 1;
-                            });
-                            _resetPass(resetPassword: model.resetPassword);
-                          },
-                          child: ForgotPassButton()),
-                    )
+                    !model.isLoading
+                        ? Padding(
+                            padding: const EdgeInsets.only(bottom: 25.0),
+                            child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    animationStatus = 1;
+                                  });
+                                  _resetPass(
+                                      resetPassword: model.resetPassword);
+                                },
+                                child: ForgotPassButton()),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(bottom: 50.0),
+                            child: CircularProgressIndicator(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              strokeWidth: 6,
+                            ),
+                          )
                   ],
                 ),
                 Center(

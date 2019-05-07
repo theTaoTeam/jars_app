@@ -60,20 +60,29 @@ class NotePage extends StatelessWidget {
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
-            icon: !isRandom ? Icon(Icons.arrow_back_ios) : Icon(Icons.keyboard_arrow_down),
+            icon: !isRandom
+                ? Icon(Icons.arrow_back_ios)
+                : Icon(Icons.keyboard_arrow_down),
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             iconSize: 25,
-            onPressed: () => Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                    curve: Curves.linear,
-                    type: !isRandom ? PageTransitionType.leftToRightWithFade : PageTransitionType.upToDown,
-                    child: !isRandom
-                        ? JarNotes(model: model)
-                        : JarPage(model: model),
+            onPressed: () => !isRandom
+                ? Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.leftToRightWithFade,
+                      child: JarNotes(model: model),
+                    ),
+                  )
+                : Navigator.pop(
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.upToDown,
+                      child: JarPage(model: model),
+                    ),
                   ),
-                ),
           ),
           actions: <Widget>[
             IconButton(

@@ -118,18 +118,26 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                         ForgotPassword(),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 50.0),
-                      child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              animationStatus = 1;
-                            });
-                            model.resetUsersJars();
-                            _submitForm(register: model.register);
-                          },
-                          child: SignUpButton()),
-                    ),
+                    !model.isLoading
+                        ? Padding(
+                            padding: EdgeInsets.only(bottom: 50.0),
+                            child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    animationStatus = 1;
+                                  });
+                                  model.resetUsersJars();
+                                  _submitForm(register: model.register);
+                                },
+                                child: SignUpButton()),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(bottom: 50.0),
+                            child: CircularProgressIndicator(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              strokeWidth: 6,
+                            ),
+                          ),
                   ],
                 ),
                 SizedBox(

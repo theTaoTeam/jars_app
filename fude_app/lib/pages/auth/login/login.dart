@@ -44,8 +44,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   void updateEmail(String email) {
     setState(() {
-    _formData['email'] = email;
-
+      _formData['email'] = email;
     });
     print('Email saved: ' + _formData['email']);
   }
@@ -141,21 +140,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         SignUp()
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 50.0),
-                      child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              animationStatus = 1;
-                            });
-                            _submitForm(login: model.login);
-                          },
-                          child: !model.isLoading
-                              ? LoginInButton()
-                              : CircularProgressIndicator(
-                                  strokeWidth: 6,
-                                )),
-                    )
+                    !model.isLoading
+                        ? Padding(
+                            padding: EdgeInsets.only(bottom: 50.0),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  animationStatus = 1;
+                                });
+                                _submitForm(login: model.login);
+                              },
+                              child: LoginInButton(),
+                            ),
+                          )
+                        : Padding(
+                            padding: EdgeInsets.only(bottom: 50.0),
+                            child: CircularProgressIndicator(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              strokeWidth: 6,
+                            ),
+                          ),
                   ],
                 ),
               ],
