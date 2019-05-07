@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
   final DecorationImage image;
-  Logo({this.image});
+  final bool isLogin;
+  Logo({this.image, this.isLogin});
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -14,7 +15,7 @@ class Logo extends StatelessWidget {
       alignment: Alignment.center,
       child: Text('JARS',
           style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: isLogin ? Theme.of(context).primaryColor : Theme.of(context).secondaryHeaderColor,
               fontSize: 60,
               letterSpacing: 8)),
     );

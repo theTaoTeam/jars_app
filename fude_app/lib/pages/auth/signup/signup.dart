@@ -81,7 +81,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             'Oops!',
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
           content: Text(userMessage),
         );
@@ -99,7 +99,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
       return Scaffold(
         body: Container(
           child: Container(
-            color: Theme.of(context).secondaryHeaderColor,
+            color: Theme.of(context).primaryColor,
             child: ListView(
               padding: EdgeInsets.all(0.0),
               children: <Widget>[
@@ -109,7 +109,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Logo(),
+                        Logo(isLogin: false),
                         FormContainer(
                             formKey: formKey,
                             updateEmail: updateEmail,
@@ -143,7 +143,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                       style: TextStyle(
                           fontWeight: FontWeight.w300,
                           letterSpacing: 0.5,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).secondaryHeaderColor,
                           fontSize: 12.0),
                     ),
                   ),

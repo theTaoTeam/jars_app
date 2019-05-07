@@ -21,7 +21,9 @@ class InputFieldArea extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             width: 0.5,
-            color: Theme.of(context).primaryColor,
+            color: isLogin
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).secondaryHeaderColor,
           ),
         ),
       ),
@@ -29,27 +31,35 @@ class InputFieldArea extends StatelessWidget {
         textCapitalization: TextCapitalization.none,
         obscureText: obscure,
         style: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: isLogin
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).secondaryHeaderColor,
         ),
-        keyboardType: hint == 'Email' ? TextInputType.emailAddress : TextInputType.text,
+        keyboardType:
+            hint == 'Email' ? TextInputType.emailAddress : TextInputType.text,
         decoration: InputDecoration(
           icon: Icon(
             icon,
-            color: Theme.of(context).primaryColor,
+            color: isLogin
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).secondaryHeaderColor,
             size: 32,
           ),
           border: InputBorder.none,
           hintText: hint,
           hintStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: isLogin
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).secondaryHeaderColor,
               fontSize: 15.0,
               letterSpacing: 5),
           contentPadding:
               EdgeInsets.only(top: 30.0, right: 30.0, bottom: 30.0, left: 5.0),
         ),
         validator: (String val) {
-          String finalVal = val.toLowerCase();
+          String finalVal = val.toLowerCase().trim();
           if (hint == 'Email') {
+         
             print(finalVal);
             if (finalVal.isEmpty ||
                 !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
@@ -58,15 +68,14 @@ class InputFieldArea extends StatelessWidget {
             }
           } else if (hint == 'Password') {
             if (finalVal.isEmpty || finalVal.length < 8) {
-              return isLogin
-                  ? 'Check your password'
-                  : 'Must be 8 characters';
+              return isLogin ? 'Check your password' : 'Must be at least 8 characters';
             }
           }
         },
         onSaved: (String val) {
           print(val);
-          hint == 'Email' ? updateEmail(val) : updatePassword(val);
+          val.toLowerCase();
+          hint == 'Email' ? updateEmail(val.trim()) : updatePassword(val.trim());
         },
       ),
     );

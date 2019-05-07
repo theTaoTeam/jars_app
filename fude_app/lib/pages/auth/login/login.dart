@@ -43,7 +43,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   }
 
   void updateEmail(String email) {
+    setState(() {
     _formData['email'] = email;
+
+    });
     print('Email saved: ' + _formData['email']);
   }
 
@@ -122,7 +125,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Logo(),
+                        Logo(isLogin: true),
                         model.resetLinkSent
                             ? Text(
                                 'check your email!',

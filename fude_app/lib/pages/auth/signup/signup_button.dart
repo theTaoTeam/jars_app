@@ -10,13 +10,13 @@ class SignUpButton extends StatelessWidget {
       height: height * 0.07,
       alignment: FractionalOffset.center,
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).secondaryHeaderColor,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Text(
         "signup",
         style: TextStyle(
-          color: Theme.of(context).secondaryHeaderColor,
+          color: Theme.of(context).primaryColor,
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
           letterSpacing: 5,

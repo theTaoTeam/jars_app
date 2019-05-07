@@ -72,7 +72,7 @@ class _ForgotPassState extends State<ForgotPassPage>
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Logo(),
+                        Logo(isLogin: true),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 20.0),
                           child: Column(
@@ -89,6 +89,7 @@ class _ForgotPassState extends State<ForgotPassPage>
                                         obscure: false,
                                         icon: Icons.person_outline,
                                         updateEmail: updateEmail,
+                                        isLogin: true,
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(
