@@ -148,23 +148,23 @@ class _JarNotesState extends State<JarNotes> {
                                   ),
                                 ],
                               )),
-                          Container(
-                            height: height * 0.73,
-                            child: SingleChildScrollView(
+                          Flexible(
+                            child: Container(
+                              height: height * 0.72,
                               child: ListView.builder(
-                                  shrinkWrap: true,
-                                  reverse: false,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: snapshot.data.documents.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return _buildNoteListItem(context,
-                                        snapshot.data.documents[index]);
-                                  }),
+                                physics: AlwaysScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                // reverse: false,
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data.documents.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return _buildNoteListItem(
+                                      context, snapshot.data.documents[index]);
+                                },
+                              ),
                             ),
                           ),
-                          Expanded(
-                            child: Align(
+                          Align(
                               alignment: Alignment.bottomRight,
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(
@@ -181,7 +181,7 @@ class _JarNotesState extends State<JarNotes> {
                                 ),
                               ),
                             ),
-                          ),
+                          
                         ],
                       )
                     : Column(

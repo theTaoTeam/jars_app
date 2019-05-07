@@ -4,7 +4,7 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/17c1f2348b8cb700c47f0e6744a65249/res/values-en-rAU/values-en-rAU.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-en-rAU/values-en-rAU.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

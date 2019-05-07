@@ -4,7 +4,24 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-de/values-de.xml",
             "map": [
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/17c1f2348b8cb700c47f0e6744a65249/res/values-de/values-de.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.2.0.aar/5812db1a699c9e62225db70edb76f465/res/values-de/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "203",
+                        "endOffsets": "450"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1325",
+                        "endColumns": "203",
+                        "endOffsets": "1524"
+                    }
+                },
+                {
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-de/values-de.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -21,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/play-services-base-16.0.1.aar/9b921ec6e8529fa543a2fe525f066950/res/values-de/values.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/8e025d42fcc0087b873c98940424b9e5/res/values-de/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -35,23 +52,6 @@
                         "startOffsets": "105,216,412,542,656,893,1026,1177,1529,1768,1882,2082,2215,2436,2642,2743,2836",
                         "endColumns": "110,195,129,113,236,132,150,147,238,113,199,132,220,205,100,92,108",
                         "endOffsets": "211,407,537,651,888,1021,1172,1320,1763,1877,2077,2210,2431,2637,2738,2831,2940"
-                    }
-                },
-                {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.1.0.aar/29dc4b40afd85059bd3bfb587a5b8212/res/values-de/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "203",
-                        "endOffsets": "450"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1325",
-                        "endColumns": "203",
-                        "endOffsets": "1524"
                     }
                 }
             ]

@@ -4,7 +4,7 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-ca/values-ca.xml",
             "map": [
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/play-services-base-16.0.1.aar/9b921ec6e8529fa543a2fe525f066950/res/values-ca/values.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/8e025d42fcc0087b873c98940424b9e5/res/values-ca/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.1.0.aar/29dc4b40afd85059bd3bfb587a5b8212/res/values-ca/values.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.2.0.aar/5812db1a699c9e62225db70edb76f465/res/values-ca/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/17c1f2348b8cb700c47f0e6744a65249/res/values-ca/values-ca.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-ca/values-ca.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
