@@ -1,0 +1,5 @@
+version: "Apple Swift version 4.2.1 (swiftlang-1000.11.42 clang-1000.11.45.1)"
+options: "270a032d93651dff23eba4b91edeebe4"
+build_time: [1556984385, 429125000]
+inputs:
+  "/Users/scottclampet/Desktop/fude/fude_app/ios/Runner/AppDelegate.swift": !dirty [1547051521, 0]

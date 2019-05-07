@@ -87,14 +87,12 @@ class AddToJarForm extends StatelessWidget {
                           value: val.toString(),
                           child: Text(
                             val.toString(),
-                            style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor),
+                            style:
+                                TextStyle(color: val == selectedCategory ? Theme.of(context).secondaryHeaderColor : Color.fromRGBO(40, 40, 40, 1)),
                           ),
                         );
                       }).toList(),
                       onChanged: (dynamic val) {
-                        print(val);
-                        print(selectedCategory);
                         updateCategory(val);
                       },
                     ),

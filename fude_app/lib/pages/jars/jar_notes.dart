@@ -40,7 +40,9 @@ class _JarNotesState extends State<JarNotes> {
 
   _buildNoteListItem(BuildContext context, DocumentSnapshot document) {
     return NotesCard(
-        note: document, toggleFavoriteStatus: toggleFavoriteStatus);
+        note: document,
+        toggleFavoriteStatus: toggleFavoriteStatus,
+        model: widget.model);
   }
 
   @override
@@ -146,15 +148,21 @@ class _JarNotesState extends State<JarNotes> {
                                   ),
                                 ],
                               )),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              reverse: false,
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.documents.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return _buildNoteListItem(
-                                    context, snapshot.data.documents[index]);
-                              }),
+                          Container(
+                            height: height * 0.73,
+                            child: SingleChildScrollView(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  reverse: false,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: snapshot.data.documents.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return _buildNoteListItem(context,
+                                        snapshot.data.documents[index]);
+                                  }),
+                            ),
+                          ),
                           Expanded(
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -180,7 +188,9 @@ class _JarNotesState extends State<JarNotes> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(height: height * .3,),
+                          SizedBox(
+                            height: height * .3,
+                          ),
                           Center(
                             child: Text(
                               isFavorite

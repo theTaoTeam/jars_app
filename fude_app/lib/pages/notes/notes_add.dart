@@ -162,7 +162,7 @@ class _AddNotePageState extends State<AddNotePage> {
                       
                       RaisedButton(
                           child: Text(
-                            'ADD JAR',
+                            'ADD IDEA',
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,

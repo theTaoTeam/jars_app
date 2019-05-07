@@ -125,6 +125,7 @@ class _HomePageState extends State<HomePage> {
                                   initialPage: 0),
                               itemCount: widget.model.usersJars.length,
                               itemBuilder: (context, index) {
+                                print(index);
                                 return index == 0
                                     ? HomePageJar(
                                         model: widget.model, title: 'Add Jar')

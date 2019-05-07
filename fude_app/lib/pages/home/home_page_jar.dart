@@ -127,9 +127,15 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(jar != null) {
+      print(jar.data['title']);
+      print(jar.data['image']);
+    }
     Image jarImage = Image(
       image: jar != null
-          ? NetworkImage(jar.data['image'])
+          ? jar.data['image'] != null
+              ? NetworkImage(jar.data['image'])
+              : AssetImage('assets/logo.png')
           : AssetImage('assets/logo.png'),
       fit: BoxFit.cover,
       alignment: FractionalOffset(

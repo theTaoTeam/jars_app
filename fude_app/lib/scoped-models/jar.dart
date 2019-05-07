@@ -62,7 +62,7 @@ mixin JarModel on Model {
         'owners': FieldValue.arrayUnion([user.email]),
         'categories': data['categories'],
         'image': imageLocation == null
-            ? 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'
+            ? null
             : imageLocation.toString(),
         'isFav': false
       });
@@ -75,7 +75,7 @@ mixin JarModel on Model {
   }
 
   void updateJar(Map<String, dynamic> data) async {
-    print('updateJar Data: $data');
+    print('updateJar Data: ${_selJar.data['title']}');
     String imageLocation;
     try {
       if (data['image'] != null) {
@@ -162,11 +162,14 @@ mixin JarModel on Model {
 
   void addToJar(String category, String title, String notes, String link,
       File image) async {
-    print('image: ----------- $image');
+    // print('image: ----------- $image');
     String imageLocation;
+    _isLoading = true;
+    notifyListeners();
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
+        print(imageLocation);
       }
       await _firestore
           .collection('jars')
@@ -182,7 +185,7 @@ mixin JarModel on Model {
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
       });
-
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
@@ -191,7 +194,7 @@ mixin JarModel on Model {
 
   Future<String> uploadNoteImageToStorage(File image) async {
     final StorageReference ref =
-        FirebaseStorage.instance.ref().child('images/');
+        FirebaseStorage.instance.ref().child('images').child('${_selJar.documentID}.jpg');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url
@@ -199,7 +202,6 @@ mixin JarModel on Model {
     try {
       await uploadTask.onComplete.then((val) async {
         await val.ref.getDownloadURL().then((val) {
-          // print('VAL $val, type: ${val.runtimeType}');
           location = val;
         });
       });
@@ -207,6 +209,7 @@ mixin JarModel on Model {
       print(e);
     }
     //returns the download url
+    print('LOCATION $location');
     return location;
   }
 
@@ -298,9 +301,9 @@ mixin JarModel on Model {
   Future<List<dynamic>> fetchAllUserJars(String email) async {
     _isLoading = true;
     notifyListeners();
+    QuerySnapshot jars;
     FirebaseUser user = await _auth.currentUser();
     _usersJars = [_addJar];
-    QuerySnapshot jars;
     try {
       jars = await _firestore
           .collection('jars')
@@ -361,7 +364,8 @@ mixin JarModel on Model {
 
   Future<bool> getThemeFromPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _darkTheme = prefs.getBool('darkTheme') != null ? prefs.getBool('darkTheme') : false;
+    _darkTheme =
+        prefs.getBool('darkTheme') != null ? prefs.getBool('darkTheme') : false;
     print(_darkTheme);
     notifyListeners();
     return _darkTheme;

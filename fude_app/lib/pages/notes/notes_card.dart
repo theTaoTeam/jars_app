@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:fude/scoped-models/main.dart';
 
 import 'package:fude/pages/notes/note.dart';
 import 'package:fude/helpers/design_helpers.dart';
 
 class NotesCard extends StatelessWidget {
   final DocumentSnapshot note;
+  final MainModel model;
   final Function toggleFavoriteStatus;
 
-  NotesCard({this.note, this.toggleFavoriteStatus});
+  NotesCard({this.note, this.toggleFavoriteStatus, this.model});
 
   Widget makeListTile(DocumentSnapshot note, double _targetWidth, double height,
       BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       leading: Container(
-        width: _targetWidth * 0.55,
-        // height: height,
+        width: _targetWidth * 0.2,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(1.0),
           child: note['image'] != null
-              ? Image.network(note['image'], scale: 0.1)
-              : logoInStorage(),
+              ? Image.network(note['image'], scale: 0.2)
+              : Image.network(model.selectedJar.data['image'], scale: 2,),
         ),
       ),
       title: Container(
@@ -90,7 +91,7 @@ class NotesCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                child: makeListTile(note, _targetWidth, height, context),
+                child: makeListTile(note, width, height, context),
               ),
             ],
           ),
