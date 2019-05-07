@@ -4,7 +4,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:fude/scoped-models/main.dart';
 
 import 'package:fude/pages/notes/note.dart';
-import 'package:fude/helpers/design_helpers.dart';
 
 class NotesCard extends StatelessWidget {
   final DocumentSnapshot note;
@@ -56,7 +55,7 @@ class NotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    final double _targetWidth = width > 550.0 ? 100.0 : width * 0.45;
+    // final double _targetWidth = width > 550.0 ? 100.0 : width * 0.45;
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(
