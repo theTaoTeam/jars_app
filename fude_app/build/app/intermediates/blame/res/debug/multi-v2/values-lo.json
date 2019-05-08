@@ -4,7 +4,7 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-lo/values-lo.xml",
             "map": [
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-lo/values-lo.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/values-lo/values-lo.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -18,23 +18,6 @@
                         "startOffsets": "2848",
                         "endColumns": "100",
                         "endOffsets": "2944"
-                    }
-                },
-                {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.2.0.aar/5812db1a699c9e62225db70edb76f465/res/values-lo/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "190",
-                        "endOffsets": "437"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1279",
-                        "endColumns": "190",
-                        "endOffsets": "1465"
                     }
                 },
                 {
@@ -52,6 +35,23 @@
                         "startOffsets": "105,215,417,549,658,869,996,1134,1470,1681,1788,1985,2116,2346,2537,2635,2734",
                         "endColumns": "109,201,131,108,210,126,137,144,210,106,196,130,229,190,97,98,113",
                         "endOffsets": "210,412,544,653,864,991,1129,1274,1676,1783,1980,2111,2341,2532,2630,2729,2843"
+                    }
+                },
+                {
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.1.0.aar/38073fba81337282ec717636d3adfe57/res/values-lo/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "190",
+                        "endOffsets": "437"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1279",
+                        "endColumns": "190",
+                        "endOffsets": "1465"
                     }
                 }
             ]

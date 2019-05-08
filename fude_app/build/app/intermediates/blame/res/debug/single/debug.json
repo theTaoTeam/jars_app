@@ -5,7 +5,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xxhdpi-v4_googleg_disabled_color_18.png.flat",
@@ -13,7 +13,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_media_action.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_media_action.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_media_action.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat",
@@ -21,7 +21,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_big_media_narrow.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_big_media_narrow.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_big_media_narrow.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat",
@@ -29,11 +29,11 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout-v21_notification_action.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout-v21/notification_action.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout-v21/notification_action.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
@@ -41,7 +41,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-v21_notification_action_background.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-v21/notification_action_background.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-v21/notification_action_background.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_light_normal.xml.flat",
@@ -49,11 +49,11 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_media.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_media.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_media.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_part_chronometer.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout/notification_template_part_chronometer.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout/notification_template_part_chronometer.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat",
@@ -77,7 +77,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-mdpi-v4/notification_bg_normal.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-mdpi-v4/notification_bg_normal.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light_normal.xml.flat",
@@ -89,7 +89,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_dark_normal.xml.flat",
@@ -101,15 +101,15 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout-v21_notification_template_custom_big.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout-v21/notification_template_custom_big.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout-v21/notification_template_custom_big.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_media_cancel_action.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_media_cancel_action.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_media_cancel_action.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-xhdpi-v4/notification_bg_low_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-xhdpi-v4/notification_bg_low_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_googleg_standard_color_18.png.flat",
@@ -121,19 +121,19 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_notification_bg.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable/notification_bg.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable/notification_bg.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_big_media.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_big_media.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_big_media.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_dark.xml.flat",
@@ -149,7 +149,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout-v21_notification_template_icon_group.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout-v21/notification_template_icon_group.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout-v21/notification_template_icon_group.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat",
@@ -161,7 +161,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout-v21_notification_action_tombstone.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout-v21/notification_action_tombstone.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout-v21/notification_action_tombstone.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xxhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
@@ -169,15 +169,15 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_big_media_narrow_custom.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_big_media_narrow_custom.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_big_media_narrow_custom.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_notify_panel_notification_icon_bg.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_disabled.xml.flat",
@@ -193,7 +193,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_media_custom.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_media_custom.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_media_custom.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_common_google_signin_btn_text_dark_normal_background.9.png.flat",
@@ -208,16 +208,12 @@
         "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/8e025d42fcc0087b873c98940424b9e5/res/drawable-mdpi-v4/googleg_disabled_color_18.png"
     },
     {
-        "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout-v16_notification_template_custom_big.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout-v16/notification_template_custom_big.xml"
-    },
-    {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_big_media_custom.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_big_media_custom.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_big_media_custom.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark.xml.flat",
@@ -225,11 +221,11 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_lines_media.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0-rc01.aar/6316117ce006784918914b2aed6fb055/res/layout/notification_template_lines_media.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/c2cf478f1ea26815d96268e7e7d45163/res/layout/notification_template_lines_media.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_dark_focused.xml.flat",
@@ -237,7 +233,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_notification_tile_bg.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable/notification_tile_bg.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable/notification_tile_bg.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_common_google_signin_btn_icon_dark_normal_background.9.png.flat",
@@ -256,12 +252,8 @@
         "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/8e025d42fcc0087b873c98940424b9e5/res/drawable-mdpi-v4/googleg_standard_color_18.png"
     },
     {
-        "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_icon_group.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout/notification_template_icon_group.xml"
-    },
-    {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_notification_bg_low.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable/notification_bg_low.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable/notification_bg_low.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/xml_flutter_image_picker_file_paths.xml.flat",
@@ -289,11 +281,11 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-xhdpi-v4/notification_bg_normal.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-xhdpi-v4/notification_bg_normal.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_template_part_time.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout/notification_template_part_time.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/layout/notification_template_part_time.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_text_light_focused.xml.flat",
@@ -301,15 +293,11 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_notification_icon_background.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable/notification_icon_background.xml"
-    },
-    {
-        "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_action.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout/notification_action.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable/notification_icon_background.xml"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-xhdpi-v4_googleg_disabled_color_18.png.flat",
@@ -325,11 +313,7 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-hdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-hdpi-v4/notification_bg_normal.9.png"
-    },
-    {
-        "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/layout_notification_action_tombstone.xml.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/layout/notification_action_tombstone.xml"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-hdpi-v4/notification_bg_normal.9.png"
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable_common_google_signin_btn_icon_light_focused.xml.flat",
@@ -353,6 +337,6 @@
     },
     {
         "merged": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/res/merged/debug/drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+        "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
     }
 ]

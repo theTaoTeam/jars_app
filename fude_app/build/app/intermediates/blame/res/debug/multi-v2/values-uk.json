@@ -4,6 +4,23 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-uk/values-uk.xml",
             "map": [
                 {
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.1.0.aar/38073fba81337282ec717636d3adfe57/res/values-uk/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "204",
+                        "endOffsets": "451"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1274",
+                        "endColumns": "204",
+                        "endOffsets": "1474"
+                    }
+                },
+                {
                     "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-base-16.0.1.aar/8e025d42fcc0087b873c98940424b9e5/res/values-uk/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
@@ -21,24 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.2.0.aar/5812db1a699c9e62225db70edb76f465/res/values-uk/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "204",
-                        "endOffsets": "451"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1274",
-                        "endColumns": "204",
-                        "endOffsets": "1474"
-                    }
-                },
-                {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-uk/values-uk.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

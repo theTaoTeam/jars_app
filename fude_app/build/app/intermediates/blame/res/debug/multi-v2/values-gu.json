@@ -4,7 +4,24 @@
             "outputFile": "/Users/scottclampet/Desktop/fude/fude_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-gu/values-gu.xml",
             "map": [
                 {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0-rc01.aar/bb02f5e428eca9d9e74dc73d8aa5e400/res/values-gu/values-gu.xml",
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.1.0.aar/38073fba81337282ec717636d3adfe57/res/values-gu/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "205",
+                        "endOffsets": "452"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1245",
+                        "endColumns": "205",
+                        "endOffsets": "1446"
+                    }
+                },
+                {
+                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/core-1.0.0.aar/8c8b14e3eac48c4d17a3c2f5ac664824/res/values-gu/values-gu.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -35,23 +52,6 @@
                         "startOffsets": "105,215,413,540,654,851,975,1116,1451,1658,1768,1963,2090,2292,2472,2563,2659",
                         "endColumns": "109,197,126,113,196,123,140,128,206,109,194,126,201,179,90,95,110",
                         "endOffsets": "210,408,535,649,846,970,1111,1240,1653,1763,1958,2085,2287,2467,2558,2654,2765"
-                    }
-                },
-                {
-                    "source": "/Users/scottclampet/.gradle/caches/transforms-1/files-1.1/jetified-play-services-basement-16.2.0.aar/5812db1a699c9e62225db70edb76f465/res/values-gu/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "205",
-                        "endOffsets": "452"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1245",
-                        "endColumns": "205",
-                        "endOffsets": "1446"
                     }
                 }
             ]

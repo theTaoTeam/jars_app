@@ -1,9 +1,9 @@
-cloud_firestore=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.11.0+1/
-cloud_functions=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions-0.0.5/
-firebase_analytics=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.1.0/
-firebase_auth=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.10.0+1/
-firebase_core=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.0/
-firebase_storage=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.0.0/
-image_picker=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.4.12/
+cloud_firestore=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.10.1/
+cloud_functions=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions-0.2.0+1/
+firebase_analytics=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_analytics-1.2.0+1/
+firebase_auth=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.9.0/
+firebase_core=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.3.4/
+firebase_storage=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-2.1.1+2/
+image_picker=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.0+2/
 shared_preferences=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.3/
 url_launcher=/Users/scottclampet/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-3.0.3/
