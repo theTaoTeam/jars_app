@@ -1,24 +1,25 @@
+
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
 .DS_Store
-.dart_tool/
+.atom/
+.buildlog/
+.history
+.svn/
 
-ios/
-android/
-
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
 .idea/
 
-.packages
-.pub/
+# Visual Studio Code related
+.vscode/
 
-build/
-
-.flutter-plugins
-flutter/
-
-node_modules/
-.env.dart
-
-*.g.dart
-*.icloud
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
@@ -26,11 +27,7 @@ node_modules/
 .packages
 .pub-cache/
 .pub/
-build/
-flutter_*.png
-linked_*.ds
-unlinked.ds
-unlinked_spec.ds
+/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -66,8 +63,6 @@ unlinked_spec.ds
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-xcuserdata/
-Pods/
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
