@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(bottom: 50.0),
                             child: CircularProgressIndicator(
                               backgroundColor: Theme.of(context).primaryColor,
-                              strokeWidth: 6,
+                              strokeWidth: 4,
                             ),
                           ),
                   ],

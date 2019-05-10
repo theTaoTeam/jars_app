@@ -135,7 +135,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(bottom: 50.0),
                             child: CircularProgressIndicator(
                               backgroundColor: Theme.of(context).primaryColor,
-                              strokeWidth: 6,
+                              strokeWidth: 4,
                             ),
                           ),
                   ],

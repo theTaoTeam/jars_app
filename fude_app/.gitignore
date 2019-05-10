@@ -11,6 +11,9 @@
 .history
 .svn/
 
+ios/fastlane/
+android/fastlane/
+
 # IntelliJ related
 *.iml
 *.ipr

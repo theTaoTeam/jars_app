@@ -255,7 +255,7 @@ class _JarPageState extends State<EditJarPage> {
                 )
               : Center(
                   child: CircularProgressIndicator(
-                    strokeWidth: 6,
+                    strokeWidth: 4,
                   ),
                 ),
         ),

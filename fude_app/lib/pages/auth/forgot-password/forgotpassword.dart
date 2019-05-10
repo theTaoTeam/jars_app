@@ -120,7 +120,7 @@ class _ForgotPassState extends State<ForgotPassPage>
                             padding: EdgeInsets.only(bottom: 50.0),
                             child: CircularProgressIndicator(
                               backgroundColor: Theme.of(context).primaryColor,
-                              strokeWidth: 6,
+                              strokeWidth: 4,
                             ),
                           )
                   ],
