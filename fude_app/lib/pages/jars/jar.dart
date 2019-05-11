@@ -11,6 +11,7 @@ import 'package:fude/pages/jars/jar_notes.dart';
 import 'package:fude/pages/jars/category_card.dart';
 import 'package:fude/pages/home/home.dart';
 import 'package:fude/helpers/randomNoteModal.dart';
+import 'package:fude/pages/jars/jar_edit.dart';
 
 class JarPage extends StatefulWidget {
   final MainModel model;
@@ -30,8 +31,7 @@ class _JarPageState extends State<JarPage> {
 
   @override
   void initState() {
-    print(widget.model.selectedJar.data);
-    Timer(Duration(seconds: 0), fadeInstructions);
+    fadeInstructions();
     super.initState();
   }
 
@@ -205,7 +205,38 @@ class _JarPageState extends State<JarPage> {
                                                 }),
                                           ),
                                         )
-                                      : Container(),
+                                      : AnimatedOpacity(
+                                          opacity: _swiperVisible ? 1.0 : 0.0,
+                                          duration:
+                                              Duration(milliseconds: 1000),
+                                          child: Container(
+                                            child: IconButton(
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  color: Theme.of(context)
+                                                      .iconTheme
+                                                      .color,
+                                                ),
+                                                iconSize: 39,
+                                                onPressed: () {
+                                                  print('pressed');
+                                                  _swiperVisible = false;
+                                                  model.categoryChildren = [];
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    PageTransition(
+                                                      curve: Curves.linear,
+                                                      type: PageTransitionType
+                                                          .downToUp,
+                                                      child: EditJarPage(
+                                                          model: model,
+                                                          jar: model
+                                                              .selectedJar),
+                                                    ),
+                                                  );
+                                                }),
+                                          ),
+                                        ),
                                 ],
                               ),
                             ),
@@ -269,19 +300,38 @@ class _JarPageState extends State<JarPage> {
                                     child: AnimatedOpacity(
                                       opacity: _swiperVisible ? 1.0 : 0.0,
                                       duration: Duration(milliseconds: 1000),
-                                      child: Text(
-                                        "YOU DON'T HAVE ANY CATEGORIES YET",
-                                        style: TextStyle(
-                                          color: Theme.of(context)
-                                              .secondaryHeaderColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          letterSpacing: 3,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "This jar needs some categories",
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              letterSpacing: 3,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            height: height * 0.02,
+                                          ),
+                                          Text(
+                                            "Tap the '+' in the top corner",
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              letterSpacing: 3,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
+
                             //SWIPER
                             Positioned(
                               top: height * 0.53,
