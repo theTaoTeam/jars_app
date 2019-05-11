@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/notes/note.dart';
+import 'package:fude/pages/notes/notes_add.dart';
 
 void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
     MainModel model, String category) {
@@ -22,7 +23,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
           content: ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Container(
-              height: height * 0.35,
+              height: randomNote != null ? height * 0.35 : height * 0.25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,18 +62,21 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                       : Container(),
                   // dialog top
                   randomNote == null
-                      ? Center(
-                          child: Text(
-                            "You don't have any $category ideas yet.",
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.fade,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor == Color.fromRGBO(40, 40, 40, 1)
-                                  ? Color.fromRGBO(242, 242, 242, 1)
-                                  : Color.fromRGBO(40, 40, 40, 1),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              letterSpacing: 3,
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "You don't have any $category ideas yet.",
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor ==
+                                        Color.fromRGBO(40, 40, 40, 1)
+                                    ? Color.fromRGBO(242, 242, 242, 1)
+                                    : Color.fromRGBO(40, 40, 40, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                letterSpacing: 3,
+                              ),
                             ),
                           ),
                         )
@@ -117,7 +121,42 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                             )
                           ],
                         )
-                      : Container(),
+                      : Row(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              // flex: 4,
+                              child: Container(
+                                // width: width,
+                                padding: EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).secondaryHeaderColor),
+                                child: FlatButton(
+                                    highlightColor: Colors.transparent,
+                                    splashColor: Colors.transparent,
+                                    child: Text(
+                                      'ADD IDEA',
+                                      style:
+                                          Theme.of(context).textTheme.headline,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                          curve: Curves.linear,
+                                          type: PageTransitionType.downToUp,
+                                          child: AddNotePage(
+                                              categories: model.selectedJar
+                                                  .data['categories']),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            )
+                          ],
+                        ),
                 ],
               ),
             ),

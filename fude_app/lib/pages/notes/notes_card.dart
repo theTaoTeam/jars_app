@@ -17,12 +17,12 @@ class NotesCard extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       leading: Container(
-        width: _targetWidth * 0.2,
+        width: _targetWidth * 0.25,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1.0),
           child: note['image'] != null
               ? Image.network(note['image'], scale: 0.2)
-              : Image.network(model.selectedJar.data['image'], scale: 2,),
+              : Image.network(model.selectedJar.data['image'], scale: 1,),
         ),
       ),
       title: Container(
@@ -55,7 +55,6 @@ class NotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    // final double _targetWidth = width > 550.0 ? 100.0 : width * 0.45;
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(
