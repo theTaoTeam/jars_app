@@ -54,6 +54,7 @@ class _AddNotePageState extends State<AddNotePage> {
     }
     formKey.currentState.save(); // Save our form now.
     nullCategory = false;
+    print(_formData);
     model.addToJar(_formData['category'], _formData['title'],
         _formData['notes'], _formData['link'], _formData['image']);
     Navigator.pushReplacement(
@@ -92,7 +93,7 @@ class _AddNotePageState extends State<AddNotePage> {
   }
 
   void updateImage(File image) {
-    print(image);
+    print('IMAGE: $image');
     setState(() {
       _formData['image'] = image;
     });

@@ -169,6 +169,7 @@ mixin JarModel on Model {
         imageLocation = await uploadNoteImageToStorage(image);
         print(imageLocation);
       }
+      print('in scoped model image: ${_selJar['image']}');
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
@@ -180,8 +181,11 @@ mixin JarModel on Model {
         'notes': notes,
         'link': link,
         'isFav': false,
-        'image':
-            imageLocation == null ? _selJar['image'] : imageLocation.toString(),
+        'image': imageLocation == null
+            ? _selJar['image'] != null
+                ? _selJar['image']
+                : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'
+            : imageLocation.toString(),
       });
       _isLoading = false;
       notifyListeners();
