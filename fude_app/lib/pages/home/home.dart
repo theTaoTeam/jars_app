@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.08),
+        padding: EdgeInsets.only(bottom: height * 0.06),
         child: FloatingActionButton(
           shape: CircleBorder(),
           elevation: 0,
@@ -78,18 +78,11 @@ class _HomePageState extends State<HomePage> {
           highlightElevation: 0,
           onPressed: () => widget.model.invertTheme(),
           child: !widget.model.isLoading
-              ? Theme.of(context).primaryColor ==
-                      Color.fromRGBO(242, 242, 242, 1)
-                  ? Image.asset(
-                      'assets/IconDark.png',
-                      height: height * 0.2,
-                      width: width * 0.2,
-                    )
-                  : Image.asset(
-                      'assets/IconLight.png',
-                      height: height * 0.2,
-                      width: width * 0.2,
-                    )
+              ? Image.asset(
+                  'assets/yinYang.png',
+                  height: height * 0.15,
+                  width: width * 0.15,
+                )
               : Container(),
         ),
       ),
