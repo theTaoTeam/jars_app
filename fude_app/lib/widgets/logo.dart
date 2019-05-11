@@ -14,7 +14,7 @@ class Logo extends StatelessWidget {
       padding: EdgeInsets.only(top: height * 0.07),
       alignment: Alignment.center,
       child: Text('JARS',
-          style: TextStyle(
+          style: TextStyle(   
               color: isLogin ? Theme.of(context).primaryColor : Theme.of(context).secondaryHeaderColor,
               fontSize: 60,
               letterSpacing: 8)),
