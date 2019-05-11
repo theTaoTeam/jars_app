@@ -47,7 +47,7 @@ mixin JarModel on Model {
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
-    // _isLoading = true;
+    _isLoading = true;
     notifyListeners();
     CollectionReference jarCollection = _firestore.collection('jars');
     String imageLocation;
@@ -63,8 +63,8 @@ mixin JarModel on Model {
         'image': imageLocation == null ? null : imageLocation.toString(),
         'isFav': false
       });
-      fetchAllUserJars(user.email);
-      // _isLoading = false;
+      await fetchAllUserJars(user.email);
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       print(e);
