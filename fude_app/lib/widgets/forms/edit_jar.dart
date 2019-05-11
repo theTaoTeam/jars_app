@@ -132,7 +132,7 @@ class EditJarForm extends StatelessWidget {
             _buildFormTitles("CATEGORIES", context),
             needsAtLeastOneCategory
                 ? Text(
-                    'You need at least one category',
+                    'Please keep at least one category',
                     style: TextStyle(color: Colors.red),
                     textAlign: TextAlign.start,
                   )

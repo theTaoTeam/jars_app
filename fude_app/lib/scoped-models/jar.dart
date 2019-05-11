@@ -61,9 +61,7 @@ mixin JarModel on Model {
         'title': data['title'],
         'owners': FieldValue.arrayUnion([user.email]),
         'categories': data['categories'],
-        'image': imageLocation == null
-            ? null
-            : imageLocation.toString(),
+        'image': imageLocation == null ? null : imageLocation.toString(),
         'isFav': false
       });
       fetchAllUserJars(user.email);
@@ -214,8 +212,10 @@ mixin JarModel on Model {
   }
 
   Future<String> uploadJarImageToStorage(File image) async {
-    final StorageReference ref =
-        FirebaseStorage.instance.ref().child('images').child('${_selJar.documentID}.jpg');
+    final StorageReference ref = FirebaseStorage.instance
+        .ref()
+        .child('images')
+        .child('${_selJar.documentID}.jpg');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url
@@ -334,11 +334,11 @@ mixin JarModel on Model {
         _usersJars.insert(1, jar);
       });
       print('NEW LIST: $_usersJars');
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
       print(e);
     }
-    _isLoading = false;
-    notifyListeners();
     return _usersJars;
   }
 

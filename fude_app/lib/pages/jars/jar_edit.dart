@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/widgets/forms/edit_jar.dart';
 import 'package:fude/widgets/forms/add_user_to_jar.dart';
+import 'package:fude/pages/home/home.dart';
 
 class EditJarPage extends StatefulWidget {
   final MainModel model;
@@ -167,6 +168,7 @@ class _JarPageState extends State<EditJarPage> {
                 splashColor: Colors.transparent,
                 onPressed: () {
                   FocusScope.of(context).requestFocus(FocusNode());
+                  model.fetchAllUserJars(model.currUserEmail);
                   Navigator.pop(context);
                 }),
           ],
@@ -242,7 +244,8 @@ class _JarPageState extends State<EditJarPage> {
                                   iconSize: 36,
                                   color: Colors.red,
                                   onPressed: () {
-                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
                                     model.deleteJar();
                                     Navigator.pop(context);
                                   })
