@@ -58,11 +58,11 @@ class _JarNotesState extends State<JarNotes> {
           icon: Icon(Icons.keyboard_arrow_left),
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
-          onPressed: () => Navigator.pushReplacement(
+          onPressed: () => Navigator.pop(
                 context,
                 PageTransition(
                   curve: Curves.linear,
-                  type: PageTransitionType.leftToRightWithFade,
+                  type: PageTransitionType.fade,
                   child: JarPage(model: widget.model),
                 ),
               ),

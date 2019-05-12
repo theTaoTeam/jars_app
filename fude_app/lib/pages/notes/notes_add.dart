@@ -58,14 +58,17 @@ class _AddNotePageState extends State<AddNotePage> {
     print(_formData);
     model.addToJar(_formData['category'], _formData['title'],
         _formData['notes'], _formData['link'], _formData['image']);
-    Navigator.pushReplacement(
-      context,
-      PageTransition(
-        curve: Curves.linear,
-        type: PageTransitionType.leftToRight,
-        child: JarNotes(model: model),
-      ),
-    );
+    FocusScope.of(context).requestFocus(FocusNode());
+    widget.fromJarScreen
+        ? Navigator.pop(context)
+        : Navigator.pushReplacement(
+            context,
+            PageTransition(
+              curve: Curves.linear,
+              type: PageTransitionType.upToDown,
+              child: JarNotes(model: model),
+            ),
+          );
   }
 
   void updateCategory(dynamic value) {
