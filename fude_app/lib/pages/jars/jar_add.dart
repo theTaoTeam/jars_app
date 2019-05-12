@@ -108,7 +108,6 @@ class _JarPageState extends State<AddJarPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: height * 0.04),
                   AddJarForm(
                       formKey: formKey,
                       imageSelected: imageSelected,

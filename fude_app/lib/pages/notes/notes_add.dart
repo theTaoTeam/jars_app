@@ -9,8 +9,9 @@ import 'package:fude/pages/jars/jar_notes.dart';
 
 class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;
+  final bool fromJarScreen;
 
-  AddNotePage({this.categories});
+  AddNotePage({this.categories, this.fromJarScreen});
 
   @override
   State<StatefulWidget> createState() {
@@ -118,15 +119,17 @@ class _AddNotePageState extends State<AddNotePage> {
               icon: Icon(Icons.keyboard_arrow_down),
               color: Theme.of(context).iconTheme.color,
               iconSize: 40,
-              onPressed: () => Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                      curve: Curves.linear,
-                      type: PageTransitionType.upToDown,
-                      child: JarNotes(model: model),
+              onPressed: () => widget.fromJarScreen
+                  ? Navigator.pop(context)
+                  : Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        curve: Curves.linear,
+                        type: PageTransitionType.upToDown,
+                        child: JarNotes(model: model),
+                      ),
                     ),
-                  ),
-            )
+            ),
           ],
         ),
         body: Container(
@@ -140,7 +143,6 @@ class _AddNotePageState extends State<AddNotePage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * 0.04),
                     AddToJarForm(
                       formKey: formKey,
                       categoryList: model.selectedJar.data['categories'],
@@ -153,15 +155,14 @@ class _AddNotePageState extends State<AddNotePage> {
                       updateImage: updateImage,
                     ),
                     SizedBox(height: height * 0.04),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: width * 0.055,
-                      ),
-                      
-                      RaisedButton(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: width * 0.055,
+                        ),
+                        RaisedButton(
                           child: Text(
                             'ADD IDEA',
                             style: TextStyle(
@@ -174,15 +175,15 @@ class _AddNotePageState extends State<AddNotePage> {
                           elevation: 7,
                           highlightElevation: 1,
                           padding: EdgeInsets.all(15),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
                           color: Theme.of(context).secondaryHeaderColor,
                           splashColor: Colors.transparent,
                           highlightColor: Theme.of(context).primaryColor,
                           onPressed: () => addToJar(model),
                         ),
-                      
-                    ],
-                  )
+                      ],
+                    )
                   ],
                 ),
               ],

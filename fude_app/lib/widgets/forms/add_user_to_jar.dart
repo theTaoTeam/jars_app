@@ -63,10 +63,15 @@ class AddUserToJarForm extends StatelessWidget {
                   ),
                   model.isLoading
                       ? CircularProgressIndicator(
-                          backgroundColor: Colors.transparent, strokeWidth: 5, )
+                          backgroundColor: Colors.transparent,
+                          strokeWidth: 5,
+                        )
                       : IconButton(
                           icon: Icon(Icons.send),
-                          onPressed: () => submitAddUser(),
+                          onPressed: () {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            submitAddUser();
+                          },
                           color: Theme.of(context).iconTheme.color,
                         )
                 ],

@@ -86,6 +86,7 @@ class _JarNotesState extends State<JarNotes> {
                       curve: Curves.linear,
                       type: PageTransitionType.downToUp,
                       child: AddNotePage(
+                        fromJarScreen: false,
                           categories:
                               widget.model.selectedJar.data['categories']),
                     ),
