@@ -185,7 +185,6 @@ class _JarPageState extends State<EditJarPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: height * 0.04),
                         EditJarForm(
                           formKey: formKey,
                           model: model,
@@ -254,6 +253,7 @@ class _JarPageState extends State<EditJarPage> {
                         )
                       ],
                     ),
+                    
                   ],
                 )
               : Center(

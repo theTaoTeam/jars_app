@@ -140,7 +140,6 @@ class _AddNotePageState extends State<NoteEditPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: height * 0.04),
                     EditNoteForm(
                       formKey: formKey,
                       note: widget.note,

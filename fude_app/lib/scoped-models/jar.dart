@@ -215,10 +215,8 @@ mixin JarModel on Model {
   }
 
   Future<String> uploadJarImageToStorage(File image) async {
-    final StorageReference ref = FirebaseStorage.instance
-        .ref()
-        .child('images')
-        .child('$image');
+    final StorageReference ref =
+        FirebaseStorage.instance.ref().child('images').child('$image');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url

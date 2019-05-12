@@ -148,6 +148,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                           curve: Curves.linear,
                                           type: PageTransitionType.downToUp,
                                           child: AddNotePage(
+                                              fromJarScreen: true,
                                               categories: model.selectedJar
                                                   .data['categories']),
                                         ),
