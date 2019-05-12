@@ -47,6 +47,7 @@ mixin JarModel on Model {
 
   void addJar(Map<String, dynamic> data) async {
     print('in model.addJar: data: $data');
+    final user = await _auth.currentUser();
     _isLoading = true;
     notifyListeners();
     CollectionReference jarCollection = _firestore.collection('jars');
@@ -55,7 +56,6 @@ mixin JarModel on Model {
       if (data['image'] != null) {
         imageLocation = await uploadJarImageToStorage(data['image']);
       }
-      final user = await _auth.currentUser();
       await jarCollection.document().setData(<String, dynamic>{
         'title': data['title'],
         'owners': FieldValue.arrayUnion([user.email]),
@@ -63,7 +63,7 @@ mixin JarModel on Model {
         'image': imageLocation == null ? null : imageLocation.toString(),
         'isFav': false
       });
-      await fetchAllUserJars(user.email);
+      fetchAllUserJars(user.email);
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -218,7 +218,7 @@ mixin JarModel on Model {
     final StorageReference ref = FirebaseStorage.instance
         .ref()
         .child('images')
-        .child('${_selJar.documentID}.jpg');
+        .child('$image');
     //Upload the file to firebase
     StorageUploadTask uploadTask = ref.putFile(image);
     // Waits till the file is uploaded then stores the download url
@@ -341,6 +341,7 @@ mixin JarModel on Model {
       notifyListeners();
     } catch (e) {
       print(e);
+      return e;
     }
     return _usersJars;
   }
