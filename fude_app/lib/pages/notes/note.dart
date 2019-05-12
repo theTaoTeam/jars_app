@@ -65,7 +65,7 @@ class NotePage extends StatelessWidget {
                 : Icon(Icons.keyboard_arrow_down),
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            iconSize: Theme.of(context).iconTheme.size,
+            iconSize: 28,
             onPressed: () => !isRandom
                 ? Navigator.pushReplacement(
                     context,
