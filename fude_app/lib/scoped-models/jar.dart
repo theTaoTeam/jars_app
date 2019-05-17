@@ -136,7 +136,7 @@ mixin JarModel on Model {
     }
   }
 
-  void getJarBySelectedId(String jarId) async {
+  Future getJarBySelectedId(String jarId) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -150,6 +150,9 @@ mixin JarModel on Model {
     } catch (e) {
       print(e);
     }
+    _isLoading = false;
+    notifyListeners();
+    return;
   }
 
   void resetIsLoading() {

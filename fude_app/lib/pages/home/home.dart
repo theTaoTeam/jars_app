@@ -24,9 +24,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void _openJar(int index) {
-    widget.model.getJarBySelectedId(widget.model.usersJars[index].documentID);
-    Timer(Duration(milliseconds: 500), () {
+  void _openJar(int index) async {
+    try {
+      await widget.model
+          .getJarBySelectedId(widget.model.usersJars[index].documentID);
       Navigator.push(
         context,
         PageTransition(
@@ -35,8 +36,9 @@ class _HomePageState extends State<HomePage> {
           child: JarPage(model: widget.model),
         ),
       );
-      Timer(Duration(seconds: 2), () => widget.model.resetIsLoading());
-    });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -57,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                     : Color.fromRGBO(242, 242, 242, 1),
                 // fontWeight: FontWeight.bold,
                 fontSize: 16,
-                letterSpacing: 0,
+                letterSpacing: 2,
               ),
             ),
             onTap: () => widget.model.logout(),

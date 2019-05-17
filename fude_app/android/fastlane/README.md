@@ -15,12 +15,15 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
+### build_for_screengrab
+```
+fastlane build_for_screengrab
+```
+Build debug and test APK for screenshots
+
+----
+
 ## Android
-### android internal
-```
-fastlane android internal
-```
-Submit a new build to Internal Track on Play
 ### android test
 ```
 fastlane android test

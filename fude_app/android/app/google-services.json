@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "784023760588",
+    "firebase_url": "https://fude-app.firebaseio.com",
+    "project_id": "fude-app",
+    "storage_bucket": "fude-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784023760588:android:2318d490894b4ade",
+        "android_client_info": {
+          "package_name": "taoteam.dev.fude_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784023760588-svhrmj0k4afgu7vfpn520avkul45fc26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlPhMpZdFgIJE9SSRTqUTT7RCa5XTu22w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784023760588-svhrmj0k4afgu7vfpn520avkul45fc26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "784023760588-7sm61l542intosi5mph5gsi9hura3e1q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fude"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

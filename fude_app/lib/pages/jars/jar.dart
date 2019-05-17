@@ -142,7 +142,7 @@ class _JarPageState extends State<JarPage> {
                             Container(
                               color: Colors.transparent,
                               padding: EdgeInsets.fromLTRB(
-                                  width * 0.02, height * 0.05, 0, 0),
+                                  width * 0.02, height * 0.01, width * 0.03, 0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
