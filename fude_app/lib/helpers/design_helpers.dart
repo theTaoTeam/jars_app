@@ -25,8 +25,8 @@ ThemeData buildAppThemeData(bool darkTheme) {
         color: !darkTheme
             ? Color.fromRGBO(242, 242, 242, 1)
             : Color.fromRGBO(40, 40, 40, 1),
-        fontWeight: FontWeight.w400,
-        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        fontSize: 22,
         letterSpacing: 3,
       ),
       subtitle: TextStyle(

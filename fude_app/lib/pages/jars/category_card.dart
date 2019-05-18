@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'dart:ui';
+import 'package:page_transition/page_transition.dart';
 
+import 'package:fude/pages/notes/notes_add.dart';
 import 'package:fude/scoped-models/main.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -51,22 +53,50 @@ class CategoryCard extends StatelessWidget {
     );
   }
 
+  _buildIconContainer(BuildContext context) {
+    var icon = Expanded(
+      child: IconButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        icon: Icon(Icons.add),
+        iconSize: 28,
+        color: Theme.of(context).primaryColor,
+        onPressed: () => Navigator.pushReplacement(
+              context,
+              PageTransition(
+                curve: Curves.linear,
+                type: PageTransitionType.downToUp,
+                child: AddNotePage(
+                    fromJarScreen: true,
+                    categories: model.selectedJar.data['categories'],
+                    category: category),
+              ),
+            ),
+      ),
+    );
+
+    return Positioned(
+      top: 165,
+      bottom: 20.0,
+      left: 0.0,
+      right: 10,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+            ),
+          ),
+          icon,
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // var image = ClipRRect(
-    //   borderRadius: BorderRadius.circular(20.0),
-    //   child: BackdropFilter(
-    //     filter: ImageFilter.blur(),
-    //     child: Image.network(
-    //       'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-    //       fit: BoxFit.cover,
-    //       alignment: FractionalOffset(
-    //         0.5 + (pageVisibility.pagePosition / 3),
-    //         0.5,
-    //       ),
-    //     ),
-    //   ),
-    // );
+    final double width = MediaQuery.of(context).size.width;
 
     var imageOverlayGradient = Container(
       decoration: BoxDecoration(
@@ -105,6 +135,7 @@ class CategoryCard extends StatelessWidget {
             //   ),
             // ),
             _buildTextContainer(context),
+            _buildIconContainer(context)
           ],
         ),
       ),

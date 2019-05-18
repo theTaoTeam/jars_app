@@ -91,12 +91,12 @@ class _JarPageState extends State<JarPage> {
               end: FractionalOffset.bottomCenter,
               colors: !widget.model.darkTheme
                   ? [
-                      Color.fromRGBO(242, 242, 242, 0.5),
-                      Color.fromRGBO(40, 40, 40, 0.2),
+                      Color.fromRGBO(242, 242, 242, 0.3),
+                      Color.fromRGBO(242, 242, 242, 1),
                     ]
                   : [
                       Color.fromRGBO(40, 40, 40, 0.3),
-                      Color.fromRGBO(242, 242, 242, 1),
+                      Color.fromRGBO(40, 40, 40, 1),
                     ],
             ),
           ),
@@ -223,86 +223,61 @@ class _JarPageState extends State<JarPage> {
                                 ),
                               ),
                             ),
-                            model.selectedJar.data['categories'].length > 0
-                                ? Positioned(
-                                    top: height * 0.45,
-                                    left: width * 0.07,
-                                    right: width * 0.07,
-                                    child: AnimatedOpacity(
-                                        opacity: _swiperVisible ? 1.0 : 0.0,
-                                        duration: Duration(milliseconds: 1000),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Text(
-                                              'TAP A CATEGORY TO',
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .secondaryHeaderColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                letterSpacing: 3,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            SizedBox(
-                                              height: height * 0.01,
-                                            ),
-                                            Text(
-                                              'PULL A RANDOM IDEA',
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .secondaryHeaderColor,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                                letterSpacing: 3,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
-                                        )),
-                                  )
-                                : Positioned(
-                                    top: height * 0.60,
-                                    left: width * 0.07,
-                                    right: width * 0.07,
-                                    child: AnimatedOpacity(
-                                      opacity: _swiperVisible ? 1.0 : 0.0,
-                                      duration: Duration(milliseconds: 1000),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Text(
-                                            "This jar needs some categories",
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .secondaryHeaderColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              letterSpacing: 3,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.02,
-                                          ),
-                                          Text(
-                                            "Tap the '+' in the top corner",
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .secondaryHeaderColor,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              letterSpacing: 3,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
+                            Positioned(
+                              top: height * 0.45,
+                              left: width * 0.07,
+                              right: width * 0.07,
+                              child: AnimatedOpacity(
+                                  opacity: _swiperVisible ? 1.0 : 0.0,
+                                  duration: Duration(milliseconds: 1000),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'TAP A CATEGORY TO PULL FROM',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .secondaryHeaderColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          letterSpacing: 2,
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                  ),
+                                      SizedBox(
+                                        height: height * 0.02,
+                                      ),
+                                      Text(
+                                        'OR',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .secondaryHeaderColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          letterSpacing: 2,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: height * 0.02,
+                                      ),
+                                      Text(
+                                        'ADD AN IDEA TO A CATEGORY',
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .secondaryHeaderColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          letterSpacing: 2,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  )),
+                            ),
 
                             //SWIPER
                             Positioned(
-                              top: height * 0.53,
+                              top: height * 0.57,
                               // left: width * 0.47,
                               width: width,
                               height: height * 0.34,

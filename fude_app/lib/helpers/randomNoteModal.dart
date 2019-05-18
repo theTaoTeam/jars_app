@@ -65,7 +65,9 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                       ? Expanded(
                           child: Center(
                             child: Text(
-                              category == 'ALL' ? "You still need to add some ideas to this jar!" : "You don't have any ideas in this category yet!",
+                              category == 'ALL'
+                                  ? "You still need to add some ideas to this jar!"
+                                  : "You don't have any ideas in this category yet!",
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.clip,
                               style: TextStyle(
@@ -133,16 +135,14 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                     color:
                                         Theme.of(context).secondaryHeaderColor),
                                 child: FlatButton(
-                                    highlightColor: Colors.transparent,
-                                    splashColor: Colors.transparent,
-                                    child: Text(
-                                      'ADD IDEA',
-                                      style:
-                                          Theme.of(context).textTheme.headline,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  child: Text(
+                                    'ADD IDEA',
+                                    style: Theme.of(context).textTheme.headline,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  onPressed: () => Navigator.pushReplacement(
                                         context,
                                         PageTransition(
                                           curve: Curves.linear,
@@ -152,8 +152,8 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                               categories: model.selectedJar
                                                   .data['categories']),
                                         ),
-                                      );
-                                    }),
+                                      ),
+                                ),
                               ),
                             )
                           ],
