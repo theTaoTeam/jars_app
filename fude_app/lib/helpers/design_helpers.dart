@@ -17,15 +17,15 @@ ThemeData buildAppThemeData(bool darkTheme) {
         color: !darkTheme
             ? Color.fromRGBO(40, 40, 40, 1)
             : Color.fromRGBO(242, 242, 242, 1),
-        // fontWeight: FontWeight.bold,
-        fontSize: 40,
-        letterSpacing: 20,
+        fontWeight: FontWeight.w400,
+        fontSize: 37,
+        letterSpacing: 10,
       ),
       subhead: TextStyle(
         color: !darkTheme
             ? Color.fromRGBO(242, 242, 242, 1)
             : Color.fromRGBO(40, 40, 40, 1),
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w400,
         fontSize: 20,
         letterSpacing: 3,
       ),

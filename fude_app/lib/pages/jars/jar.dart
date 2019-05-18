@@ -92,10 +92,10 @@ class _JarPageState extends State<JarPage> {
               colors: !widget.model.darkTheme
                   ? [
                       Color.fromRGBO(242, 242, 242, 0.5),
-                      Color.fromRGBO(40, 40, 40, 0.8),
+                      Color.fromRGBO(40, 40, 40, 0.2),
                     ]
                   : [
-                      Color.fromRGBO(40, 40, 40, 0.5),
+                      Color.fromRGBO(40, 40, 40, 0.3),
                       Color.fromRGBO(242, 242, 242, 1),
                     ],
             ),
@@ -142,7 +142,7 @@ class _JarPageState extends State<JarPage> {
                             Container(
                               color: Colors.transparent,
                               padding: EdgeInsets.fromLTRB(
-                                  width * 0.02, height * 0.01, width * 0.03, 0),
+                                  width * 0.02, height * 0.06, width * 0.03, 0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -175,89 +175,57 @@ class _JarPageState extends State<JarPage> {
                                           }),
                                     ),
                                   ),
-                                  model.selectedJar.data['categories'].length >
-                                          0
-                                      ? AnimatedOpacity(
-                                          opacity: _swiperVisible ? 1.0 : 0.0,
-                                          duration:
-                                              Duration(milliseconds: 1000),
-                                          child: Container(
-                                            child: IconButton(
-                                                icon: Icon(
-                                                  Icons.filter_list,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color,
-                                                ),
-                                                iconSize: 39,
-                                                onPressed: () {
-                                                  _swiperVisible = false;
-                                                  Navigator.pushReplacement(
-                                                    context,
-                                                    PageTransition(
-                                                      curve: Curves.linear,
-                                                      type: PageTransitionType
-                                                          .rightToLeftWithFade,
-                                                      child: JarNotes(
-                                                          model: model),
-                                                    ),
-                                                  );
-                                                }),
+                                  AnimatedOpacity(
+                                    opacity: _swiperVisible ? 1.0 : 0.0,
+                                    duration: Duration(milliseconds: 1000),
+                                    child: Container(
+                                      child: IconButton(
+                                          icon: Icon(
+                                            Icons.filter_list,
+                                            color: Theme.of(context)
+                                                .iconTheme
+                                                .color,
                                           ),
-                                        )
-                                      : AnimatedOpacity(
-                                          opacity: _swiperVisible ? 1.0 : 0.0,
-                                          duration:
-                                              Duration(milliseconds: 1000),
-                                          child: Container(
-                                            child: IconButton(
-                                                icon: Icon(
-                                                  Icons.add,
-                                                  color: Theme.of(context)
-                                                      .iconTheme
-                                                      .color,
-                                                ),
-                                                iconSize: 39,
-                                                onPressed: () {
-                                                  print('pressed');
-                                                  _swiperVisible = false;
-                                                  model.categoryChildren = [];
-                                                  Navigator.pushReplacement(
-                                                    context,
-                                                    PageTransition(
-                                                      curve: Curves.linear,
-                                                      type: PageTransitionType
-                                                          .downToUp,
-                                                      child: EditJarPage(
-                                                          model: model,
-                                                          jar: model
-                                                              .selectedJar),
-                                                    ),
-                                                  );
-                                                }),
-                                          ),
-                                        ),
+                                          iconSize: 39,
+                                          onPressed: () {
+                                            _swiperVisible = false;
+                                            Navigator.pushReplacement(
+                                              context,
+                                              PageTransition(
+                                                curve: Curves.linear,
+                                                type: PageTransitionType
+                                                    .rightToLeftWithFade,
+                                                child: JarNotes(model: model),
+                                              ),
+                                            );
+                                          }),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                             Positioned(
-                              top: height * 0.21,
+                              top: height * 0.19,
                               left: width * 0.07,
                               right: width * 0.07,
                               child: AnimatedOpacity(
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
-                                child: Text(
-                                  model.selectedJar.data['title'].toUpperCase(),
-                                  overflow: TextOverflow.clip,
-                                  style: Theme.of(context).textTheme.title,
-                                  textAlign: TextAlign.center,
+                                child: Container(
+                                  child: Text(
+                                    model.selectedJar.data['title']
+                                        .toUpperCase(),
+                                    overflow: TextOverflow.fade,
+                                    style: Theme.of(context).textTheme.title,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 3,
+                                  ),
                                 ),
                               ),
                             ),
                             model.selectedJar.data['categories'].length > 0
                                 ? Positioned(
-                                    top: height * 0.43,
+                                    top: height * 0.45,
                                     left: width * 0.07,
                                     right: width * 0.07,
                                     child: AnimatedOpacity(
