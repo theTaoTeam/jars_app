@@ -212,7 +212,7 @@ class _JarPageState extends State<JarPage> {
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
                                 child: Container(
-                                  width: width * 0.8,
+                                  width: width * 0.7,
                                   child: Text(
                                     model.selectedJar.data['title']
                                         .toUpperCase(),
@@ -238,7 +238,7 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                           letterSpacing: 2,
                                         ),
@@ -252,7 +252,7 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                           letterSpacing: 2,
                                         ),
@@ -266,7 +266,7 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 12,
                                           letterSpacing: 2,
                                         ),

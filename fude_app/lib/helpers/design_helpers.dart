@@ -19,7 +19,7 @@ ThemeData buildAppThemeData(bool darkTheme) {
             : Color.fromRGBO(242, 242, 242, 1),
         fontWeight: FontWeight.w500,
         fontSize: 20,
-        letterSpacing: 7,
+        letterSpacing: 5,
       ),
       subhead: TextStyle(
         color: !darkTheme
