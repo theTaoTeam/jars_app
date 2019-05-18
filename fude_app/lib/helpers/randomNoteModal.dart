@@ -19,7 +19,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
         child: AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.all(2.5),
           content: ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Container(
@@ -65,9 +65,9 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                       ? Expanded(
                           child: Center(
                             child: Text(
-                              "You don't have any $category ideas yet.",
+                              category == 'ALL' ? "You still need to add some ideas to this jar!" : "You don't have any ideas in this category yet!",
                               textAlign: TextAlign.center,
-                              overflow: TextOverflow.fade,
+                              overflow: TextOverflow.clip,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor ==
                                         Color.fromRGBO(40, 40, 40, 1)
@@ -75,7 +75,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                     : Color.fromRGBO(40, 40, 40, 1),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                letterSpacing: 3,
+                                letterSpacing: 1,
                               ),
                             ),
                           ),

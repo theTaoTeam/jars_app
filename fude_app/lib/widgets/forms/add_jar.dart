@@ -72,7 +72,6 @@ class AddJarForm extends StatelessWidget {
             model: model,
             enabled: true,
             categories: categories,
-            needsAtLeastOneCategory: needsAtLeastOneCategory
           ),
         ],
       ),

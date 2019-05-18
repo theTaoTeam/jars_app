@@ -11,7 +11,6 @@ class EditJarForm extends StatelessWidget {
   final MainModel model;
   final List<dynamic> categories;
   final int categoryCount;
-  final bool needsAtLeastOneCategory;
   final Function updateTitle;
   final Function updateCategory;
   final Function updateImage;
@@ -25,7 +24,6 @@ class EditJarForm extends StatelessWidget {
       this.categories,
       this.jar,
       this.categoryCount,
-      this.needsAtLeastOneCategory,
       this.updateTitle,
       this.updateCategory,
       this.addCategoryToRemoveList,
@@ -74,13 +72,12 @@ class EditJarForm extends StatelessWidget {
               updateCategory: updateCategory,
               enabled: false,
               addCategoryToRemoveList: addCategoryToRemoveList,
-              needsAtLeastOneCategory: needsAtLeastOneCategory,
             ),
-            Text(
+            categories[i] != 'ALL' ? Text(
               'Tap and hold to delete',
               style: TextStyle(
                   color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
-            )
+            ) : Container()
           ],
         ),
       );
@@ -130,13 +127,6 @@ class EditJarForm extends StatelessWidget {
             ),
             SizedBox(height: height * 0.03),
             _buildFormTitles("CATEGORIES", context),
-            needsAtLeastOneCategory
-                ? Text(
-                    'Please keep at least one category',
-                    style: TextStyle(color: Colors.red),
-                    textAlign: TextAlign.start,
-                  )
-                : Container(),
             SizedBox(height: height * 0.01),
             _buildExistingCategoryInputs(context),
             Column(
