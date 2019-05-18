@@ -73,11 +73,11 @@ class EditJarForm extends StatelessWidget {
               enabled: false,
               addCategoryToRemoveList: addCategoryToRemoveList,
             ),
-            Text(
+            categories[i] != 'ALL' ? Text(
               'Tap and hold to delete',
               style: TextStyle(
                   color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
-            )
+            ) : Container()
           ],
         ),
       );

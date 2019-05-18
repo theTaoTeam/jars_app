@@ -266,7 +266,7 @@ class _JarPageState extends State<JarPage> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              'SELECT A CATEGORY',
+                                              'TAP A CATEGORY TO',
                                               style: TextStyle(
                                                 color: Theme.of(context)
                                                     .secondaryHeaderColor,
@@ -280,7 +280,7 @@ class _JarPageState extends State<JarPage> {
                                               height: height * 0.01,
                                             ),
                                             Text(
-                                              'TO PULL A RANDOM IDEA',
+                                              'PULL A RANDOM IDEA',
                                               style: TextStyle(
                                                 color: Theme.of(context)
                                                     .secondaryHeaderColor,

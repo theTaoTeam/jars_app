@@ -52,6 +52,8 @@ mixin JarModel on Model {
     notifyListeners();
     CollectionReference jarCollection = _firestore.collection('jars');
     String imageLocation;
+    data['categories'].add('ALL');
+
     try {
       if (data['image'] != null) {
         imageLocation = await uploadJarImageToStorage(data['image']);
@@ -361,11 +363,17 @@ mixin JarModel on Model {
       print(e);
     }
     if (notes.documents.length > 0) {
-      notes.documents.forEach((doc) {
-        if (doc.data['category'] == category) {
+      if (category == 'ALL') {
+        notes.documents.forEach((doc) {
           _jarNotesByCategory.add(doc);
-        }
-      });
+        });
+      } else {
+        notes.documents.forEach((doc) {
+          if (doc.data['category'] == category) {
+            _jarNotesByCategory.add(doc);
+          }
+        });
+      }
     } else {
       return null;
     }

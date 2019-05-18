@@ -22,7 +22,7 @@ class AddJarCategoryField extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onLongPress: () => addCategoryToRemoveList(hint),
+      onLongPress: () => hint != 'ALL' ? addCategoryToRemoveList(hint) : print("you can't delete the all category"),
       child: Card(
         color: Theme.of(context).cardColor,
         elevation: 6.0,
