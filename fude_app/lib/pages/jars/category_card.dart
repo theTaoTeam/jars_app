@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'dart:ui';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/pages/notes/notes_add.dart';
+
 import 'package:fude/scoped-models/main.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -18,7 +18,6 @@ class CategoryCard extends StatelessWidget {
   final MainModel model;
 
   _buildTextContainer(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
     var titleText = Expanded(
       child: Text(
         category.toUpperCase(),
@@ -46,30 +45,6 @@ class CategoryCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               titleText,
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: width * 0.13),
-                  child: IconButton(
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    icon: Icon(Icons.add),
-                    iconSize: 28,
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () => Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            curve: Curves.linear,
-                            type: PageTransitionType.downToUp,
-                            child: AddNotePage(
-                                fromJarScreen: true,
-                                categories:
-                                    model.selectedJar.data['categories'],
-                                category: category),
-                          ),
-                        ),
-                  ),
-                ),
-              )
             ],
           ),
         ],

@@ -12,6 +12,7 @@ import 'package:fude/pages/jars/category_card.dart';
 import 'package:fude/pages/home/home.dart';
 import 'package:fude/helpers/randomNoteModal.dart';
 import 'package:fude/pages/jars/jar_edit.dart';
+import 'package:fude/pages/notes/notes_add.dart';
 
 class JarPage extends StatefulWidget {
   final MainModel model;
@@ -31,6 +32,7 @@ class _JarPageState extends State<JarPage> {
 
   @override
   void initState() {
+    widget.model.resetIsLoading();
     fadeInstructions();
     super.initState();
   }
@@ -205,9 +207,9 @@ class _JarPageState extends State<JarPage> {
                               ),
                             ),
                             Positioned(
-                              top: height * 0.19,
-                              left: width * 0.07,
-                              right: width * 0.07,
+                              bottom: height * 0.07,
+                              left: width * 0.05,
+                              // right: width * 0.2,
                               child: AnimatedOpacity(
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
@@ -224,7 +226,7 @@ class _JarPageState extends State<JarPage> {
                               ),
                             ),
                             Positioned(
-                              top: height * 0.45,
+                              top: height * 0.24,
                               left: width * 0.07,
                               right: width * 0.07,
                               child: AnimatedOpacity(
@@ -237,8 +239,8 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
                                           letterSpacing: 2,
                                         ),
                                         textAlign: TextAlign.center,
@@ -251,8 +253,8 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
                                           letterSpacing: 2,
                                         ),
                                         textAlign: TextAlign.center,
@@ -261,12 +263,12 @@ class _JarPageState extends State<JarPage> {
                                         height: height * 0.02,
                                       ),
                                       Text(
-                                        'ADD AN IDEA TO A CATEGORY',
+                                        'ADD AN IDEA USING THE + ICON',
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
                                           letterSpacing: 2,
                                         ),
                                         textAlign: TextAlign.center,
@@ -274,10 +276,9 @@ class _JarPageState extends State<JarPage> {
                                     ],
                                   )),
                             ),
-
                             //SWIPER
                             Positioned(
-                              top: height * 0.59,
+                              top: height * 0.45,
                               // left: width * 0.47,
                               width: width,
                               height: height * 0.34,
@@ -309,6 +310,33 @@ class _JarPageState extends State<JarPage> {
                                 ),
                               ),
                             ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(
+                                    0, 0, 0, height * 0.053),
+                                padding: EdgeInsets.only(right: width * 0.03),
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(Icons.add),
+                                  iconSize: 40,
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  onPressed: () => Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          curve: Curves.linear,
+                                          type: PageTransitionType.downToUp,
+                                          child: AddNotePage(
+                                            fromJarScreen: true,
+                                            categories: model
+                                                .selectedJar.data['categories'],
+                                          ),
+                                        ),
+                                      ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),

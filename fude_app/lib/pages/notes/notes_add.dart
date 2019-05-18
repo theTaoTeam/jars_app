@@ -10,9 +10,8 @@ import 'package:fude/pages/jars/jar_notes.dart';
 class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;
   final bool fromJarScreen;
-  final String category;
 
-  AddNotePage({this.categories, this.fromJarScreen, this.category});
+  AddNotePage({this.categories, this.fromJarScreen});
 
   @override
   State<StatefulWidget> createState() {
@@ -40,12 +39,7 @@ class _AddNotePageState extends State<AddNotePage> {
   @override
   void initState() {
     super.initState();
-    if(widget.category != null) {
-
-    setState(() {
-      selectedCategory = widget.category;
-    });
-    }
+    
   }
 
   void addToJar(MainModel model) {
@@ -155,7 +149,6 @@ class _AddNotePageState extends State<AddNotePage> {
                     AddToJarForm(
                       formKey: formKey,
                       categoryList: model.selectedJar.data['categories'],
-                      category: widget.category,
                       selectedCategory: selectedCategory,
                       nullCategory: nullCategory,
                       updateCategory: updateCategory,
@@ -192,7 +185,9 @@ class _AddNotePageState extends State<AddNotePage> {
                           highlightColor: Theme.of(context).primaryColor,
                           onPressed: () => addToJar(model),
                         ),
-                        SizedBox(height: height * 0.05,)
+                        SizedBox(
+                          height: height * 0.05,
+                        )
                       ],
                     )
                   ],

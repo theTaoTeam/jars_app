@@ -6,7 +6,6 @@ import 'package:fude/widgets/form-inputs/add_tojar_inputs.dart';
 class AddToJarForm extends StatelessWidget {
   final GlobalKey formKey;
   final String selectedCategory;
-  final String category;
   final bool nullCategory;
   final List<dynamic> categoryList;
   final Function updateCategory;
@@ -18,7 +17,6 @@ class AddToJarForm extends StatelessWidget {
   AddToJarForm(
       {this.formKey,
       this.categoryList,
-      this.category,
       this.selectedCategory,
       this.nullCategory,
       this.updateCategory,

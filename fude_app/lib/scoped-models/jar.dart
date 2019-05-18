@@ -152,8 +152,6 @@ mixin JarModel on Model {
     } catch (e) {
       print(e);
     }
-    _isLoading = false;
-    notifyListeners();
     return;
   }
 
