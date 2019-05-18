@@ -39,7 +39,7 @@ class NotePage extends StatelessWidget {
               ))
           : Text(
               val,
-              maxLines: val == "Notes" ? 3 : 1,
+              maxLines: 4,
               style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
                   fontSize: Theme.of(context).textTheme.caption.fontSize,
@@ -59,48 +59,54 @@ class NotePage extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Theme.of(context).primaryColor,
-          leading: IconButton(
-            icon: !isRandom
-                ? Icon(Icons.arrow_back_ios)
-                : Icon(Icons.keyboard_arrow_down),
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            iconSize: 40,
-            onPressed: () => !isRandom
-                ? Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                      curve: Curves.linear,
-                      type: PageTransitionType.leftToRightWithFade,
-                      child: JarNotes(model: model),
-                    ),
-                  )
-                : Navigator.pop(
-                    context,
-                    PageTransition(
-                      curve: Curves.linear,
-                      type: PageTransitionType.upToDown,
-                      child: JarPage(model: model),
-                    ),
-                  ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.edit),
-              color: Theme.of(context).iconTheme.color,
-              iconSize: 25,
+          leading: Padding(
+            padding: EdgeInsets.only(top: 15),
+            child: IconButton(
+              icon: !isRandom
+                  ? Icon(Icons.keyboard_arrow_left)
+                  : Icon(Icons.keyboard_arrow_down),
               highlightColor: Colors.transparent,
               splashColor: Colors.transparent,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                    curve: Curves.linear,
-                    type: PageTransitionType.downToUp,
-                    child: NoteEditPage(note: note),
-                  ),
-                );
-              },
+              iconSize: 40,
+              onPressed: () => !isRandom
+                  ? Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                        curve: Curves.linear,
+                        type: PageTransitionType.leftToRightWithFade,
+                        child: JarNotes(model: model),
+                      ),
+                    )
+                  : Navigator.pop(
+                      context,
+                      PageTransition(
+                        curve: Curves.linear,
+                        type: PageTransitionType.upToDown,
+                        child: JarPage(model: model),
+                      ),
+                    ),
+            ),
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: IconButton(
+                icon: Icon(Icons.edit),
+                color: Theme.of(context).iconTheme.color,
+                iconSize: 25,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                      curve: Curves.linear,
+                      type: PageTransitionType.downToUp,
+                      child: NoteEditPage(note: note),
+                    ),
+                  );
+                },
+              ),
             )
           ],
         ),
