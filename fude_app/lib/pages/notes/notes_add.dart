@@ -36,12 +36,6 @@ class _AddNotePageState extends State<AddNotePage> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-    
-  }
-
   void addToJar(MainModel model) {
     // First validate form.
     if (_formData['category'] == '') {
@@ -97,7 +91,7 @@ class _AddNotePageState extends State<AddNotePage> {
   }
 
   void updateImage(File image) {
-    print('IMAGE: $image');
+    // print('IMAGE: $image');
     setState(() {
       _formData['image'] = image;
     });
@@ -107,6 +101,7 @@ class _AddNotePageState extends State<AddNotePage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    print(widget.categories);
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(
@@ -148,7 +143,7 @@ class _AddNotePageState extends State<AddNotePage> {
                   children: <Widget>[
                     AddToJarForm(
                       formKey: formKey,
-                      categoryList: model.selectedJar.data['categories'],
+                      categoryList: widget.categories,
                       selectedCategory: selectedCategory,
                       nullCategory: nullCategory,
                       updateCategory: updateCategory,

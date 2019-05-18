@@ -262,7 +262,7 @@ class _JarPageState extends State<JarPage> {
                                         height: height * 0.02,
                                       ),
                                       Text(
-                                        'ADD AN IDEA USING THE + ICON',
+                                        'TAP THE + TO ADD AN IDEA',
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
@@ -313,13 +313,13 @@ class _JarPageState extends State<JarPage> {
                               alignment: Alignment.bottomRight,
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(
-                                    0, 0, 0, height * 0.053),
+                                    0, 0, 0, height * 0.051),
                                 padding: EdgeInsets.only(right: width * 0.03),
                                 child: IconButton(
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   icon: Icon(Icons.add),
-                                  iconSize: 40,
+                                  iconSize: 39,
                                   color: Theme.of(context).secondaryHeaderColor,
                                   onPressed: () => Navigator.push(
                                         context,
