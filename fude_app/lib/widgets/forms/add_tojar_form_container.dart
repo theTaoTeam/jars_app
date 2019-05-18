@@ -77,25 +77,47 @@ class AddToJarForm extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    DropdownButton(
-                      hint: Text('CATEGORY',
-                          style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor)),
-                      value: selectedCategory,
-                      items: categoryList.map((val) {
-                        return DropdownMenuItem(
-                          value: val.toString(),
-                          child: Text(
-                            val.toString(),
-                            style:
-                                TextStyle(color: val == selectedCategory ? Theme.of(context).secondaryHeaderColor : Color.fromRGBO(40, 40, 40, 1)),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (dynamic val) {
-                        updateCategory(val);
-                      },
-                    ),
+                    categoryList.length > 1
+                        ? Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                left: BorderSide(
+                                  width: 0.5,
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                ),
+                              ),
+                            ),
+                            padding: EdgeInsets.fromLTRB(15, 0, 0, 10),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                iconSize: 36,
+                                iconEnabledColor: Theme.of(context).secondaryHeaderColor,
+                                isDense: true,
+                                hint: Text('Choose a category  ',
+                                    style: TextStyle(
+                                        color: Theme.of(context).secondaryHeaderColor,
+                                        fontSize: 17.0)),
+                                value: selectedCategory,
+                                items: categoryList.map((val) {
+                                  return DropdownMenuItem(
+                                    value: val.toString(),
+                                    child: Text(
+                                      val.toString().toLowerCase(),
+                                      style: TextStyle(
+                                          color: val == selectedCategory
+                                              ? Theme.of(context)
+                                                  .secondaryHeaderColor
+                                              : Color.fromRGBO(40, 40, 40, 1)),
+                                    ),
+                                  );
+                                }).toList(),
+                                onChanged: (dynamic val) {
+                                  updateCategory(val);
+                                },
+                              ),
+                            ),
+                          )
+                        : Container(),
                     nullCategory
                         ? Text(
                             'Please select a category',

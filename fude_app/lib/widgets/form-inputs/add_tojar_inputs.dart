@@ -25,7 +25,7 @@ class AddToJarInput extends StatelessWidget {
           errorStyle: TextStyle(color: Colors.red),
           hintText: hint,
           hintStyle: TextStyle(
-              color:  Color.fromRGBO(131, 129, 129, 1), fontSize: 15.0),
+              color:  Theme.of(context).secondaryHeaderColor, fontSize: 15.0),
           contentPadding:
               EdgeInsets.only(top: 5.0, right: 20.0, bottom: 20.0, left: 15.0),
         ),
