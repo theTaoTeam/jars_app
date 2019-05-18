@@ -46,7 +46,7 @@ mixin JarModel on Model {
   }
 
   void addJar(Map<String, dynamic> data) async {
-    print('in model.addJar: data: $data');
+    // print('in model.addJar: data: $data');
     final user = await _auth.currentUser();
     _isLoading = true;
     notifyListeners();
@@ -74,7 +74,7 @@ mixin JarModel on Model {
   }
 
   void updateJar(Map<String, dynamic> data) async {
-    print('updateJar Data: ${_selJar.data['title']}');
+    // print('updateJar Data: ${_selJar.data['title']}');
     String imageLocation;
     try {
       if (data['image'] != null) {
@@ -213,7 +213,7 @@ mixin JarModel on Model {
       print(e);
     }
     //returns the download url
-    print('LOCATION $location');
+    // print('LOCATION $location');
     return location;
   }
 
@@ -234,13 +234,13 @@ mixin JarModel on Model {
       print(e);
     }
     //returns the download url
-    print('LOCATION $location');
+    // print('LOCATION $location');
     return location;
   }
 
   void updateNote(DocumentSnapshot note, String category, String title,
       String notes, String link, File image) async {
-    print('$category, $title, $notes, $link, $image');
+    // print('$category, $title, $notes, $link, $image');
     String imageLocation;
     try {
       if (image != null) {
@@ -268,7 +268,7 @@ mixin JarModel on Model {
   }
 
   void toggleFavoriteStatus(DocumentSnapshot note) async {
-    print('in toggle fav status');
+    // print('in toggle fav status');
     try {
       await _firestore
           .collection('jars')
@@ -292,7 +292,7 @@ mixin JarModel on Model {
       user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email, password: 'testuserpass');
       if (user.email == email) {
-        print('created user because they did not exist yet');
+        // print('created user because they did not exist yet');
         user.delete();
 
         _isLoading = false;
@@ -337,7 +337,7 @@ mixin JarModel on Model {
       jars.documents.forEach((jar) {
         _usersJars.insert(1, jar);
       });
-      print('NEW LIST: $_usersJars');
+      // print('NEW LIST: $_usersJars');
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -380,15 +380,15 @@ mixin JarModel on Model {
 
   void launchURL(String url) async {
     if (isURL(url)) {
-      print('is URL');
+      // print('is URL');
       if (!url.startsWith('https://') || !url.startsWith('http://')) {
         url = "https://$url";
       }
       if (await canLaunch(url)) {
-        print('can launch this url!');
+        // print('can launch this url!');
         await launch(url);
       } else {
-        print('can launch this url!');
+        // print('can launch this url!');
         throw 'Could not launch $url';
       }
     }

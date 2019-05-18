@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
@@ -11,7 +10,6 @@ import 'package:fude/pages/jars/jar_notes.dart';
 import 'package:fude/pages/jars/category_card.dart';
 import 'package:fude/pages/home/home.dart';
 import 'package:fude/helpers/randomNoteModal.dart';
-import 'package:fude/pages/jars/jar_edit.dart';
 import 'package:fude/pages/notes/notes_add.dart';
 
 class JarPage extends StatefulWidget {
@@ -214,13 +212,14 @@ class _JarPageState extends State<JarPage> {
                                 opacity: _swiperVisible ? 1.0 : 0.0,
                                 duration: Duration(milliseconds: 1000),
                                 child: Container(
+                                  width: width * 0.8,
                                   child: Text(
                                     model.selectedJar.data['title']
                                         .toUpperCase(),
-                                    overflow: TextOverflow.fade,
+                                    overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.title,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 3,
+                                    textAlign: TextAlign.left,
+                                    maxLines: 2,
                                   ),
                                 ),
                               ),

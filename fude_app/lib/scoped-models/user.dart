@@ -46,7 +46,7 @@ mixin UserModel on Model {
   }
 
   Future<void> fetchUser() async {
-    print('FETCHING USER');
+    // print('FETCHING USER');
     _isLoading = true;
     notifyListeners();
     _currentUser = await _auth.currentUser();
@@ -62,7 +62,7 @@ mixin UserModel on Model {
           email: email, password: password);
       _currentUser = user;
       _currUserEmail = _currentUser.email;
-      print("successful login. User = $_currentUser");
+      // print("successful login. User = $_currentUser");
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -94,7 +94,7 @@ mixin UserModel on Model {
   }
 
   void resetPassword(String email) async {
-    print("sending reset password email...");
+    // print("sending reset password email...");
     _isLoading = true;
     notifyListeners();
     try {

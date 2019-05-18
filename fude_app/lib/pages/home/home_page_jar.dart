@@ -131,10 +131,10 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(jar != null) {
-      print(jar.data['title']);
-      print(jar.data['image']);
-    }
+    // if(jar != null) {
+      // print(jar.data['title']);
+      // print(jar.data['image']);
+    // }
     Image jarImage = Image(
       image: jar != null
           ? jar.data['image'] != null
