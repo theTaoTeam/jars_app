@@ -18,6 +18,7 @@ class CategoryCard extends StatelessWidget {
   final MainModel model;
 
   _buildTextContainer(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     var titleText = Expanded(
       child: Text(
         category.toUpperCase(),
@@ -30,7 +31,7 @@ class CategoryCard extends StatelessWidget {
     return Positioned(
       top: 20,
       bottom: 20.0,
-      left: 28.0,
+      left: 25.0,
       right: 28.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,11 +42,34 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
             children: [
               titleText,
-              // Expanded(child: Container()),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: width * 0.13),
+                  child: IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    icon: Icon(Icons.add),
+                    iconSize: 28,
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () => Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            curve: Curves.linear,
+                            type: PageTransitionType.downToUp,
+                            child: AddNotePage(
+                                fromJarScreen: true,
+                                categories:
+                                    model.selectedJar.data['categories'],
+                                category: category),
+                          ),
+                        ),
+                  ),
+                ),
+              )
             ],
           ),
         ],
@@ -53,51 +77,8 @@ class CategoryCard extends StatelessWidget {
     );
   }
 
-  _buildIconContainer(BuildContext context) {
-    var icon = Expanded(
-      child: IconButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        icon: Icon(Icons.add),
-        iconSize: 28,
-        color: Theme.of(context).primaryColor,
-        onPressed: () => Navigator.pushReplacement(
-              context,
-              PageTransition(
-                curve: Curves.linear,
-                type: PageTransitionType.downToUp,
-                child: AddNotePage(
-                    fromJarScreen: true,
-                    categories: model.selectedJar.data['categories'],
-                    category: category),
-              ),
-            ),
-      ),
-    );
-
-    return Positioned(
-      top: 165,
-      bottom: 20.0,
-      left: 0.0,
-      right: 10,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-            ),
-          ),
-          icon,
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-
     var imageOverlayGradient = Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -128,14 +109,7 @@ class CategoryCard extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             imageOverlayGradient,
-            // _applyTextEffects(
-            //   translationFactor: 50.0,
-            //   child: Center(
-            //     child: ,
-            //   ),
-            // ),
             _buildTextContainer(context),
-            _buildIconContainer(context)
           ],
         ),
       ),

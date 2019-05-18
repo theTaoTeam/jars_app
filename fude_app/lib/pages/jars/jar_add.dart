@@ -125,7 +125,7 @@ class _JarPageState extends State<AddJarPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        width: width * 0.055,
+                        width: width * 0.057,
                       ),
                       !model.isLoading
                           ? RaisedButton(

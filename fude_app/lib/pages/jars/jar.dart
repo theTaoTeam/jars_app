@@ -277,7 +277,7 @@ class _JarPageState extends State<JarPage> {
 
                             //SWIPER
                             Positioned(
-                              top: height * 0.57,
+                              top: height * 0.59,
                               // left: width * 0.47,
                               width: width,
                               height: height * 0.34,
@@ -289,7 +289,7 @@ class _JarPageState extends State<JarPage> {
                                   pageSnapping: true,
                                   scrollDirection: Axis.horizontal,
                                   controller: PageController(
-                                      viewportFraction: .62, initialPage: 0),
+                                      viewportFraction: .6, initialPage: 0),
                                   itemCount: model
                                       .selectedJar.data['categories'].length,
                                   itemBuilder: (context, index) {

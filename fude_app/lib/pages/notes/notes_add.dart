@@ -192,6 +192,7 @@ class _AddNotePageState extends State<AddNotePage> {
                           highlightColor: Theme.of(context).primaryColor,
                           onPressed: () => addToJar(model),
                         ),
+                        SizedBox(height: height * 0.05,)
                       ],
                     )
                   ],
