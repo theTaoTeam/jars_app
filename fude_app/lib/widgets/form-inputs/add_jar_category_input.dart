@@ -5,7 +5,6 @@ import 'package:fude/scoped-models/main.dart';
 class AddJarCategoryField extends StatelessWidget {
   final String hint;
   final bool enabled;
-  final bool needsAtLeastOneCategory;
   final Function updateCategory;
   final Function addCategoryToRemoveList;
   final MainModel model;
@@ -14,7 +13,6 @@ class AddJarCategoryField extends StatelessWidget {
   AddJarCategoryField(
       {this.hint,
       this.enabled,
-      this.needsAtLeastOneCategory,
       this.updateCategory,
       this.addCategoryToRemoveList,
       this.model,
@@ -62,8 +60,7 @@ class AddJarCategoryField extends StatelessWidget {
             ),
             validator: (String val) {
               String finalVal = val.trim();
-              if (needsAtLeastOneCategory == true ||
-                  finalVal.isEmpty && categories.length < 1) {
+              if (finalVal.isEmpty) {
                 return 'cannot be blank';
               }
             },

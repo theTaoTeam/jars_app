@@ -25,7 +25,6 @@ class _JarPageState extends State<EditJarPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> addUserFormKey = GlobalKey<FormState>();
   int categoryCount = 0;
-  bool needsAtLeastOneCategory = false;
   List<dynamic> currentCategories = [];
   bool userHasBeenAdded = false;
   bool needToInviteThisUser = false;
@@ -48,7 +47,7 @@ class _JarPageState extends State<EditJarPage> {
 
   void updateJar(MainModel model) {
     //validate form.
-    if (!this.formKey.currentState.validate() || needsAtLeastOneCategory) {
+    if (!this.formKey.currentState.validate()) {
       return;
     } else {
       formKey.currentState.save();
@@ -80,16 +79,12 @@ class _JarPageState extends State<EditJarPage> {
   void updateCategoryCount() {
     setState(() {
       categoryCount += 1;
-      needsAtLeastOneCategory = false;
     });
   }
 
   void addCategoryToRemoveList(String category) {
     _formData['categoriesToRemove'].add(category);
     setState(() {
-      if (currentCategories.length == 1 && categoryCount == 0) {
-        needsAtLeastOneCategory = true;
-      }
       currentCategories.removeWhere((val) => val == category);
     });
   }
@@ -191,7 +186,6 @@ class _JarPageState extends State<EditJarPage> {
                           jar: model.selectedJar,
                           addCategoryToRemoveList: addCategoryToRemoveList,
                           categories: currentCategories,
-                          needsAtLeastOneCategory: needsAtLeastOneCategory,
                           updateCategory: updateCategory,
                           updateTitle: updateTitle,
                           updateImage: updateImage,
