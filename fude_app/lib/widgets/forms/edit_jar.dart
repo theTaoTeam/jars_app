@@ -77,7 +77,7 @@ class EditJarForm extends StatelessWidget {
               'Tap and hold to delete',
               style: TextStyle(
                   color: Color.fromRGBO(131, 129, 129, 1), fontSize: 12),
-            ) : Container()
+            ) : Text('')
           ],
         ),
       );

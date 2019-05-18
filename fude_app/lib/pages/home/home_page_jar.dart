@@ -34,21 +34,27 @@ class HomePageJar extends StatelessWidget {
   }
 
   _buildTextContainer(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     var titleText = _applyTextEffects(
       translationFactor: 100.0,
-      child: Padding(
+      child: Container(
         padding: EdgeInsets.only(top: 16.0),
+        width: width * 0.45,
+        // height: height * 0.1,
         child: Text(
           title == null ? jar['title'].toUpperCase() : 'ADD JAR',
-          overflow: TextOverflow.ellipsis,
+          overflow: TextOverflow.fade,
           style: Theme.of(context).textTheme.subhead,
           textAlign: TextAlign.left,
+          maxLines: 1,
         ),
       ),
     );
 
     return Positioned(
-        top: 20,
+        top: 25,
         bottom: 56.0,
         left: 28.0,
         right: 28.0,
