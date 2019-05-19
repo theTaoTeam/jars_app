@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:async';
@@ -18,10 +19,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  StreamSubscription<ConnectivityResult> subscription;
+  final GlobalKey<ScaffoldState> mScaffoldState = GlobalKey<ScaffoldState>();
+  bool internetConnection = true;
   @override
   initState() {
+    final connectionStatus = Connectivity().checkConnectivity();
+    connectionStatus.then((val) {
+      if (val == ConnectivityResult.none) {
+        setState(() {
+          internetConnection = false;
+        });
+        showInitialSnackBar();
+        print('No Connection: $val');
+      }
+    });
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        setState(() {
+          internetConnection = false;
+        });
+        showSnackBar();
+        print('No Connection: $result');
+      }
+    });
+
     widget.model.fetchAllUserJars(widget.model.currUserEmail);
     super.initState();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    subscription.cancel();
   }
 
   void _openJar(int index) async {
@@ -41,11 +73,57 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+    void showInitialSnackBar() {
+    final String errorMsg = '''Poor Network Connection. Wait for a better connection, or try closing and reopening the app.
+    ''';
+    final snackBar = SnackBar(
+      backgroundColor: Color.fromRGBO(255, 51, 74, 1),
+      elevation: 4,
+      content: Text(errorMsg,
+          style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
+      duration: Duration(seconds: 5),
+    );
+    mScaffoldState.currentState.showSnackBar(snackBar);
+    Timer(
+        Duration(seconds: 5),
+        () => setState(() {
+              internetConnection = true;
+            }));
+  }
+
+  void showSnackBar() {
+    final String errorMsg = '''
+    Poor Network Connection.
+    Wait for a better connection, or
+    try closing and reopening the app.
+    ''';
+    final snackBar = SnackBar(
+      backgroundColor: Color.fromRGBO(255, 51, 74, 1),
+      elevation: 4,
+      content: Text(errorMsg,
+          style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
+      action: SnackBarAction(
+          label: 'OK',
+          textColor: Color.fromRGBO(242, 242, 242, 1),
+          onPressed: () => setState(() {
+                internetConnection = true;
+              })),
+      duration: Duration(seconds: 5),
+    );
+    mScaffoldState.currentState.showSnackBar(snackBar);
+    Timer(
+        Duration(seconds: 5),
+        () => setState(() {
+              internetConnection = true;
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: mScaffoldState,
       appBar: AppBar(
         title: Container(
           margin: EdgeInsets.only(left: width * 0.7),
@@ -70,29 +148,26 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: height * 0.06),
-        child: FloatingActionButton(
-          shape: CircleBorder(),
-          elevation: 0,
-          backgroundColor: Theme.of(context).primaryColor,
-          foregroundColor: Theme.of(context).primaryColor,
-          highlightElevation: 0,
-          onPressed: () => widget.model.invertTheme(),
-          child: !widget.model.isLoading
-              ? Image.asset(
-                  'assets/yinYang.png',
-                  height: height * 0.15,
-                  width: width * 0.15,
-                )
-              : Container(),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).primaryColor,
-        elevation: 0,
-        child: Container(height: 20),
-      ),
+      floatingActionButton: internetConnection
+          ? Padding(
+              padding: EdgeInsets.only(bottom: height * 0.06),
+              child: FloatingActionButton(
+                shape: CircleBorder(),
+                elevation: 0,
+                backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Theme.of(context).primaryColor,
+                highlightElevation: 0,
+                onPressed: () => widget.model.invertTheme(),
+                child: !widget.model.isLoading
+                    ? Image.asset(
+                        'assets/yinYang.png',
+                        height: height * 0.15,
+                        width: width * 0.15,
+                      )
+                    : Container(),
+              ),
+            )
+          : Container(),
       body: !widget.model.isLoading
           ? Container(
               height: height,

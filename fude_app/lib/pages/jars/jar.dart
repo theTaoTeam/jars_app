@@ -238,8 +238,8 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
                                           letterSpacing: 2,
                                         ),
                                         textAlign: TextAlign.center,
@@ -252,8 +252,8 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
                                           letterSpacing: 2,
                                         ),
                                         textAlign: TextAlign.center,
@@ -266,9 +266,9 @@ class _JarPageState extends State<JarPage> {
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          letterSpacing: 2,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                          letterSpacing: 1,
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
