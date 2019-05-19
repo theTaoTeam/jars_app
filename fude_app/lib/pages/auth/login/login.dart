@@ -58,6 +58,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     if (!formKey.currentState.validate()) {
       return;
     } else {
+      FocusScope.of(context).requestFocus(FocusNode());
       formKey.currentState.save();
       try {
         await login(email: _formData['email'], password: _formData['password']);

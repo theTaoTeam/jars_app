@@ -57,6 +57,7 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
     if (!formKey.currentState.validate()) {
       return;
     } else {
+      FocusScope.of(context).requestFocus(FocusNode());
       formKey.currentState.save();
       try {
         await register(

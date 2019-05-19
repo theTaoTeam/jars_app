@@ -45,8 +45,8 @@ class _ForgotPassState extends State<ForgotPassPage>
     if (!_formKey.currentState.validate()) {
       return;
     } else {
+      // FocusScope.of(context).requestFocus(FocusNode());
       _formKey.currentState.save();
-
       resetPassword(_emailInput);
       Navigator.pop(context);
     }
