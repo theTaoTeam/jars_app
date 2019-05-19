@@ -27,13 +27,14 @@ dependencies:
   firebase_auth: ^0.11.1
   cloud_functions: ^0.3.0+1
   cloud_firestore: ^0.11.0+2
-  image_picker: ^0.6.0+3
+  image_picker: ^0.4.12+1
   firebase_storage: ^3.0.0
-  page_transition: '^1.0.9'
+  page_transition: ^1.0.9
   flutter_swiper: ^1.1.6
   url_launcher: ^3.0.3
   validators: ^2.0.0
-  flutter_slidable: "^0.4.9" 
+  connectivity: ^0.4.3+1
+
   
 
 dev_dependencies:

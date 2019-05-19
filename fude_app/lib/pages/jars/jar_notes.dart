@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
@@ -19,11 +22,36 @@ class JarNotes extends StatefulWidget {
 }
 
 class _JarNotesState extends State<JarNotes> {
+  StreamSubscription<ConnectivityResult> subscription;
+  final GlobalKey<ScaffoldState> sScaffoldState = GlobalKey<ScaffoldState>();
   bool isFavorite = false;
 
   @override
   void initState() {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.none) {
+        showSnackBar();
+        print('No Connection: $result');
+      }
+    });
     super.initState();
+  }
+
+  void showSnackBar() {
+    final String errorMsg = '''
+    Poor Network Connection.
+    Wait for a better connection, or
+    try closing and reopening the app.
+    ''';
+    final snackBar = SnackBar(
+      backgroundColor: Color.fromRGBO(255, 51, 74, 1),
+      elevation: 4,
+      content: Text(errorMsg,
+          style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
+    );
+    sScaffoldState.currentState.showSnackBar(snackBar);
   }
 
   void toggleFavoriteFilter() {
@@ -51,6 +79,7 @@ class _JarNotesState extends State<JarNotes> {
     final double width = MediaQuery.of(context).size.width;
     DocumentSnapshot jar = widget.model.selectedJar;
     return Scaffold(
+      key: sScaffoldState,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
@@ -86,7 +115,7 @@ class _JarNotesState extends State<JarNotes> {
                       curve: Curves.linear,
                       type: PageTransitionType.downToUp,
                       child: AddNotePage(
-                        fromJarScreen: false,
+                          fromJarScreen: false,
                           categories:
                               widget.model.selectedJar.data['categories']),
                     ),
@@ -166,23 +195,22 @@ class _JarNotesState extends State<JarNotes> {
                             ),
                           ),
                           Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                padding: EdgeInsets.fromLTRB(
-                                    0, 0, width * 0.04, width * 0.05),
-                                child: IconButton(
-                                  splashColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  icon: isFavorite
-                                      ? Icon(Icons.favorite)
-                                      : Icon(Icons.favorite_border),
-                                  iconSize: 38,
-                                  color: Theme.of(context).iconTheme.color,
-                                  onPressed: () => toggleFavoriteFilter(),
-                                ),
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(
+                                  0, 0, width * 0.04, width * 0.05),
+                              child: IconButton(
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                icon: isFavorite
+                                    ? Icon(Icons.favorite)
+                                    : Icon(Icons.favorite_border),
+                                iconSize: 38,
+                                color: Theme.of(context).iconTheme.color,
+                                onPressed: () => toggleFavoriteFilter(),
                               ),
                             ),
-                          
+                          ),
                         ],
                       )
                     : Column(

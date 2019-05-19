@@ -17,7 +17,7 @@ ThemeData buildAppThemeData(bool darkTheme) {
         color: !darkTheme
             ? Color.fromRGBO(40, 40, 40, 1)
             : Color.fromRGBO(242, 242, 242, 1),
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 20,
         letterSpacing: 5,
       ),
@@ -25,7 +25,7 @@ ThemeData buildAppThemeData(bool darkTheme) {
         color: !darkTheme
             ? Color.fromRGBO(242, 242, 242, 1)
             : Color.fromRGBO(40, 40, 40, 1),
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 22,
         letterSpacing: 3,
       ),

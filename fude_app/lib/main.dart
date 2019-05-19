@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:connectivity/connectivity.dart';
 
 import 'package:fude/pages/auth/login/login.dart';
 import 'package:fude/pages/auth/signup/signup.dart';
