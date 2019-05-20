@@ -379,11 +379,11 @@ mixin JarModel on Model {
   }
 
   void launchURL(String url) async {
-    if (isURL(url)) {
-      // print('is URL');
-      if (!url.startsWith('https://') || !url.startsWith('http://')) {
+    if (!url.startsWith('https://') && !url.startsWith('http://')) {
         url = "https://$url";
       }
+    if (isURL(url, protocols: ['https', 'http'])) {
+      print('is URL');
       if (await canLaunch(url)) {
         // print('can launch this url!');
         await launch(url);
