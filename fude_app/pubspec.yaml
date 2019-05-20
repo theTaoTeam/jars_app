@@ -1,5 +1,5 @@
 name: fude
-description: An app that encourages cooking new dishes and spending time with those you care about.
+description: An app that makes it easier to try new things!
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -7,7 +7,7 @@ description: An app that encourages cooking new dishes and spending time with th
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
