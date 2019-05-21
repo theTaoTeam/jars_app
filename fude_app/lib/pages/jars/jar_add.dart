@@ -30,14 +30,13 @@ class _JarPageState extends State<AddJarPage> {
       return;
     } else {
       formKey.currentState.save(); // Save our form now.
-      print(_formData);
       model.addJar(_formData);
       Navigator.pop(context);
     }
   }
 
   void updateTitle(String val) {
-    print('update title called: $_formData');
+    // print('update title called: $_formData');
     if (val != null) {
       setState(() {
         _formData['title'] = val;
@@ -75,7 +74,6 @@ class _JarPageState extends State<AddJarPage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    print('Building Jar_Add...');
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(

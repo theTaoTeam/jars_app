@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fude/models/jar.dart';
 
 mixin JarModel on Model {
   bool _isLoading = false;
@@ -17,11 +18,8 @@ mixin JarModel on Model {
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
   List<QuerySnapshot> _allJarIdeas;
-  final Map<String, dynamic> _addJar = {
-    'owners': [],
-    'title': 'ADD JAR',
-    'categories': []
-  };
+  final Jar _addJar = Jar(title: 'ADD JAR', categories: [], image: null);
+
   List<dynamic> _usersJars = [];
   List<Widget> categoryChildren = [];
 
@@ -46,14 +44,23 @@ mixin JarModel on Model {
   }
 
   void addJar(Map<String, dynamic> data) async {
-    // print('in model.addJar: data: $data');
-    final user = await _auth.currentUser();
     _isLoading = true;
     notifyListeners();
+    final user = await _auth.currentUser();
     CollectionReference jarCollection = _firestore.collection('jars');
     String imageLocation;
     data['categories'].add('ALL');
 
+    //first add jar locally
+    final newJar = Jar(
+        title: data['title'],
+        categories: data['categories'],
+        image: data['image']);
+    _usersJars.insert(1, newJar);
+    _isLoading = false;
+    notifyListeners();
+
+    //after adding jar locally, add to db
     try {
       if (data['image'] != null) {
         imageLocation = await uploadJarImageToStorage(data['image']);
@@ -65,17 +72,31 @@ mixin JarModel on Model {
         'image': imageLocation == null ? null : imageLocation.toString(),
         'isFav': false
       });
-      fetchAllUserJars(user.email);
-      _isLoading = false;
-      notifyListeners();
     } catch (e) {
       print(e);
     }
   }
 
   void updateJar(Map<String, dynamic> data) async {
-    // print('updateJar Data: ${_selJar.data['title']}');
     String imageLocation;
+    _isLoading = true;
+    notifyListeners();
+    //update jar locally first
+    _usersJars.forEach((jar) {
+      if (jar.title == data['title']) {
+        jar.title = data['title'];
+        if (data['categoriesToAdd'].length > 0) {
+          jar.categories.add(data['categories']);
+        }
+        if (data['categoriesToRemove'].length > 0) {
+          jar.categories.arrayRemove(data['categoriesToRemove']);
+        }
+        jar.image = data['image'] == null ? _selJar['image'] : data['image'];
+      }
+    });
+    _isLoading = false;
+    notifyListeners();
+    //then update in db
     try {
       if (data['image'] != null) {
         imageLocation = await uploadJarImageToStorage(data['image']);
@@ -101,7 +122,7 @@ mixin JarModel on Model {
         'isFav': _selJar['isFav']
       });
       final user = await _auth.currentUser();
-      fetchAllUserJars(user.email);
+      fetchAllUserJarsFromDB(user.email);
       notifyListeners();
     } catch (e) {
       print(e);
@@ -109,6 +130,8 @@ mixin JarModel on Model {
   }
 
   void deleteJar() async {
+    _usersJars.removeWhere((jar) => jar.title == _selJar['title']);
+    notifyListeners();
     try {
       _firestore
           .collection('jars')
@@ -116,7 +139,7 @@ mixin JarModel on Model {
           .delete()
           .catchError((err) => print(err));
       final user = await _auth.currentUser();
-      fetchAllUserJars(user.email);
+      fetchAllUserJarsFromDB(user.email);
       notifyListeners();
     } catch (e) {
       print(e);
@@ -138,13 +161,13 @@ mixin JarModel on Model {
     }
   }
 
-  Future getJarBySelectedId(String jarId) async {
+  Future getJarBySelectedTitle(String title) async {
     _isLoading = true;
     notifyListeners();
     try {
       await _firestore.collection('jars').getDocuments().then((val) {
         val.documents.forEach((jar) {
-          if (jar.documentID == jarId) {
+          if (jar['title'] == title) {
             _selJar = jar;
           }
         });
@@ -162,7 +185,6 @@ mixin JarModel on Model {
 
   void addToJar(String category, String title, String notes, String link,
       File image) async {
-    // print('image: ----------- $image');
     String imageLocation;
     _isLoading = true;
     notifyListeners();
@@ -171,7 +193,6 @@ mixin JarModel on Model {
         imageLocation = await uploadNoteImageToStorage(image);
         print(imageLocation);
       }
-      print('in scoped model image: ${_selJar['image']}');
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
@@ -213,7 +234,6 @@ mixin JarModel on Model {
       print(e);
     }
     //returns the download url
-    // print('LOCATION $location');
     return location;
   }
 
@@ -323,7 +343,7 @@ mixin JarModel on Model {
     }
   }
 
-  Future<List<dynamic>> fetchAllUserJars(String email) async {
+  Future<List<dynamic>> fetchAllUserJarsFromDB(String email) async {
     _isLoading = true;
     notifyListeners();
     QuerySnapshot jars;
@@ -335,9 +355,13 @@ mixin JarModel on Model {
           .where('owners', arrayContains: email != null ? email : user.email)
           .getDocuments();
       jars.documents.forEach((jar) {
-        _usersJars.insert(1, jar);
+        final Jar newJar = Jar(
+          title: jar['title'],
+          categories: jar['categories'],
+          image: jar['image'],
+        );
+        _usersJars.insert(1, newJar);
       });
-      // print('NEW LIST: $_usersJars');
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -380,8 +404,8 @@ mixin JarModel on Model {
 
   void launchURL(String url) async {
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-        url = "https://$url";
-      }
+      url = "https://$url";
+    }
     if (isURL(url, protocols: ['https', 'http'])) {
       print('is URL');
       if (await canLaunch(url)) {

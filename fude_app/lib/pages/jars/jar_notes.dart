@@ -144,7 +144,6 @@ class _JarNotesState extends State<JarNotes> {
                     .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                // print('snapshot hasData: ${snapshot.hasData}');
                 return Center(child: CircularProgressIndicator());
               } else {
                 return snapshot.data.documents.length > 0
