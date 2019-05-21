@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,14 +8,14 @@ import 'package:page_transition/page_transition.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar_edit.dart';
 import 'package:fude/pages/jars/jar_add.dart';
+import 'package:fude/models/jar.dart';
 
 class HomePageJar extends StatelessWidget {
-  final DocumentSnapshot jar;
+  final Jar jar;
   final MainModel model;
   final String title;
 
-  HomePageJar(
-      {@required this.model, this.jar, this.title});
+  HomePageJar({@required this.model, this.jar, this.title});
 
   Widget _applyTextEffects({
     @required double translationFactor,
@@ -44,7 +46,7 @@ class HomePageJar extends StatelessWidget {
         width: width * 0.45,
         // height: height * 0.1,
         child: Text(
-          title == null ? jar['title'].toUpperCase() : 'ADD JAR',
+          title == null ? jar.title.toUpperCase() : 'ADD JAR',
           overflow: TextOverflow.fade,
           style: Theme.of(context).textTheme.subhead,
           textAlign: TextAlign.left,
@@ -115,7 +117,7 @@ class HomePageJar extends StatelessWidget {
                         );
                       }),
                   Text(
-                    title == null ? jar['title'].toUpperCase() : 'ADD JAR',
+                    title == null ? jar.title.toUpperCase() : 'ADD JAR',
                     style: TextStyle(
                       color: model.darkTheme
                           ? Color.fromRGBO(40, 40, 40, 1)
@@ -131,22 +133,34 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if(jar != null) {
-      // print(jar.data['title']);
-      // print(jar.data['image']);
-    // }
-    Image jarImage = Image(
-      image: jar != null
-          ? jar.data['image'] != null
-              ? NetworkImage(jar.data['image'])
-              : AssetImage('assets/logo.png')
-          : AssetImage('assets/logo.png'),
-      fit: BoxFit.cover,
-      alignment: FractionalOffset(
-        0.5,
-        0.5,
-      ),
-    );
+    Image jarImage = jar != null
+        ? jar.image.runtimeType != String && jar.image != null
+            ? Image.file(
+                jar.image,
+                fit: BoxFit.cover,
+                alignment: FractionalOffset(
+                  0.5,
+                  0.5,
+                ),
+              )
+            : Image(
+                image: jar.image != null
+                    ? NetworkImage(jar.image)
+                    : AssetImage('assets/logo.png'),
+                fit: BoxFit.cover,
+                alignment: FractionalOffset(
+                  0.5,
+                  0.5,
+                ),
+              )
+        : Image(
+            image: AssetImage('assets/logo.png'),
+            fit: BoxFit.cover,
+            alignment: FractionalOffset(
+              0.5,
+              0.5,
+            ),
+          );
     var image = title == null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(30.0),

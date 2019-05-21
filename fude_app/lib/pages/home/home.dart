@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           internetConnection = false;
         });
-        showInitialSnackBar();
+        showSnackBar();
         print('No Connection: $val');
       }
     });
@@ -45,8 +45,7 @@ class _HomePageState extends State<HomePage> {
         print('No Connection: $result');
       }
     });
-
-    widget.model.fetchAllUserJars(widget.model.currUserEmail);
+    widget.model.fetchAllUserJarsFromDB(widget.model.currUserEmail);
     super.initState();
   }
 
@@ -59,7 +58,7 @@ class _HomePageState extends State<HomePage> {
   void _openJar(int index) async {
     try {
       await widget.model
-          .getJarBySelectedId(widget.model.usersJars[index].documentID);
+          .getJarBySelectedTitle(widget.model.usersJars[index].title);
       Navigator.push(
         context,
         PageTransition(
@@ -73,46 +72,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-    void showInitialSnackBar() {
-    final String errorMsg = '''Poor Network Connection. Wait for a better connection, or try closing and reopening the app.
-    ''';
-    final snackBar = SnackBar(
-      backgroundColor: Color.fromRGBO(255, 51, 74, 1),
-      elevation: 4,
-      content: Text(errorMsg,
-          style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
-      duration: Duration(seconds: 5),
-    );
-    mScaffoldState.currentState.showSnackBar(snackBar);
-    Timer(
-        Duration(seconds: 5),
-        () => setState(() {
-              internetConnection = true;
-            }));
-  }
-
   void showSnackBar() {
     final String errorMsg = '''
-    Poor Network Connection.
-    Wait for a better connection, or
-    try closing and reopening the app.
+    No Network Connection.
+    Reopen the app once you connect.
+    Some data may not show until you do.
     ''';
     final snackBar = SnackBar(
       backgroundColor: Color.fromRGBO(255, 51, 74, 1),
       elevation: 4,
       content: Text(errorMsg,
           style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
-      action: SnackBarAction(
-          label: 'OK',
-          textColor: Color.fromRGBO(242, 242, 242, 1),
-          onPressed: () => setState(() {
-                internetConnection = true;
-              })),
       duration: Duration(seconds: 5),
     );
     mScaffoldState.currentState.showSnackBar(snackBar);
     Timer(
-        Duration(seconds: 5),
+        Duration(milliseconds: 5500),
         () => setState(() {
               internetConnection = true;
             }));
@@ -179,9 +154,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   widget.model.usersJars.length == 0
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
+                      ? Container()
                       : Container(
                           margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
                           width: width,
