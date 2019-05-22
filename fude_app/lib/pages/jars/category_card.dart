@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'dart:ui';
-import 'package:page_transition/page_transition.dart';
-
 
 import 'package:fude/scoped-models/main.dart';
 

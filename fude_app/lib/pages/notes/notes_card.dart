@@ -1,33 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:fude/scoped-models/main.dart';
 
+import 'package:fude/models/idea.dart';
 import 'package:fude/pages/notes/note.dart';
 
 class NotesCard extends StatelessWidget {
-  final DocumentSnapshot note;
+  final Idea idea;
   final MainModel model;
   final Function toggleFavoriteStatus;
+  final int index;
 
-  NotesCard({this.note, this.toggleFavoriteStatus, this.model});
+  NotesCard({this.idea, this.toggleFavoriteStatus, this.model, this.index});
 
-  Widget makeListTile(DocumentSnapshot note, double _targetWidth, double height,
-      BuildContext context) {
+  Widget makeListTile(
+      Idea idea, double _targetWidth, double height, BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       leading: Container(
         width: _targetWidth * 0.25,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(1.0),
-          child: note['image'] != null
-              ? Image.network(note['image'], scale: 0.2)
-              : Image.network(model.selectedJar.data['image'], scale: 1,),
+          child: idea.image != null
+              ? idea.image.runtimeType != String
+                  ? Image.file(
+                      idea.image,
+                      fit: BoxFit.cover,
+                      alignment: FractionalOffset(
+                        0.5,
+                        0.5,
+                      ),
+                    )
+                  : Image.network(idea.image, scale: 0.2)
+              : Image.network(
+                  model.selectedJar.data['image'],
+                  scale: 1,
+                ),
         ),
       ),
       title: Container(
         child: Text(
-          note['title'].toUpperCase(),
+          idea.title.toUpperCase(),
           style: Theme.of(context).textTheme.headline,
           overflow: TextOverflow.ellipsis,
         ),
@@ -35,18 +48,18 @@ class NotesCard extends StatelessWidget {
       subtitle: Container(
         margin: EdgeInsets.only(top: 5),
         child: Text(
-          note['category'].toUpperCase(),
+          idea.category.toUpperCase(),
           style: Theme.of(context).textTheme.caption,
         ),
       ),
       trailing: IconButton(
         icon:
-            !note['isFav'] ? Icon(Icons.favorite_border) : Icon(Icons.favorite),
+            !idea.getIsFav ? Icon(Icons.favorite_border) : Icon(Icons.favorite),
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         color: Theme.of(context).primaryColor,
         iconSize: 24,
-        onPressed: () => toggleFavoriteStatus(note),
+        onPressed: () => toggleFavoriteStatus(idea, index),
       ),
     );
   }
@@ -55,6 +68,7 @@ class NotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
+    print(idea.getIsFav);
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(
@@ -63,7 +77,7 @@ class NotesCard extends StatelessWidget {
             curve: Curves.linear,
             type: PageTransitionType.rightToLeftWithFade,
             child: NotePage(
-              note: note,
+              idea: idea,
               isRandom: false,
             ),
           ),
@@ -89,7 +103,7 @@ class NotesCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                child: makeListTile(note, width, height, context),
+                child: makeListTile(idea, width, height, context),
               ),
             ],
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fude/scoped-models/main.dart';
 
 class LoginInButton extends StatelessWidget {
   @override

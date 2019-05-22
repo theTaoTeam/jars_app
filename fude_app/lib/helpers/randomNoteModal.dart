@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fude/models/idea.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/notes/note.dart';
 import 'package:fude/pages/notes/notes_add.dart';
 
-void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
-    MainModel model, String category) {
+void showRandomNote(
+    BuildContext context, Idea randomNote, MainModel model, String category) {
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;
   showDialog(
@@ -37,11 +37,18 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                             width: width,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                    randomNote['image'] != null
-                                        ? randomNote['image']
-                                        : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
-                                  ),
+                                  image: randomNote.image != null
+                                      ? randomNote.image.runtimeType != String
+                                          ? Image.file(
+                                              randomNote.image,
+                                              fit: BoxFit.cover,
+                                              alignment: FractionalOffset(
+                                                0.5,
+                                                0.5,
+                                              ),
+                                            )
+                                          : NetworkImage(randomNote.image)
+                                      : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604',
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(
                                       Theme.of(context)
@@ -51,7 +58,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                             ),
                             child: Center(
                               child: Text(
-                                randomNote['title'].toUpperCase(),
+                                randomNote.title.toUpperCase(),
                                 style: Theme.of(context).textTheme.subtitle,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
@@ -113,7 +120,7 @@ void showRandomNote(BuildContext context, DocumentSnapshot randomNote,
                                           curve: Curves.linear,
                                           type: PageTransitionType.downToUp,
                                           child: NotePage(
-                                            note: randomNote,
+                                            idea: randomNote,
                                             isRandom: true,
                                           ),
                                         ),

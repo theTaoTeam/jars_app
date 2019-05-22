@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:fude/scoped-models/main.dart';
 import 'package:fude/pages/jars/jar.dart';
 import 'package:fude/pages/home/home_page_jar.dart';
+import 'package:fude/helpers/snackBar.dart';
 
 class HomePage extends StatefulWidget {
   final MainModel model;
@@ -24,16 +25,6 @@ class _HomePageState extends State<HomePage> {
   bool internetConnection = true;
   @override
   initState() {
-    final connectionStatus = Connectivity().checkConnectivity();
-    connectionStatus.then((val) {
-      if (val == ConnectivityResult.none) {
-        setState(() {
-          internetConnection = false;
-        });
-        showSnackBar();
-        print('No Connection: $val');
-      }
-    });
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -41,7 +32,8 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           internetConnection = false;
         });
-        showSnackBar();
+        showSnackBar(mScaffoldState);
+        Timer(Duration(milliseconds: 5500), () => setState(() {internetConnection = true;}));
         print('No Connection: $result');
       }
     });
@@ -70,27 +62,6 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print(e);
     }
-  }
-
-  void showSnackBar() {
-    final String errorMsg = '''
-    No Network Connection.
-    Reopen the app once you connect.
-    Some data may not show until you do.
-    ''';
-    final snackBar = SnackBar(
-      backgroundColor: Color.fromRGBO(255, 51, 74, 1),
-      elevation: 4,
-      content: Text(errorMsg,
-          style: TextStyle(color: Color.fromRGBO(242, 242, 242, 1))),
-      duration: Duration(seconds: 5),
-    );
-    mScaffoldState.currentState.showSnackBar(snackBar);
-    Timer(
-        Duration(milliseconds: 5500),
-        () => setState(() {
-              internetConnection = true;
-            }));
   }
 
   @override

@@ -10,6 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fude/models/jar.dart';
+import 'package:fude/models/idea.dart';
+import 'package:uuid/uuid.dart';
 
 mixin JarModel on Model {
   bool _isLoading = false;
@@ -21,6 +23,8 @@ mixin JarModel on Model {
   final Jar _addJar = Jar(title: 'ADD JAR', categories: [], image: null);
 
   List<dynamic> _usersJars = [];
+  List<Idea> _jarIdeas = [];
+  List<Idea> _favIdeas = [];
   List<Widget> categoryChildren = [];
 
   DocumentSnapshot get selectedJar {
@@ -43,19 +47,28 @@ mixin JarModel on Model {
     return _usersJars;
   }
 
+  List<dynamic> get jarIdeas {
+    return _jarIdeas;
+  }
+
+  List<Idea> get favIdeas {
+    return _favIdeas;
+  }
+
   void addJar(Map<String, dynamic> data) async {
     _isLoading = true;
     notifyListeners();
     final user = await _auth.currentUser();
     CollectionReference jarCollection = _firestore.collection('jars');
     String imageLocation;
-    data['categories'].add('ALL');
+    data['categories'].insert(0, 'ALL');
 
     //first add jar locally
     final newJar = Jar(
-        title: data['title'],
-        categories: data['categories'],
-        image: data['image']);
+      title: data['title'],
+      categories: data['categories'],
+      image: data['image'],
+    );
     _usersJars.insert(1, newJar);
     _isLoading = false;
     notifyListeners();
@@ -81,19 +94,26 @@ mixin JarModel on Model {
     String imageLocation;
     _isLoading = true;
     notifyListeners();
+
     //update jar locally first
+    List<dynamic> newCategories = [];
+
     _usersJars.forEach((jar) {
-      if (jar.title == data['title']) {
-        jar.title = data['title'];
+      if (jar.title == _selJar['title']) {
+        jar.categories.forEach((cat) => newCategories.add(cat));
         if (data['categoriesToAdd'].length > 0) {
-          jar.categories.add(data['categories']);
+          newCategories.add(data['categories']);
         }
         if (data['categoriesToRemove'].length > 0) {
-          jar.categories.arrayRemove(data['categoriesToRemove']);
+          newCategories.remove(data['categoriesToRemove']);
         }
-        jar.image = data['image'] == null ? _selJar['image'] : data['image'];
+        jar = Jar(
+            title: data['title'],
+            categories: newCategories,
+            image: data['image'] == null ? _selJar['image'] : data['image']);
       }
     });
+
     _isLoading = false;
     notifyListeners();
     //then update in db
@@ -121,8 +141,6 @@ mixin JarModel on Model {
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
         'isFav': _selJar['isFav']
       });
-      final user = await _auth.currentUser();
-      fetchAllUserJarsFromDB(user.email);
       notifyListeners();
     } catch (e) {
       print(e);
@@ -138,15 +156,15 @@ mixin JarModel on Model {
           .document(_selJar.documentID)
           .delete()
           .catchError((err) => print(err));
-      final user = await _auth.currentUser();
-      fetchAllUserJarsFromDB(user.email);
       notifyListeners();
     } catch (e) {
       print(e);
     }
   }
 
-  void deleteJarIdea(String id) {
+  void deleteJarIdea(String id, String title) {
+    _jarIdeas.removeWhere((idea) => idea.title == title);
+
     try {
       _firestore
           .collection('jars')
@@ -186,7 +204,22 @@ mixin JarModel on Model {
   void addToJar(String category, String title, String notes, String link,
       File image) async {
     String imageLocation;
-    _isLoading = true;
+    final uuid = Uuid();
+    final newIdea = Idea(
+        id: uuid.v4(),
+        title: title,
+        notes: notes,
+        isFav: false,
+        category: category,
+        link: link,
+        image: image != null
+            ? image
+            : _selJar['image'] != null
+                ? _selJar['image']
+                : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604');
+
+    _jarIdeas.insert(0, newIdea);
+    _isLoading = false;
     notifyListeners();
     try {
       if (image != null) {
@@ -258,28 +291,43 @@ mixin JarModel on Model {
     return location;
   }
 
-  void updateNote(DocumentSnapshot note, String category, String title,
-      String notes, String link, File image) async {
-    // print('$category, $title, $notes, $link, $image');
+  void updateNote(Idea newIdea, String category, String title, String notes,
+      String link, File image) async {
+    _isLoading = true;
+    notifyListeners();
+    final Idea updatedIdea = Idea(
+      title: newIdea.title,
+      category: newIdea.category,
+      link: newIdea.link,
+      isFav: newIdea.getIsFav,
+      image: newIdea.image == null ? _selJar['image'] : newIdea.image,
+    );
+    _jarIdeas.forEach((idea) {
+      if (idea == newIdea) {
+        idea = updatedIdea;
+      }
+    });
+
+    _isLoading = false;
+    notifyListeners();
     String imageLocation;
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
       }
-      print(imageLocation);
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
           .collection('jarNotes')
-          .document(note.documentID)
+          .document(newIdea.id)
           .updateData({
-        'category': category == '' ? note['category'] : category,
+        'category': category == '' ? newIdea.category : category,
         'title': title,
         'notes': notes,
         'link': link,
-        'isFav': note['isFav'],
+        'isFav': newIdea.getIsFav,
         'image':
-            imageLocation == null ? note['image'] : imageLocation.toString()
+            imageLocation == null ? newIdea.image : imageLocation.toString()
       });
       notifyListeners();
     } catch (e) {
@@ -287,16 +335,22 @@ mixin JarModel on Model {
     }
   }
 
-  void toggleFavoriteStatus(DocumentSnapshot note) async {
-    // print('in toggle fav status');
+  void toggleFavoriteStatus(Idea idea, int index) async {
+    // _jarIdeas[index].setIsFav = !idea.getIsFav;
+    _jarIdeas.forEach((val) {
+      if(val == idea) {
+        val.setIsFav = !idea.getIsFav;
+      }
+    });
+    fetchFavoriteJarIdeas();
+    notifyListeners();
     try {
       await _firestore
           .collection('jars')
           .document(_selJar.documentID)
           .collection('jarNotes')
-          .document(note.documentID)
-          .updateData({'isFav': !note.data['isFav']});
-      notifyListeners();
+          .document(idea.id)
+          .updateData({'isFav': _jarIdeas[index].getIsFav});
     } catch (e) {
       print(e);
     }
@@ -371,35 +425,67 @@ mixin JarModel on Model {
     return _usersJars;
   }
 
-  Future<List<DocumentSnapshot>> fetchJarNotesByCategory(
-      String category) async {
-    List<DocumentSnapshot> _jarNotesByCategory = [];
-    QuerySnapshot notes;
+  Future<List<dynamic>> fetchAllJarIdeasFromDB() async {
+    _isLoading = true;
+    notifyListeners();
+    QuerySnapshot ideas;
+    _jarIdeas = [];
     try {
-      notes = await _firestore
+      ideas = await _firestore
           .collection('jars')
           .document(_selJar.documentID)
           .collection('jarNotes')
           .getDocuments();
+      ideas.documents.forEach((idea) {
+        final Idea newIdea = Idea(
+          id: idea.documentID,
+          title: idea['title'],
+          category: idea['category'],
+          notes: idea['notes'],
+          link: idea['link'],
+          isFav: idea['isFav'] == null ? false : idea['isFav'],
+          image: idea['image'],
+        );
+        _jarIdeas.add(newIdea);
+      });
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
       print(e);
+      return e;
     }
-    if (notes.documents.length > 0) {
+    return _jarIdeas;
+  }
+
+  void fetchFavoriteJarIdeas() {
+    _favIdeas = [];
+    _jarIdeas.forEach((idea) {
+      if (idea.getIsFav) {
+        print('idea is fav ${idea.title}');
+        _favIdeas.add(idea);
+      }
+    });
+    print(_favIdeas);
+    notifyListeners();
+  }
+
+  List<Idea> fetchJarNotesByCategory(String category) {
+    List<Idea> _jarIdeasByCategory = [];
+
+    if (_jarIdeas.length > 0) {
       if (category == 'ALL') {
-        notes.documents.forEach((doc) {
-          _jarNotesByCategory.add(doc);
-        });
+        _jarIdeasByCategory = _jarIdeas;
       } else {
-        notes.documents.forEach((doc) {
-          if (doc.data['category'] == category) {
-            _jarNotesByCategory.add(doc);
+        _jarIdeas.forEach((idea) {
+          if (idea.category == category) {
+            _jarIdeasByCategory.add(idea);
           }
         });
       }
     } else {
       return null;
     }
-    return _jarNotesByCategory;
+    return _jarIdeasByCategory;
   }
 
   void launchURL(String url) async {
