@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fude/models/idea.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
 import 'dart:ui';
 
@@ -32,6 +32,7 @@ class _JarPageState extends State<JarPage> {
   void initState() {
     widget.model.resetIsLoading();
     fadeInstructions();
+    widget.model.fetchAllJarIdeasFromDB();
     super.initState();
   }
 
@@ -41,21 +42,18 @@ class _JarPageState extends State<JarPage> {
     });
   }
 
-  void _pullRandomNote(MainModel model, String category) async {
+  void _pullRandomNote(MainModel model, String category) {
     final _random = Random();
-    List<DocumentSnapshot> notes = [];
-    DocumentSnapshot randomNote;
+    List<Idea> ideas = [];
+    Idea randomNote;
     print('CATEGORY: $category');
-    try {
-      notes = await model.fetchJarNotesByCategory(category);
-    } catch (e) {
-      print(e);
+    ideas = model.fetchJarNotesByCategory(category);
+    
+    if (ideas != null && ideas.length != 0) {
+      print("ideas !== NULL: $ideas");
+      randomNote = ideas[_random.nextInt(ideas.length)];
     }
-    if (notes != null && notes.length != 0) {
-      print("notes !== NULL: $notes");
-      randomNote = notes[_random.nextInt(notes.length)];
-    }
-    print("notes: $notes");
+    print("ideas: $ideas");
 
     showRandomNote(context, randomNote, model, category);
   }

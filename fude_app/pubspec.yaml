@@ -7,7 +7,7 @@ description: An app that makes it easier to try new things!
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+3
+version: 1.0.0+4
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
@@ -34,6 +34,7 @@ dependencies:
   url_launcher: ^3.0.3
   validators: ^2.0.0
   connectivity: ^0.4.3+1
+  uuid: ^2.0.1
 
   
 

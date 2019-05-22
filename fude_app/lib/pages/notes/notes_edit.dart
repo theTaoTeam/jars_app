@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fude/models/idea.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/widgets/forms/edit_note_form_container.dart';
@@ -10,9 +10,10 @@ import 'package:fude/scoped-models/main.dart';
 import 'dart:io';
 
 class NoteEditPage extends StatefulWidget {
-  final DocumentSnapshot note;
+  final Idea idea;
 
-  NoteEditPage({this.note});
+
+  NoteEditPage({this.idea});
 
   @override
   State<StatefulWidget> createState() {
@@ -39,7 +40,7 @@ class _AddNotePageState extends State<NoteEditPage> {
   void initState() {
     super.initState();
     setState(() {
-      selectedCategory = widget.note['category'];
+      selectedCategory = widget.idea.category;
     });
   }
 
@@ -49,7 +50,7 @@ class _AddNotePageState extends State<NoteEditPage> {
       return;
     } else {
       formKey.currentState.save(); // Save our form now.
-      model.updateNote(widget.note, _formData['category'], _formData['title'],
+      model.updateNote(widget.idea, _formData['category'], _formData['title'],
           _formData['notes'], _formData['link'], _formData['image']);
       Navigator.pushReplacement(
         context,
@@ -121,7 +122,7 @@ class _AddNotePageState extends State<NoteEditPage> {
                       curve: Curves.linear,
                       type: PageTransitionType.upToDown,
                       child: NotePage(
-                        note: widget.note,
+                        idea: widget.idea,
                         isRandom: false,
                       ),
                     ),
@@ -142,7 +143,7 @@ class _AddNotePageState extends State<NoteEditPage> {
                   children: <Widget>[
                     EditNoteForm(
                       formKey: formKey,
-                      note: widget.note,
+                      idea: widget.idea,
                       categoryList: model.selectedJar.data['categories'],
                       nullCategory: nullCategory,
                       selectedCategory: selectedCategory,
@@ -185,7 +186,7 @@ class _AddNotePageState extends State<NoteEditPage> {
                               iconSize: 36,
                               color: Colors.red,
                               onPressed: () {
-                                model.deleteJarIdea(widget.note.documentID);
+                                model.deleteJarIdea(widget.idea.id, widget.idea.title);
                                 Navigator.pushReplacement(
                                   context,
                                   PageTransition(

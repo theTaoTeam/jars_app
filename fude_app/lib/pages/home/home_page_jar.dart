@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:fude/scoped-models/main.dart';
@@ -37,8 +34,7 @@ class HomePageJar extends StatelessWidget {
 
   _buildTextContainer(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
-
+    // final double height = MediaQuery.of(context).size.height;
     var titleText = _applyTextEffects(
       translationFactor: 100.0,
       child: Container(

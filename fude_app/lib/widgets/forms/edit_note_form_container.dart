@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:fude/models/idea.dart';
 import 'package:fude/widgets/form-inputs/image.dart';
 import 'package:fude/widgets/form-inputs/edit_note_input.dart';
 
 class EditNoteForm extends StatelessWidget {
   final GlobalKey formKey;
-  final DocumentSnapshot note;
+  final Idea idea;
   final String selectedCategory;
   final List<dynamic> categoryList;
   final bool nullCategory;
@@ -18,7 +18,7 @@ class EditNoteForm extends StatelessWidget {
 
   EditNoteForm(
       {this.formKey,
-      this.note,
+      this.idea,
       this.categoryList,
       this.nullCategory,
       this.selectedCategory,
@@ -120,11 +120,11 @@ class EditNoteForm extends StatelessWidget {
               ],
             ),
             SizedBox(height: height * 0.045),
-            _buildTextSections('Name', note['title']),
+            _buildTextSections('Name', idea.title),
             SizedBox(height: height * 0.03),
-            _buildTextSections('Link', note['link']),
+            _buildTextSections('Link', idea.link),
             SizedBox(height: height * 0.03),
-            _buildTextSections('Notes', note['notes']),
+            _buildTextSections('Notes', idea.notes),
             SizedBox(height: height * 0.045),
             _buildFormTitles("IMAGE", context),
             SizedBox(height: height * 0.025),
