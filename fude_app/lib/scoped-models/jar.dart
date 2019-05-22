@@ -101,16 +101,20 @@ mixin JarModel on Model {
     _usersJars.forEach((jar) {
       if (jar.title == _selJar['title']) {
         jar.categories.forEach((cat) => newCategories.add(cat));
+        print(newCategories);
         if (data['categoriesToAdd'].length > 0) {
           newCategories.add(data['categories']);
         }
         if (data['categoriesToRemove'].length > 0) {
           newCategories.remove(data['categoriesToRemove']);
+          
         }
+
         jar = Jar(
-            title: data['title'],
-            categories: newCategories,
-            image: data['image'] == null ? _selJar['image'] : data['image']);
+          title: data['title'],
+          categories: newCategories,
+          image: data['image'] == null ? _selJar['image'] : data['image'],
+        );
       }
     });
 
@@ -127,6 +131,20 @@ mixin JarModel on Model {
             .document(_selJar.documentID)
             .updateData({
           'categories': FieldValue.arrayRemove(data['categoriesToRemove']),
+        });
+        await _firestore
+            .collection('jars')
+            .document(_selJar.documentID)
+            .collection('jarNotes')
+            .getDocuments()
+            .then((snapshot) {
+          for (DocumentSnapshot doc in snapshot.documents) {
+            for (var i = 0; i < data['categoriesToRemove'].length; i++) {
+              if(doc.data['category'] == data['categoriesToRemove'][i]) {
+                doc.reference.delete();
+              }
+            }
+          }
         });
       }
       await _firestore
@@ -164,7 +182,6 @@ mixin JarModel on Model {
 
   void deleteJarIdea(String id, String title) {
     _jarIdeas.removeWhere((idea) => idea.title == title);
-
     try {
       _firestore
           .collection('jars')
@@ -304,6 +321,7 @@ mixin JarModel on Model {
     );
     _jarIdeas.forEach((idea) {
       if (idea == newIdea) {
+        print('got idea');
         idea = updatedIdea;
       }
     });
@@ -338,7 +356,7 @@ mixin JarModel on Model {
   void toggleFavoriteStatus(Idea idea, int index) async {
     // _jarIdeas[index].setIsFav = !idea.getIsFav;
     _jarIdeas.forEach((val) {
-      if(val == idea) {
+      if (val == idea) {
         val.setIsFav = !idea.getIsFav;
       }
     });

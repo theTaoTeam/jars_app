@@ -61,14 +61,14 @@ class _JarPageState extends State<EditJarPage> {
   }
 
   void updateCategory(String val) {
-    print(val);
+    // print(val);
     if (val != '' && !_formData['categoriesToAdd'].contains(val)) {
       _formData['categoriesToAdd'].add(val);
     }
   }
 
   void updateImage(File image) {
-    print('image: $image');
+    // print('image: $image');
     setState(() {
       _formData['image'] = image;
     });

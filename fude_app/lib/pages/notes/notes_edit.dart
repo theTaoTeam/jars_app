@@ -12,7 +12,6 @@ import 'dart:io';
 class NoteEditPage extends StatefulWidget {
   final Idea idea;
 
-
   NoteEditPage({this.idea});
 
   @override
@@ -50,8 +49,10 @@ class _AddNotePageState extends State<NoteEditPage> {
       return;
     } else {
       formKey.currentState.save(); // Save our form now.
-      model.updateNote(widget.idea, _formData['category'], _formData['title'],
-          _formData['notes'], _formData['link'], _formData['image']);
+      setState(() {
+        model.updateNote(widget.idea, _formData['category'], _formData['title'],
+            _formData['notes'], _formData['link'], _formData['image']);
+      });
       Navigator.pushReplacement(
         context,
         PageTransition(
@@ -186,7 +187,8 @@ class _AddNotePageState extends State<NoteEditPage> {
                               iconSize: 36,
                               color: Colors.red,
                               onPressed: () {
-                                model.deleteJarIdea(widget.idea.id, widget.idea.title);
+                                model.deleteJarIdea(
+                                    widget.idea.id, widget.idea.title);
                                 Navigator.pushReplacement(
                                   context,
                                   PageTransition(

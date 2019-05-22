@@ -64,11 +64,27 @@ class EditNoteForm extends StatelessWidget {
     );
   }
 
+  List<DropdownMenuItem<String>> dropdownItems(BuildContext context) {
+    List<DropdownMenuItem<String>> items = [];
+    categoryList.forEach((category) {
+        print(category);
+        items.add(DropdownMenuItem(
+          value: category.toString(),
+          child: Text(
+            category.toString(),
+            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          ),
+        ));
+      },
+    );
+
+    return items;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     // final double width = MediaQuery.of(context).size.width;
-    print(categoryList);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       color: Theme.of(context).primaryColor,
@@ -88,19 +104,10 @@ class EditNoteForm extends StatelessWidget {
                           style: TextStyle(
                               color: Theme.of(context).secondaryHeaderColor)),
                       value: selectedCategory,
-                      items: categoryList.map((val) {
-                        return DropdownMenuItem(
-                          value: val.toString(),
-                          child: Text(
-                            val.toString(),
-                            style: TextStyle(
-                                color: Theme.of(context).secondaryHeaderColor),
-                          ),
-                        );
-                      }).toList(),
+                      items: dropdownItems(context),
                       onChanged: (dynamic val) {
-                        print(val);
-                        print(selectedCategory);
+                        // print(val);
+                        // print(selectedCategory);
                         updateCategory(val);
                       },
                     ),
