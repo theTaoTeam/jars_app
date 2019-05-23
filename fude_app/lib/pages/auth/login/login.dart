@@ -46,12 +46,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     setState(() {
       _formData['email'] = email;
     });
-    print('Email saved: ' + _formData['email']);
+    // print('Email saved: ' + _formData['email']);
   }
 
   void updatePassword(String password) {
     _formData['password'] = password;
-    print('Password saved: ' + _formData['password']);
+    // print('Password saved: ' + _formData['password']);
   }
 
   void _submitForm({Function login}) async {

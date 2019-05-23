@@ -10,7 +10,7 @@ class ForgotPassword extends StatelessWidget {
             top: 160.0,
           ),
           onPressed: () {
-            print('reset password pressed');
+            // print('reset password pressed');
             Navigator.pushReplacementNamed(context, '/forgotpass');
           },
           child: Text(

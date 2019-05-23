@@ -33,7 +33,7 @@ class NotesCard extends StatelessWidget {
                     )
                   : Image.network(idea.image, scale: 0.2)
               : Image.network(
-                  model.selectedJar.data['image'],
+                  model.locallySelJar.image,
                   scale: 1,
                 ),
         ),
@@ -68,7 +68,7 @@ class NotesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
-    print(idea.getIsFav);
+    // print(idea.getIsFav);
     return GestureDetector(
       onTap: () {
         Navigator.pushReplacement(

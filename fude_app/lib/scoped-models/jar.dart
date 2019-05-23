@@ -19,7 +19,7 @@ mixin JarModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
   DocumentSnapshot _selJar;
-  List<QuerySnapshot> _allJarIdeas;
+  Jar _locallySelJar;
   final Jar _addJar = Jar(title: 'ADD JAR', categories: [], image: null);
 
   List<dynamic> _usersJars = [];
@@ -31,8 +31,8 @@ mixin JarModel on Model {
     return _selJar;
   }
 
-  List<QuerySnapshot> get allJarIdeas {
-    return _allJarIdeas;
+  Jar get locallySelJar {
+    return _locallySelJar;
   }
 
   bool get isLoading {
@@ -92,14 +92,12 @@ mixin JarModel on Model {
 
   void updateJar(Map<String, dynamic> data) async {
     String imageLocation;
-    _isLoading = true;
-    notifyListeners();
 
     //update jar locally first
     List<dynamic> newCategories = [];
 
     _usersJars.forEach((jar) {
-      if (jar.title == _selJar['title']) {
+      if (jar.title == _locallySelJar.title) {
         jar.categories.forEach((cat) => newCategories.add(cat));
         print(newCategories);
         if (data['categoriesToAdd'].length > 0) {
@@ -107,18 +105,15 @@ mixin JarModel on Model {
         }
         if (data['categoriesToRemove'].length > 0) {
           newCategories.remove(data['categoriesToRemove']);
-          
         }
 
         jar = Jar(
           title: data['title'],
           categories: newCategories,
-          image: data['image'] == null ? _selJar['image'] : data['image'],
+          image: data['image'] == null ? _locallySelJar.image : data['image'],
         );
       }
     });
-
-    _isLoading = false;
     notifyListeners();
     //then update in db
     try {
@@ -140,8 +135,8 @@ mixin JarModel on Model {
             .then((snapshot) {
           for (DocumentSnapshot doc in snapshot.documents) {
             for (var i = 0; i < data['categoriesToRemove'].length; i++) {
-              if(doc.data['category'] == data['categoriesToRemove'][i]) {
-                doc.reference.delete();
+              if (doc.data['category'] == data['categoriesToRemove'][i]) {
+                doc.reference.updateData({'category': 'ALL'});
               }
             }
           }
@@ -157,7 +152,6 @@ mixin JarModel on Model {
         'title': data['title'],
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
-        'isFav': _selJar['isFav']
       });
       notifyListeners();
     } catch (e) {
@@ -196,8 +190,16 @@ mixin JarModel on Model {
     }
   }
 
-  Future getJarBySelectedTitle(String title) async {
+  void getJarBySelectedTitle(String title) async {
     _isLoading = true;
+    notifyListeners();
+
+    _usersJars.forEach((jar) {
+      if (jar.title == title) {
+        _locallySelJar = jar;
+      }
+    });
+    _isLoading = false;
     notifyListeners();
     try {
       await _firestore.collection('jars').getDocuments().then((val) {
@@ -207,10 +209,10 @@ mixin JarModel on Model {
           }
         });
       });
+      await fetchAllJarIdeasFromDB();
     } catch (e) {
       print(e);
     }
-    return;
   }
 
   void resetIsLoading() {
@@ -304,31 +306,33 @@ mixin JarModel on Model {
       print(e);
     }
     //returns the download url
-    // print('LOCATION $location');
     return location;
   }
 
   void updateNote(Idea newIdea, String category, String title, String notes,
       String link, File image) async {
+    String imageLocation;
     _isLoading = true;
     notifyListeners();
+
     final Idea updatedIdea = Idea(
-      title: newIdea.title,
-      category: newIdea.category,
-      link: newIdea.link,
+      title: title,
+      category: category,
+      link: link,
       isFav: newIdea.getIsFav,
-      image: newIdea.image == null ? _selJar['image'] : newIdea.image,
+      image: image == null ? _selJar['image'] : image,
     );
     _jarIdeas.forEach((idea) {
-      if (idea == newIdea) {
-        print('got idea');
+      if (idea.title == title) {
+        print(idea.category);
         idea = updatedIdea;
+        print(idea.category);
+        notifyListeners();
       }
     });
 
     _isLoading = false;
     notifyListeners();
-    String imageLocation;
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
@@ -416,8 +420,8 @@ mixin JarModel on Model {
   }
 
   Future<List<dynamic>> fetchAllUserJarsFromDB(String email) async {
-    _isLoading = true;
-    notifyListeners();
+    // _isLoading = true;
+    // notifyListeners();
     QuerySnapshot jars;
     FirebaseUser user = await _auth.currentUser();
     _usersJars = [_addJar];
@@ -448,6 +452,7 @@ mixin JarModel on Model {
     notifyListeners();
     QuerySnapshot ideas;
     _jarIdeas = [];
+    // print('_selJar: $_selJar');
     try {
       ideas = await _firestore
           .collection('jars')
@@ -479,11 +484,11 @@ mixin JarModel on Model {
     _favIdeas = [];
     _jarIdeas.forEach((idea) {
       if (idea.getIsFav) {
-        print('idea is fav ${idea.title}');
+        // print('idea is fav ${idea.title}');
         _favIdeas.add(idea);
       }
     });
-    print(_favIdeas);
+    // print(_favIdeas);
     notifyListeners();
   }
 
@@ -511,7 +516,7 @@ mixin JarModel on Model {
       url = "https://$url";
     }
     if (isURL(url, protocols: ['https', 'http'])) {
-      print('is URL');
+      // print('is URL');
       if (await canLaunch(url)) {
         // print('can launch this url!');
         await launch(url);
@@ -526,7 +531,7 @@ mixin JarModel on Model {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _darkTheme =
         prefs.getBool('darkTheme') != null ? prefs.getBool('darkTheme') : false;
-    print(_darkTheme);
+    // print(_darkTheme);
     notifyListeners();
     return _darkTheme;
   }

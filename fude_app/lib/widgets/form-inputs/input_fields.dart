@@ -60,7 +60,7 @@ class InputFieldArea extends StatelessWidget {
           String finalVal = val.toLowerCase().trim();
           if (hint == 'Email') {
          
-            print(finalVal);
+            // print(finalVal);
             if (finalVal.isEmpty ||
                 !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                     .hasMatch(finalVal)) {
@@ -73,7 +73,7 @@ class InputFieldArea extends StatelessWidget {
           }
         },
         onSaved: (String val) {
-          print(val);
+          // print(val);
           val.toLowerCase();
           hint == 'Email' ? updateEmail(val.trim()) : updatePassword(val.trim());
         },

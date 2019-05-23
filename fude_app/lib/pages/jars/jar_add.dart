@@ -45,14 +45,14 @@ class _JarPageState extends State<AddJarPage> {
   }
 
   void updateCategory(String val) {
-    print('update category called: $val');
+    // print('update category called: $val');
     setState(() {
       _formData['categories'].add(val);
     });
   }
 
   void updateImage(File image) {
-    print('image: $image');
+    // print('image: $image');
     setState(() {
       imageSelected = true;
       _formData['image'] = image;
@@ -60,7 +60,7 @@ class _JarPageState extends State<AddJarPage> {
   }
 
   void updateCategoryCount() {
-    print('categoryCount: $categoryCount');
+    // print('categoryCount: $categoryCount');
     setState(() {
       if (imageSelected) {
         imageSelected = false;
