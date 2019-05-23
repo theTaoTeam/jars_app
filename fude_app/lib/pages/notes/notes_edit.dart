@@ -46,7 +46,7 @@ class _AddNotePageState extends State<NoteEditPage> {
 
   void updateNote(MainModel model) {
     // First validate form.
-    if (!this.formKey.currentState.validate()) {
+    if (!this.formKey.currentState.validate()){
       return;
     } else {
       formKey.currentState.save(); // Save our form now.

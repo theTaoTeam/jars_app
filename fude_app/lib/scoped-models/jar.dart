@@ -90,31 +90,31 @@ mixin JarModel on Model {
     }
   }
 
-  void updateJar(Map<String, dynamic> data) async {
+  Future<void> updateJar(Map<String, dynamic> data) async {
     String imageLocation;
-
-    //update jar locally first
     List<dynamic> newCategories = [];
-
+    //update jar locally first
     _usersJars.forEach((jar) {
       if (jar.title == _locallySelJar.title) {
         jar.categories.forEach((cat) => newCategories.add(cat));
-        print(newCategories);
         if (data['categoriesToAdd'].length > 0) {
           newCategories.add(data['categories']);
         }
         if (data['categoriesToRemove'].length > 0) {
           newCategories.remove(data['categoriesToRemove']);
         }
+        print('${jar.image}');
 
         jar = Jar(
           title: data['title'],
           categories: newCategories,
           image: data['image'] == null ? _locallySelJar.image : data['image'],
         );
+        print('${jar.image}');
+        notifyListeners();
       }
     });
-    notifyListeners();
+    print('notifyed listeners');
     //then update in db
     try {
       if (data['image'] != null) {
@@ -153,10 +153,10 @@ mixin JarModel on Model {
         'image':
             imageLocation == null ? _selJar['image'] : imageLocation.toString(),
       });
-      notifyListeners();
     } catch (e) {
       print(e);
     }
+    notifyListeners();
   }
 
   void deleteJar() async {
@@ -420,8 +420,6 @@ mixin JarModel on Model {
   }
 
   Future<List<dynamic>> fetchAllUserJarsFromDB(String email) async {
-    // _isLoading = true;
-    // notifyListeners();
     QuerySnapshot jars;
     FirebaseUser user = await _auth.currentUser();
     _usersJars = [_addJar];

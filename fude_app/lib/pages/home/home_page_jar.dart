@@ -129,6 +129,7 @@ class HomePageJar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print('jar card update');
     Image jarImage = jar != null
         ? jar.image.runtimeType != String && jar.image != null
             ? Image.file(
@@ -157,6 +158,7 @@ class HomePageJar extends StatelessWidget {
               0.5,
             ),
           );
+       
     var image = title == null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(30.0),

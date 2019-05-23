@@ -184,8 +184,9 @@ class _JarPageState extends State<JarPage> {
                                                 .color,
                                           ),
                                           iconSize: 39,
-                                          onPressed: () {
+                                          onPressed: () async {
                                             _swiperVisible = false;
+                                            await model.fetchAllJarIdeasFromDB();
                                             Navigator.pushReplacement(
                                               context,
                                               PageTransition(

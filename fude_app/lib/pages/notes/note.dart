@@ -14,8 +14,8 @@ class NotePage extends StatelessWidget {
 
   NotePage({this.idea, @required this.isRandom});
 
-  Widget _buildTextSections(String val, BuildContext context, MainModel model,
-      Idea idea) {
+  Widget _buildTextSections(
+      String val, BuildContext context, MainModel model, Idea idea) {
     return Container(
       padding: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
@@ -93,7 +93,7 @@ class NotePage extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.edit),
                 color: Theme.of(context).iconTheme.color,
-                iconSize: 25,
+                iconSize: 23,
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 onPressed: () {
@@ -113,19 +113,31 @@ class NotePage extends StatelessWidget {
         body: Container(
             height: height,
             width: width,
-            // padding: EdgeInsets.all(25),
+            padding: EdgeInsets.only(top: height * 0.03),
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: ListView(
               // shrinkWrap: true,
               padding: EdgeInsets.fromLTRB(width * 0.05, 0, width * 0.05, 0),
               children: <Widget>[
+                
                 Container(
                   height: height / 3,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(idea.image != null
-                          ? idea.image
-                          : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
+                      image: idea.image != null
+                          ? idea.image.runtimeType != String
+                              ? Image.file(
+                                  idea.image,
+                                  fit: BoxFit.cover,
+                                  alignment: FractionalOffset(
+                                    0.5,
+                                    0.5,
+                                  ),
+                                )
+                              : NetworkImage(idea.image, scale: 0.2)
+                          : NetworkImage(idea.image != null
+                              ? idea.image
+                              : 'https://firebasestorage.googleapis.com/v0/b/fude-app.appspot.com/o/Scoot-01.png?alt=media&token=53fc26de-7c61-4076-a0cb-f75487779604'),
                     ),
                   ),
                 ),
