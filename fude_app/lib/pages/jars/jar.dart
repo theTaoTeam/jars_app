@@ -32,7 +32,6 @@ class _JarPageState extends State<JarPage> {
   void initState() {
     widget.model.resetIsLoading();
     fadeInstructions();
-    widget.model.fetchAllJarIdeasFromDB();
     super.initState();
   }
 
@@ -46,14 +45,14 @@ class _JarPageState extends State<JarPage> {
     final _random = Random();
     List<Idea> ideas = [];
     Idea randomNote;
-    print('CATEGORY: $category');
+    // print('CATEGORY: $category');
     ideas = model.fetchJarNotesByCategory(category);
     
     if (ideas != null && ideas.length != 0) {
-      print("ideas !== NULL: $ideas");
+      // print("ideas !== NULL: $ideas");
       randomNote = ideas[_random.nextInt(ideas.length)];
     }
-    print("ideas: $ideas");
+    // print("ideas: $ideas");
 
     showRandomNote(context, randomNote, model, category);
   }
@@ -70,8 +69,8 @@ class _JarPageState extends State<JarPage> {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: widget.model.selectedJar.data['image'] != null
-                ? NetworkImage(widget.model.selectedJar.data['image'])
+            image: widget.model.locallySelJar.image != null
+                ? NetworkImage(widget.model.locallySelJar.image)
                 : AssetImage('assets/logo.png'),
             fit: BoxFit.fitWidth,
           ),
@@ -212,7 +211,7 @@ class _JarPageState extends State<JarPage> {
                                 child: Container(
                                   width: width * 0.7,
                                   child: Text(
-                                    model.selectedJar.data['title']
+                                    model.locallySelJar.title
                                         .toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.title,
@@ -260,7 +259,7 @@ class _JarPageState extends State<JarPage> {
                                         height: height * 0.02,
                                       ),
                                       Text(
-                                        'TAP THE + TO ADD AN IDEA',
+                                        'TAP THE + TO ADD TO YOUR JAR',
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .secondaryHeaderColor,
@@ -289,17 +288,17 @@ class _JarPageState extends State<JarPage> {
                                   controller: PageController(
                                       viewportFraction: .6, initialPage: 0),
                                   itemCount: model
-                                      .selectedJar.data['categories'].length,
+                                      .locallySelJar.categories.length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () => _pullRandomNote(
                                           model,
-                                          model.selectedJar.data['categories']
+                                          model.locallySelJar.categories
                                               [index]),
                                       child: CategoryCard(
                                         model: widget.model,
-                                        category: model.selectedJar
-                                            .data['categories'][index],
+                                        category: model.locallySelJar
+                                            .categories[index],
                                         index: index,
                                       ),
                                     );
@@ -327,7 +326,7 @@ class _JarPageState extends State<JarPage> {
                                           child: AddNotePage(
                                             fromJarScreen: true,
                                             categories: model
-                                                .selectedJar.data['categories'],
+                                                .locallySelJar.categories,
                                           ),
                                         ),
                                       ),

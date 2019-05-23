@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         });
         showSnackBar(mScaffoldState);
         Timer(Duration(milliseconds: 5500), () => setState(() {internetConnection = true;}));
-        print('No Connection: $result');
+        // print('No Connection: $result');
       }
     });
     widget.model.fetchAllUserJarsFromDB(widget.model.currUserEmail);
@@ -47,9 +47,8 @@ class _HomePageState extends State<HomePage> {
     subscription.cancel();
   }
 
-  void _openJar(int index) async {
-    try {
-      await widget.model
+  void _openJar(int index) {
+      widget.model
           .getJarBySelectedTitle(widget.model.usersJars[index].title);
       Navigator.push(
         context,
@@ -59,15 +58,14 @@ class _HomePageState extends State<HomePage> {
           child: JarPage(model: widget.model),
         ),
       );
-    } catch (e) {
-      print(e);
-    }
+   
   }
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
+    
     return Scaffold(
       key: mScaffoldState,
       appBar: AppBar(

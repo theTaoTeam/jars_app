@@ -44,16 +44,16 @@ class _SignUpState extends State<SignUpPage> with TickerProviderStateMixin {
 
   void updateEmail(String email) {
     _formData['email'] = email;
-    print('Email saved: ' + _formData['email']);
+    // print('Email saved: ' + _formData['email']);
   }
 
   void updatePassword(String password) {
     _formData['password'] = password;
-    print('Password saved: ' + _formData['password']);
+    // print('Password saved: ' + _formData['password']);
   }
 
   void _submitForm({Function register}) async {
-    print("about to register");
+    // print("about to register");
     if (!formKey.currentState.validate()) {
       return;
     } else {

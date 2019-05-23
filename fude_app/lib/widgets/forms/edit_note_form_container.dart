@@ -66,13 +66,17 @@ class EditNoteForm extends StatelessWidget {
 
   List<DropdownMenuItem<String>> dropdownItems(BuildContext context) {
     List<DropdownMenuItem<String>> items = [];
-    categoryList.forEach((category) {
-        print(category);
+    categoryList.forEach(
+      (category) {
+        // print(category);
         items.add(DropdownMenuItem(
           value: category.toString(),
           child: Text(
             category.toString(),
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+            style: TextStyle(
+                color: category == selectedCategory
+                    ? Theme.of(context).secondaryHeaderColor
+                    : Color.fromRGBO(40, 40, 40, 1),fontSize: 17.0),
           ),
         ));
       },
@@ -102,7 +106,9 @@ class EditNoteForm extends StatelessWidget {
                     DropdownButton(
                       hint: Text('CATEGORY',
                           style: TextStyle(
-                              color: Theme.of(context).secondaryHeaderColor)),
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontSize: 17.0,
+                          )),
                       value: selectedCategory,
                       items: dropdownItems(context),
                       onChanged: (dynamic val) {

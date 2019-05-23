@@ -34,7 +34,6 @@ class _JarNotesState extends State<JarNotes> {
         .listen((ConnectivityResult result) {
       if (result == ConnectivityResult.none) {
         showSnackBar(sScaffoldState);
-        print('No Connection: $result');
       }
     });
     super.initState();

@@ -49,7 +49,6 @@ class _AddNotePageState extends State<AddNotePage> {
     }
     formKey.currentState.save(); // Save our form now.
     nullCategory = false;
-    print(_formData);
     model.addToJar(_formData['category'], _formData['title'],
         _formData['notes'], _formData['link'], _formData['image']);
     FocusScope.of(context).requestFocus(FocusNode());
@@ -101,7 +100,7 @@ class _AddNotePageState extends State<AddNotePage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    print(widget.categories);
+    // print(widget.categories);
     return ScopedModelDescendant<MainModel>(
         builder: (BuildContext context, Widget child, MainModel model) {
       return Scaffold(

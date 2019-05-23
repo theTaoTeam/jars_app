@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:fude/widgets/forms/edit_note_form_container.dart';
 import 'package:fude/pages/notes/note.dart';
 import 'package:fude/pages/jars/jar_notes.dart';
+import 'package:fude/pages/jars/jar.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'dart:io';
 
@@ -49,23 +50,23 @@ class _AddNotePageState extends State<NoteEditPage> {
       return;
     } else {
       formKey.currentState.save(); // Save our form now.
-      setState(() {
-        model.updateNote(widget.idea, _formData['category'], _formData['title'],
-            _formData['notes'], _formData['link'], _formData['image']);
-      });
+      model.updateNote(widget.idea, _formData['category'], _formData['title'],
+          _formData['notes'], _formData['link'], _formData['image']);
+      FocusScope.of(context).requestFocus(FocusNode());
+      model.getJarBySelectedTitle(model.locallySelJar.title);
       Navigator.pushReplacement(
         context,
         PageTransition(
           curve: Curves.linear,
           type: PageTransitionType.fade,
-          child: JarNotes(model: model),
+          child: JarPage(model: model),
         ),
       );
     }
   }
 
   void updateCategory(dynamic value) {
-    print("updating cateogory: $value");
+    // print("updating cateogory: $value");
     setState(() {
       selectedCategory = value;
       _formData['category'] = value.toString();
@@ -91,7 +92,7 @@ class _AddNotePageState extends State<NoteEditPage> {
   }
 
   void updateImage(File image) {
-    print(image);
+    // print(image);
     setState(() {
       _formData['image'] = image;
     });

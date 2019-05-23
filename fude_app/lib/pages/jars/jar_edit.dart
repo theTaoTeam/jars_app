@@ -43,13 +43,14 @@ class _JarPageState extends State<EditJarPage> {
     super.initState();
   }
 
-  void updateJar(MainModel model) {
+  void updateJar(MainModel model) async {
     //validate form.
     if (!this.formKey.currentState.validate()) {
       return;
     } else {
       formKey.currentState.save();
       model.updateJar(_formData);
+      await model.fetchAllUserJarsFromDB(model.currUserEmail);
       Navigator.pop(context);
     }
   }
@@ -245,7 +246,6 @@ class _JarPageState extends State<EditJarPage> {
                         )
                       ],
                     ),
-                    
                   ],
                 )
               : Center(
