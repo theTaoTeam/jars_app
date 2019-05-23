@@ -235,10 +235,13 @@ class _JarPageState extends State<EditJarPage> {
                                   icon: Icon(Icons.delete),
                                   iconSize: 36,
                                   color: Colors.red,
-                                  onPressed: () {
+                                  onPressed: () async {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     model.deleteJar();
+                                    await model.fetchAllUserJarsFromDB(
+                                        model.currUserEmail);
+
                                     Navigator.pop(context);
                                   })
                             ],

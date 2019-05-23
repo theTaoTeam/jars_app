@@ -160,7 +160,7 @@ mixin JarModel on Model {
   }
 
   void deleteJar() async {
-    _usersJars.removeWhere((jar) => jar.title == _selJar['title']);
+    _usersJars.removeWhere((jar) => jar.id == _selJar.documentID);
     notifyListeners();
     try {
       _firestore
