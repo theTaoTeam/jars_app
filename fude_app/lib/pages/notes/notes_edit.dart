@@ -44,22 +44,24 @@ class _AddNotePageState extends State<NoteEditPage> {
     });
   }
 
-  void updateNote(MainModel model) {
+  void updateNote(MainModel model) async {
     // First validate form.
-    if (!this.formKey.currentState.validate()){
+    if (!this.formKey.currentState.validate()) {
       return;
     } else {
       formKey.currentState.save(); // Save our form now.
+
       model.updateNote(widget.idea, _formData['category'], _formData['title'],
           _formData['notes'], _formData['link'], _formData['image']);
+
       FocusScope.of(context).requestFocus(FocusNode());
-      model.getJarBySelectedTitle(model.locallySelJar.title);
+
       Navigator.pushReplacement(
         context,
         PageTransition(
           curve: Curves.linear,
           type: PageTransitionType.fade,
-          child: JarPage(model: model),
+          child: JarNotes(model: model),
         ),
       );
     }

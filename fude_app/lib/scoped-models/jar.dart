@@ -91,11 +91,15 @@ mixin JarModel on Model {
   }
 
   Future<void> updateJar(Map<String, dynamic> data) async {
+    _isLoading = true;
+    notifyListeners();
     String imageLocation;
     List<dynamic> newCategories = [];
+    int jarIndex;
     //update jar locally first
     _usersJars.forEach((jar) {
       if (jar.title == _locallySelJar.title) {
+        jarIndex = _usersJars.indexOf(jar);
         jar.categories.forEach((cat) => newCategories.add(cat));
         if (data['categoriesToAdd'].length > 0) {
           newCategories.add(data['categories']);
@@ -105,16 +109,18 @@ mixin JarModel on Model {
         }
         print('${jar.image}');
 
-        jar = Jar(
+        final Jar updatedJar = Jar(
           title: data['title'],
           categories: newCategories,
           image: data['image'] == null ? _locallySelJar.image : data['image'],
         );
-        print('${jar.image}');
+        _usersJars.removeAt(jarIndex);
+        _usersJars.insert(jarIndex, updatedJar);
+
+        _isLoading = false;
         notifyListeners();
       }
     });
-    print('notifyed listeners');
     //then update in db
     try {
       if (data['image'] != null) {
@@ -312,27 +318,30 @@ mixin JarModel on Model {
   void updateNote(Idea newIdea, String category, String title, String notes,
       String link, File image) async {
     String imageLocation;
+    final Uuid uuid = Uuid();
     _isLoading = true;
     notifyListeners();
-
+    print('val: $link ${link.runtimeType}');
     final Idea updatedIdea = Idea(
-      title: title,
-      category: category,
-      link: link,
+      id: uuid.v4(),
+      title: title == null ? newIdea.title : title,
+      category: category == '' ? newIdea.category : category,
+      link: link == '' ? newIdea.link : link,
       isFav: newIdea.getIsFav,
       image: image == null ? _selJar['image'] : image,
     );
+    int index;
     _jarIdeas.forEach((idea) {
-      if (idea.title == title) {
-        print(idea.category);
-        idea = updatedIdea;
-        print(idea.category);
-        notifyListeners();
+      if (idea.id == newIdea.id) {
+        index = _jarIdeas.indexOf(idea);
       }
     });
+    _jarIdeas.removeAt(index);
+    _jarIdeas.insert(index, updatedIdea);
 
     _isLoading = false;
     notifyListeners();
+
     try {
       if (image != null) {
         imageLocation = await uploadNoteImageToStorage(image);
@@ -420,6 +429,8 @@ mixin JarModel on Model {
   }
 
   Future<List<dynamic>> fetchAllUserJarsFromDB(String email) async {
+    _isLoading = true;
+    notifyListeners();
     QuerySnapshot jars;
     FirebaseUser user = await _auth.currentUser();
     _usersJars = [_addJar];

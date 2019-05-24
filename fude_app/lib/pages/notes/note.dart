@@ -16,6 +16,8 @@ class NotePage extends StatelessWidget {
 
   Widget _buildTextSections(
       String val, BuildContext context, MainModel model, Idea idea) {
+        print('idea link: ${idea.link.runtimeType}');
+        print('val: ${val.runtimeType}');
     return Container(
       padding: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
@@ -38,7 +40,7 @@ class NotePage extends StatelessWidget {
                         Theme.of(context).textTheme.caption.letterSpacing),
               ))
           : Text(
-              val,
+              val == null ? '' : val,
               maxLines: 4,
               style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
@@ -126,14 +128,15 @@ class NotePage extends StatelessWidget {
                     image: DecorationImage(
                       image: idea.image != null
                           ? idea.image.runtimeType != String
-                              ? Image.file(
-                                  idea.image,
-                                  fit: BoxFit.cover,
-                                  alignment: FractionalOffset(
-                                    0.5,
-                                    0.5,
-                                  ),
-                                )
+                              ? FileImage(idea.image)
+                              // Image.file(
+                              //     idea.image,
+                              //     fit: BoxFit.cover,
+                              //     alignment: FractionalOffset(
+                              //       0.5,
+                              //       0.5,
+                              //     ),
+                              //   )
                               : NetworkImage(idea.image, scale: 0.2)
                           : NetworkImage(idea.image != null
                               ? idea.image

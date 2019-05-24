@@ -49,8 +49,8 @@ class _JarPageState extends State<EditJarPage> {
       return;
     } else {
       formKey.currentState.save();
-      await model.updateJar(_formData);
-      await model.fetchAllUserJarsFromDB(model.currUserEmail);
+      model.updateJar(_formData);
+      // model.fetchAllUserJarsFromDB(model.currUserEmail);
 
       Navigator.pop(context);
     }
