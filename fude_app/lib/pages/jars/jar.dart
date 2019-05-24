@@ -47,7 +47,7 @@ class _JarPageState extends State<JarPage> {
     Idea randomNote;
     // print('CATEGORY: $category');
     ideas = model.fetchJarNotesByCategory(category);
-    
+
     if (ideas != null && ideas.length != 0) {
       // print("ideas !== NULL: $ideas");
       randomNote = ideas[_random.nextInt(ideas.length)];
@@ -70,7 +70,12 @@ class _JarPageState extends State<JarPage> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: widget.model.locallySelJar.image != null
-                ? NetworkImage(widget.model.locallySelJar.image)
+                ? widget.model.locallySelJar.image.runtimeType != String
+                    ? FileImage(
+                        widget.model.locallySelJar.image,
+                    )
+                    : NetworkImage(widget.model.locallySelJar.image,
+                        scale: 0.2)
                 : AssetImage('assets/logo.png'),
             fit: BoxFit.fitWidth,
           ),
@@ -186,7 +191,8 @@ class _JarPageState extends State<JarPage> {
                                           iconSize: 39,
                                           onPressed: () async {
                                             _swiperVisible = false;
-                                            await model.fetchAllJarIdeasFromDB();
+                                            await model
+                                                .fetchAllJarIdeasFromDB();
                                             Navigator.pushReplacement(
                                               context,
                                               PageTransition(
@@ -212,8 +218,7 @@ class _JarPageState extends State<JarPage> {
                                 child: Container(
                                   width: width * 0.7,
                                   child: Text(
-                                    model.locallySelJar.title
-                                        .toUpperCase(),
+                                    model.locallySelJar.title.toUpperCase(),
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.title,
                                     textAlign: TextAlign.left,
@@ -223,7 +228,7 @@ class _JarPageState extends State<JarPage> {
                               ),
                             ),
                             Positioned(
-                              top: height * 0.24,
+                              top: height * 0.21,
                               left: width * 0.07,
                               right: width * 0.07,
                               child: AnimatedOpacity(
@@ -288,18 +293,18 @@ class _JarPageState extends State<JarPage> {
                                   scrollDirection: Axis.horizontal,
                                   controller: PageController(
                                       viewportFraction: .6, initialPage: 0),
-                                  itemCount: model
-                                      .locallySelJar.categories.length,
+                                  itemCount:
+                                      model.locallySelJar.categories.length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () => _pullRandomNote(
                                           model,
-                                          model.locallySelJar.categories
-                                              [index]),
+                                          model
+                                              .locallySelJar.categories[index]),
                                       child: CategoryCard(
                                         model: widget.model,
-                                        category: model.locallySelJar
-                                            .categories[index],
+                                        category: model
+                                            .locallySelJar.categories[index],
                                         index: index,
                                       ),
                                     );
@@ -326,8 +331,8 @@ class _JarPageState extends State<JarPage> {
                                           type: PageTransitionType.downToUp,
                                           child: AddNotePage(
                                             fromJarScreen: true,
-                                            categories: model
-                                                .locallySelJar.categories,
+                                            categories:
+                                                model.locallySelJar.categories,
                                           ),
                                         ),
                                       ),
