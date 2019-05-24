@@ -3,9 +3,9 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:io';
 
-import 'package:fude/widgets/forms/add_tojar_form_container.dart';
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/jars/jar_notes.dart';
+import 'package:jars/widgets/forms/add_tojar_form_container.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/pages/jars/jar_notes.dart';
 
 class AddNotePage extends StatefulWidget {
   final List<dynamic> categories;

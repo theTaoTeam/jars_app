@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
-import 'package:fude/widgets/form-inputs/add_user_tojar.dart';
+import 'package:jars/widgets/form-inputs/add_user_tojar.dart';
 
 class AddUserToJarForm extends StatelessWidget {
   final GlobalKey addUserFormKey;

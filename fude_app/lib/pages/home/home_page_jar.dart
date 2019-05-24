@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/jars/jar_edit.dart';
-import 'package:fude/pages/jars/jar_add.dart';
-import 'package:fude/models/jar.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/pages/jars/jar_edit.dart';
+import 'package:jars/pages/jars/jar_add.dart';
+import 'package:jars/models/jar.dart';
 
 class HomePageJar extends StatelessWidget {
   final Jar jar;

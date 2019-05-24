@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:fude/models/idea.dart';
+import 'package:jars/models/idea.dart';
 
 class Jar {
   final String id;

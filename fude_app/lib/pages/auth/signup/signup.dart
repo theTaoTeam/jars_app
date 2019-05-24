@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
-import 'package:fude/pages/auth/signup/forgotpass_link.dart';
+import 'package:jars/pages/auth/signup/forgotpass_link.dart';
 
-import 'package:fude/pages/auth/signup/signup_button.dart';
-import 'package:fude/helpers/exceptions.dart';
-import 'package:fude/widgets/forms/form_container.dart';
-import 'package:fude/widgets/logo.dart';
+import 'package:jars/pages/auth/signup/signup_button.dart';
+import 'package:jars/helpers/exceptions.dart';
+import 'package:jars/widgets/forms/form_container.dart';
+import 'package:jars/widgets/logo.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

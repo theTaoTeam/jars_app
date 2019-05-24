@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:fude/widgets/form-inputs/image.dart';
-import 'package:fude/widgets/form-inputs/add_tojar_inputs.dart';
+import 'package:jars/widgets/form-inputs/image.dart';
+import 'package:jars/widgets/form-inputs/add_tojar_inputs.dart';
 
 class AddToJarForm extends StatelessWidget {
   final GlobalKey formKey;

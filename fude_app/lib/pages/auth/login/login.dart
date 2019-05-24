@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
-import 'package:fude/pages/auth/signup/signup_link.dart';
-import 'package:fude/pages/auth/login/login_button.dart';
-import 'package:fude/helpers/exceptions.dart';
-import 'package:fude/widgets/forms/form_container.dart';
-import 'package:fude/widgets/logo.dart';
+import 'package:jars/pages/auth/signup/signup_link.dart';
+import 'package:jars/pages/auth/login/login_button.dart';
+import 'package:jars/helpers/exceptions.dart';
+import 'package:jars/widgets/forms/form_container.dart';
+import 'package:jars/widgets/logo.dart';
 
 class LoginPage extends StatefulWidget {
   @override

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'package:fude/pages/auth/login/login.dart';
-import 'package:fude/pages/auth/signup/signup.dart';
-import 'package:fude/pages/auth/forgot-password/forgotpassword.dart';
-import 'package:fude/pages/home/home.dart';
-import 'package:fude/pages/jars/jar_add.dart';
-import 'package:fude/pages/notes/notes_add.dart';
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/helpers/design_helpers.dart';
+import 'package:jars/pages/auth/login/login.dart';
+import 'package:jars/pages/auth/signup/signup.dart';
+import 'package:jars/pages/auth/forgot-password/forgotpassword.dart';
+import 'package:jars/pages/home/home.dart';
+import 'package:jars/pages/jars/jar_add.dart';
+import 'package:jars/pages/notes/notes_add.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/helpers/design_helpers.dart';
 
 Future<void> main() async {
   SystemChrome.setPreferredOrientations([

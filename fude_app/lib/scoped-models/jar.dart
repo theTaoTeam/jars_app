@@ -9,8 +9,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fude/models/jar.dart';
-import 'package:fude/models/idea.dart';
+import 'package:jars/models/jar.dart';
+import 'package:jars/models/idea.dart';
 import 'package:uuid/uuid.dart';
 
 mixin JarModel on Model {

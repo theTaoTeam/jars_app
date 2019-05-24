@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:io';
 
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/widgets/forms/add_jar.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/widgets/forms/add_jar.dart';
 
 class AddJarPage extends StatefulWidget {
   @override

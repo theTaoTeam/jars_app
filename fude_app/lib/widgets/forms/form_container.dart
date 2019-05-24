@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fude/widgets/form-inputs/input_fields.dart';
+import 'package:jars/widgets/form-inputs/input_fields.dart';
 
 class FormContainer extends StatelessWidget {
   final GlobalKey formKey;

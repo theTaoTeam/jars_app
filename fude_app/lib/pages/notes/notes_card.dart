@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
-import 'package:fude/models/idea.dart';
-import 'package:fude/pages/notes/note.dart';
+import 'package:jars/models/idea.dart';
+import 'package:jars/pages/notes/note.dart';
 
 class NotesCard extends StatelessWidget {
   final Idea idea;

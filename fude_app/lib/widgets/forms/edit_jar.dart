@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:fude/widgets/form-inputs/add_jar_name_input.dart';
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/widgets/form-inputs/add_jar_category_input.dart';
-import 'package:fude/widgets/form-inputs/image.dart';
+import 'package:jars/widgets/form-inputs/add_jar_name_input.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/widgets/form-inputs/add_jar_category_input.dart';
+import 'package:jars/widgets/form-inputs/image.dart';
 
 class EditJarForm extends StatelessWidget {
   final GlobalKey formKey;

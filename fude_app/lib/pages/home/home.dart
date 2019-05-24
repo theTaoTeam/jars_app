@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:async';
 
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/jars/jar.dart';
-import 'package:fude/pages/home/home_page_jar.dart';
-import 'package:fude/helpers/snackBar.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/pages/jars/jar.dart';
+import 'package:jars/pages/home/home_page_jar.dart';
+import 'package:jars/helpers/snackBar.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class HomePage extends StatefulWidget {

@@ -4,12 +4,12 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/pages/notes/notes_card.dart';
-import 'package:fude/pages/notes/notes_add.dart';
-import 'package:fude/pages/jars/jar.dart';
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/models/idea.dart';
-import 'package:fude/helpers/snackBar.dart';
+import 'package:jars/pages/notes/notes_card.dart';
+import 'package:jars/pages/notes/notes_add.dart';
+import 'package:jars/pages/jars/jar.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/models/idea.dart';
+import 'package:jars/helpers/snackBar.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class JarNotes extends StatefulWidget {

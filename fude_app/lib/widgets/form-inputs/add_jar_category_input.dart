@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
 class AddJarCategoryField extends StatelessWidget {
   final String hint;

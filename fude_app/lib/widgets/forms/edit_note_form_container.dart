@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:fude/models/idea.dart';
-import 'package:fude/widgets/form-inputs/image.dart';
-import 'package:fude/widgets/form-inputs/edit_note_input.dart';
+import 'package:jars/models/idea.dart';
+import 'package:jars/widgets/form-inputs/image.dart';
+import 'package:jars/widgets/form-inputs/edit_note_input.dart';
 
 class EditNoteForm extends StatelessWidget {
   final GlobalKey formKey;

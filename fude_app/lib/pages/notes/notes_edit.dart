@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fude/models/idea.dart';
+import 'package:jars/models/idea.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/widgets/forms/edit_note_form_container.dart';
-import 'package:fude/pages/notes/note.dart';
-import 'package:fude/pages/jars/jar_notes.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/widgets/forms/edit_note_form_container.dart';
+import 'package:jars/pages/notes/note.dart';
+import 'package:jars/pages/jars/jar_notes.dart';
+import 'package:jars/scoped-models/main.dart';
 import 'dart:io';
 
 class NoteEditPage extends StatefulWidget {

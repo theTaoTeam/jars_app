@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:fude/models/idea.dart';
+import 'package:jars/models/idea.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/jars/jar_notes.dart';
-import 'package:fude/pages/jars/category_card.dart';
-import 'package:fude/pages/home/home.dart';
-import 'package:fude/helpers/randomNoteModal.dart';
-import 'package:fude/pages/notes/notes_add.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/pages/jars/jar_notes.dart';
+import 'package:jars/pages/jars/category_card.dart';
+import 'package:jars/pages/home/home.dart';
+import 'package:jars/helpers/randomNoteModal.dart';
+import 'package:jars/pages/notes/notes_add.dart';
 
 class JarPage extends StatefulWidget {
   final MainModel model;

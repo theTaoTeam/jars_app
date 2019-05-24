@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fude/models/idea.dart';
+import 'package:jars/models/idea.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'package:fude/scoped-models/main.dart';
-import 'package:fude/pages/notes/notes_edit.dart';
-import 'package:fude/pages/jars/jar_notes.dart';
-import 'package:fude/pages/jars/jar.dart';
+import 'package:jars/scoped-models/main.dart';
+import 'package:jars/pages/notes/notes_edit.dart';
+import 'package:jars/pages/jars/jar_notes.dart';
+import 'package:jars/pages/jars/jar.dart';
 
 class NotePage extends StatelessWidget {
   final Idea idea;

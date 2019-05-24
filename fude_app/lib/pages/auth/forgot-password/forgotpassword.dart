@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/animation.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:fude/scoped-models/main.dart';
+import 'package:jars/scoped-models/main.dart';
 
-import 'package:fude/pages/auth/forgot-password/forgotpass_button.dart';
-import 'package:fude/widgets/logo.dart';
-import 'package:fude/widgets/form-inputs/input_fields.dart';
+import 'package:jars/pages/auth/forgot-password/forgotpass_button.dart';
+import 'package:jars/widgets/logo.dart';
+import 'package:jars/widgets/form-inputs/input_fields.dart';
 
 class ForgotPassPage extends StatefulWidget {
   @override

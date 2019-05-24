@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:fude/helpers/exceptions.dart';
+import 'package:jars/helpers/exceptions.dart';
 
 mixin UserModel on Model {
   final FirebaseAuth _auth = FirebaseAuth.instance;
