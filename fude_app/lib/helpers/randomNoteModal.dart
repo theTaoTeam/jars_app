@@ -39,13 +39,8 @@ void showRandomNote(
                               image: DecorationImage(
                                   image: randomNote.image != null
                                       ? randomNote.image.runtimeType != String
-                                          ? Image.file(
+                                          ? FileImage(
                                               randomNote.image,
-                                              fit: BoxFit.cover,
-                                              alignment: FractionalOffset(
-                                                0.5,
-                                                0.5,
-                                              ),
                                             )
                                           : NetworkImage(randomNote.image)
                                       : AssetImage('assets/logo.png'),
