@@ -6,7 +6,6 @@ import 'package:page_transition/page_transition.dart';
 import 'package:fude/widgets/forms/edit_note_form_container.dart';
 import 'package:fude/pages/notes/note.dart';
 import 'package:fude/pages/jars/jar_notes.dart';
-import 'package:fude/pages/jars/jar.dart';
 import 'package:fude/scoped-models/main.dart';
 import 'dart:io';
 

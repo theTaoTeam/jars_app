@@ -61,7 +61,7 @@ class AddUserToJarForm extends StatelessWidget {
                     addUserToJar: addUserToJar,
                     userHasBeenAdded: userHasBeenAdded,
                   ),
-                  model.isLoading
+                  model.isLoadingAddUser
                       ? CircularProgressIndicator(
                           backgroundColor: Colors.transparent,
                           strokeWidth: 5,

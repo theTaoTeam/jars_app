@@ -15,6 +15,7 @@ import 'package:uuid/uuid.dart';
 
 mixin JarModel on Model {
   bool _isLoading = false;
+  bool _isLoadingAddUser = false;
   bool _darkTheme = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final Firestore _firestore = Firestore.instance;
@@ -37,6 +38,10 @@ mixin JarModel on Model {
 
   bool get isLoading {
     return _isLoading;
+  }
+
+  bool get isLoadingAddUser {
+    return _isLoadingAddUser;
   }
 
   bool get darkTheme {
@@ -390,7 +395,7 @@ mixin JarModel on Model {
   addUserToJar(String email) async {
     FirebaseUser user;
     String returnMsg = 'user does not exist';
-    _isLoading = true;
+    _isLoadingAddUser = true;
     notifyListeners();
     //run createUser function to see if email already exists. If it doesn't, delete the user and notify front end.
     try {
@@ -400,7 +405,7 @@ mixin JarModel on Model {
         // print('created user because they did not exist yet');
         user.delete();
 
-        _isLoading = false;
+        _isLoadingAddUser = false;
         notifyListeners();
         return returnMsg;
       }
@@ -419,7 +424,7 @@ mixin JarModel on Model {
           } catch (e) {
             print(e);
           }
-          _isLoading = false;
+          _isLoadingAddUser = false;
           notifyListeners();
           returnMsg = 'user exists and has been added to jar!';
           return returnMsg;
