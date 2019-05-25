@@ -15,6 +15,9 @@ class NotesCard extends StatelessWidget {
 
   Widget makeListTile(
       Idea idea, double _targetWidth, double height, BuildContext context) {
+        if(idea!= null) {
+          print(idea.image);
+        }
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       leading: Container(
@@ -33,7 +36,7 @@ class NotesCard extends StatelessWidget {
                     )
                   : Image.network(idea.image, scale: 0.2)
               : Image.network(
-                  model.locallySelJar.image,
+                  model.selectedJar['image'],
                   scale: 1,
                 ),
         ),

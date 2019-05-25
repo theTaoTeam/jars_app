@@ -66,6 +66,7 @@ mixin JarModel on Model {
     final user = await _auth.currentUser();
     CollectionReference jarCollection = _firestore.collection('jars');
     String imageLocation;
+    print(data['image']);
     data['categories'].insert(0, 'ALL');
 
     //first add jar locally
@@ -332,8 +333,9 @@ mixin JarModel on Model {
       title: title == null ? newIdea.title : title,
       category: category == '' ? newIdea.category : category,
       link: link == '' ? newIdea.link : link,
+      notes: notes == '' ? newIdea.notes : notes,
       isFav: newIdea.getIsFav,
-      image: image == null ? _selJar['image'] : image,
+      image: image == null ? newIdea.image : image,
     );
     int index;
     _jarIdeas.forEach((idea) {
