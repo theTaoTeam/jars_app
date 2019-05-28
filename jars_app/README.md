@@ -21,6 +21,14 @@ Feedback is always welcome; we’d love to hear from you!
 
 Support email: dev@tao.team
 
+# Demos
+<p float="left">
+ <img src="https://user-images.githubusercontent.com/17322126/58373722-fbe6c800-7eef-11e9-8db6-78803370442a.gif" width="350" height="400">
+ <img src="https://user-images.githubusercontent.com/17322126/58373731-1a4cc380-7ef0-11e9-8866-105346de5d49.gif" width="350" height="400">
+ <img src="https://user-images.githubusercontent.com/17322126/58373748-7adc0080-7ef0-11e9-894d-0983c160bbeb.gif" width="350" height="400">
+ <img src="https://user-images.githubusercontent.com/17322126/58373752-8af3e000-7ef0-11e9-97f2-6a576f157cf3.gif" width="350" height="400">
+ </p>
+
 ### Setting Up
 #### Assuming Flutter is Installed
     1. Names with hyphens are considered invalid module names in dart, so change the jars folder's name to be jars.
