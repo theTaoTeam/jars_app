@@ -16,6 +16,7 @@ class CategoryCard extends StatelessWidget {
   final MainModel model;
 
   _buildTextContainer(BuildContext context) {
+    print(category);
     var titleText = Expanded(
       child: Text(
         category.toUpperCase(),

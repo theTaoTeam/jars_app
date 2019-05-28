@@ -296,6 +296,7 @@ class _JarPageState extends State<JarPage> {
                                   itemCount:
                                       model.locallySelJar.categories.length,
                                   itemBuilder: (context, index) {
+                                    print(model.locallySelJar.categories);
                                     return GestureDetector(
                                       onTap: () => _pullRandomNote(
                                           model,

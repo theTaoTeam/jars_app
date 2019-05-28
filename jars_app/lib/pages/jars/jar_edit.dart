@@ -50,8 +50,6 @@ class _JarPageState extends State<EditJarPage> {
     } else {
       formKey.currentState.save();
       model.updateJar(_formData);
-      // model.fetchAllUserJarsFromDB(model.currUserEmail);
-
       Navigator.pop(context);
     }
   }

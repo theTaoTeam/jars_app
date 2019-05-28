@@ -102,24 +102,26 @@ mixin JarModel on Model {
     String imageLocation;
     List<dynamic> newCategories = [];
     int jarIndex;
+    print('toAdd: ${data['categoriesToAdd']} | toRemove: ${data['categoriesToRemove']}');
     //update jar locally first
     _usersJars.forEach((jar) {
       if (jar.title == _locallySelJar.title) {
         jarIndex = _usersJars.indexOf(jar);
         jar.categories.forEach((cat) => newCategories.add(cat));
         if (data['categoriesToAdd'].length > 0) {
-          newCategories.add(data['categories']);
+          data['categoriesToAdd'].forEach((cat) => newCategories.add(cat));
         }
+        print('newCategories: $newCategories');
         if (data['categoriesToRemove'].length > 0) {
-          newCategories.remove(data['categoriesToRemove']);
+          data['categoriesToRemove'].forEach((cat) => newCategories.remove(cat));
         }
-        print('${jar.image}');
-
         final Jar updatedJar = Jar(
           title: data['title'],
           categories: newCategories,
           image: data['image'] == null ? _locallySelJar.image : data['image'],
         );
+        _locallySelJar = updatedJar;
+        print(_locallySelJar.categories);
         _usersJars.removeAt(jarIndex);
         _usersJars.insert(jarIndex, updatedJar);
 
